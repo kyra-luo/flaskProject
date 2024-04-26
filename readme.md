@@ -20,9 +20,9 @@ Welcome to our project, a discussion forum designed to facilitate vibrant and en
 
 - **Community Engagement**: Users can join communities that align with their interests, each hosting its own set of discussions and posts.
 
-### Replys
+### Replies
 
-- **Reply posts**: Users can reply to the posts posted by other users, this can promote discussion among users.
+- **Reply to posts**: Users can reply to the posts posted by other users, this can promote discussion among users.
 
 ### Search Functionality
 
