@@ -161,3 +161,24 @@ body, html {
   position: relative; /* 这确保了.container内的内容相对于它进行定位 */
   z-index: 1; /* 保证内容显示在背景之上 */
 }
+.gender{
+    color: pink;
+}
+input[type="radio"] + label {
+    margin-right: 75px; /* Adjust as needed */
+}
+
+.regi{
+    width: 140px;
+    height: 60px;
+    border: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    background-color: skyblue;
+    border-radius: 46px;
+    outline: none;
+    color: ghostwhite;
+    text-transform: uppercase;
+    cursor: pointer;
+
+}
