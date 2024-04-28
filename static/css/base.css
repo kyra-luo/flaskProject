@@ -61,3 +61,6 @@ body, html {
     color: #ccc;
     pointer-events: none;
 }
+.content {
+    padding-top: 50px;
+}

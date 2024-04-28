@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     {% block head %}
-    <title>Navbar Example</title>
+    <title>Navbar before login</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/logo.ico') }}">
     <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/f48b9c11bb.js"></script>
@@ -27,8 +27,11 @@
             </div>
         </div>
     </nav>
-    {% block content %}
-
-    {% endblock %}
+   <div class="content">
+        {% block content %}
+        <!-- 子模板的内容会显示在这里 -->
+        {% endblock %}
+    </div>
 </body>
 </html>
+

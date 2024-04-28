@@ -1,16 +1,17 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     {% block head %}
-    <title>Title</title>
+        {{ super() }}
+        <title>Title</title>
     {% endblock %}
 </head>
 <body>
-{% block content %}
-
-<a href="/login">test test</a>
-{% endblock %}
+    {% block content %}
+   <a href="/login"> test</a> <!-- 确保使用 <a> 标签正确 -->
+    {% endblock %}
 </body>
 </html>
