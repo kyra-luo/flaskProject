@@ -2,9 +2,28 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Navbar Example</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/logo.ico') }}">
+    <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
 </head>
 <body>
+    <nav class="navbar">
+        <div class="navbar-container">
+            <div class="logo-container">
+                <img src="#" alt="our Logo">
+            </div>
+            <div class="search-container">
+                <label>
+                    <input type="text" placeholder="Search Reddit">
 
+                </label>
+            </div>
+            <div class="button-container">
+                <button>Get account</button>
+                <button>Log In</button>
+                <button>...</button>
+            </div>
+        </div>
+    </nav>
 </body>
 </html>

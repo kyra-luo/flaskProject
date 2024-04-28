@@ -21,6 +21,10 @@ def login():
 def register():
     return render_template('register.html')
 
+@app.route('/base',methods=['GET', 'POST'])
+def base():
+    return render_template('base.html')
+
 if __name__ == '__main__':
     app.run()
 
