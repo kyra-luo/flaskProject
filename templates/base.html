@@ -5,6 +5,7 @@
     <title>Navbar Example</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/logo.ico') }}">
     <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/f48b9c11bb.js"></script>
 </head>
 <body>
     <nav class="navbar">
@@ -14,8 +15,8 @@
             </div>
             <div class="search-container">
                 <label>
+                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" placeholder="Search Reddit">
-
                 </label>
             </div>
             <div class="button-container">
