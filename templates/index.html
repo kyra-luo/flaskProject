@@ -1,17 +1,15 @@
 <!DOCTYPE html>
+{% extends "base.html" %}
 <html lang="en">
 <head>
-    {% extends "base.html" %}
-
-    {% block head %}
     <meta charset="UTF-8">
+    {% block head %}
     <title>Title</title>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/logo.ico') }}">
     {% endblock %}
-
 </head>
 <body>
 {% block content %}
+
 <a href="/login">test test</a>
 {% endblock %}
 </body>

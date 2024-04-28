@@ -2,10 +2,12 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    {% block head %}
     <title>Navbar Example</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/logo.ico') }}">
     <link href="{{ url_for('static', filename='css/base.css') }}" rel="stylesheet">
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/f48b9c11bb.js"></script>
+    {% endblock %}
 </head>
 <body>
     <nav class="navbar">
@@ -25,6 +27,8 @@
             </div>
         </div>
     </nav>
-    {% block content %}{% endblock %}
+    {% block content %}
+
+    {% endblock %}
 </body>
 </html>
