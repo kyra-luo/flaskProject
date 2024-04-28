@@ -161,9 +161,11 @@ body, html {
   position: relative; /* 这确保了.container内的内容相对于它进行定位 */
   z-index: 1; /* 保证内容显示在背景之上 */
 }
+
 .gender{
     color: pink;
 }
+
 input[type="radio"] + label {
     margin-right: 75px; /* Adjust as needed */
 }
@@ -180,5 +182,44 @@ input[type="radio"] + label {
     color: ghostwhite;
     text-transform: uppercase;
     cursor: pointer;
+}
 
+.gender_box {
+    max-height: 400px;
+    width: 80%;
+    min-width: 250px; /* Minimum width so it doesn't get too narrow */
+    background-color: ghostwhite;
+    margin: 10px 0;
+    border-radius: 55px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: flex-start; /* 从左边开始排列内容 */
+    padding-left: 20px; /* 增加左内边距以保持图标在容器内 */
+}
+
+.gender_box i{
+    text-align: center;
+    line-height: 55px;
+    color: gray;
+    font-size: 1.2rem;
+}
+.gender_box input{
+    flex: 1;
+    border: none;
+    background: none;
+    outline: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: large;
+    color: black;
+}
+.gender_box input::placeholder{
+    color: pink;
+    text-align: center;
+}
+
+.gender_box .gender {
+    margin-right: 10px; /* 减少标签之间的间隔 */
+    margin-left: 2px; /* 增加标签左侧的间隔，如果需要的话 */
 }
