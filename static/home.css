@@ -3,3 +3,13 @@ nav {
     height: 50px;
     background-color: gray;
 }
+
+
+.single-post {
+    background-color: lightgreen;
+
+}
+
+.post-replies {
+    background-color: lightblue;
+}
