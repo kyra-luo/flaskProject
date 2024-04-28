@@ -12,4 +12,15 @@ nav {
 
 .post-replies {
     background-color: lightblue;
+    transition: opacity 3s ease, height 3s ease;
+    /* Adjust based on your content */
+    opacity: 1;
+}
+
+.hidden {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    /* Optional: remove padding when hidden */
 }
