@@ -5,7 +5,6 @@ nav {
 }
 
 .single-post {
-    margin-bottom: 3rem;
     border-radius: 15px;
     padding: 1rem;
 }
@@ -16,16 +15,30 @@ nav {
 
 
 .post-replies {
-    background-color: lightblue;
     transition: opacity 3s ease, height 3s ease;
     /* Adjust based on your content */
     opacity: 1;
+    padding-top: 0.5rem;
 }
 
 .post-toggle-reply {
     cursor: pointer;
     width: 100%;
-    margin-bottom: 1rem;
+}
+
+.post-single-reply {
+    border-bottom: 1px solid black;
+}
+
+
+.post-replies .post-single-reply:not(:first-child) {
+    /* CSS styles here will apply to all .post-single-reply within .post-replies except the first .post-single-reply */
+    margin-top: 0.5rem;
+}
+
+.post-replies .post-single-reply:last-child {
+    /* CSS styles here will apply to all .post-single-reply within .post-replies except the first .post-single-reply */
+    border-bottom: none;
 }
 
 .hidden {
@@ -34,4 +47,47 @@ nav {
     overflow: hidden;
     padding: 0;
     /* Optional: remove padding when hidden */
+}
+
+.custom-textarea {
+    position: relative;
+    width: 100%;
+    /* Adjust width as needed */
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 10px;
+    padding-bottom: 40px;
+    border-radius: 15px;
+}
+
+.auto-expand {
+    width: 100%;
+    padding: 20px 0 10px 0;
+    border: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* Prevents scrollbar from affecting the layout */
+    min-height: 40px;
+    /* Minimum height */
+    /* resize: none; */
+    /* Disables manual resizing */
+}
+
+textarea.auto-expand:focus {
+    outline: none;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 4px;
+    /* Position buttons at the bottom of the container */
+    right: 13px;
+    /* Align buttons to the right */
+}
+
+.btns {
+    padding: 5px 10px;
+    /* Padding inside the buttons */
+    margin-left: 5px;
+    /* Space between buttons */
 }

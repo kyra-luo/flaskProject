@@ -34,9 +34,14 @@
                 </svg>
             </button>
             <div class="post-replies">
-                <div class="post-reply-input">
-                    <input type="text" class="post-reply-text" placeholder="Reply...">
-                    <button class="post-reply-submit">Submit</button>
+                <div class="custom-textarea">
+                    <textarea class="auto-expand" placeholder="Place a comment"></textarea>
+                    <div class="buttons">
+                        <button type="button"
+                            class="btn btn-sm btns btn-outline-primary comment post-comment">Comment</button>
+                        <button type="button"
+                            class="btn btn-sm btn-outline-secondary btns cancel post-cancel">Cancel</button>
+                    </div>
                 </div>
                 <div class="post-single-reply">
                     <div class="post-user-info">
@@ -83,6 +88,13 @@
             </div>
             <button class="post-toggle-reply">Reply</button>
             <div class="post-replies">
+                <div class="custom-textarea">
+                    <textarea class="auto-expand" placeholder="Place a comment"></textarea>
+                    <div class="buttons">
+                        <button class="btn comment post-comment">Comment</button>
+                        <button class="btn cancel post-cancel">Cancel</button>
+                    </div>
+                </div>
                 <div class="post-single-reply">
                     <div class="post-user-info">
                         <img src="" alt="" class="post-user-avatar"> <span class="post-user-name">Jace</span> <span
