@@ -4,10 +4,6 @@ nav {
     background-color: gray;
 }
 
-p:hover {
-    color: none;
-}
-
 .single-post {
     margin-bottom: 3rem;
     border-radius: 15px;
@@ -18,11 +14,18 @@ p:hover {
     background-color: rgba(211, 211, 211, 0.529);
 }
 
+
 .post-replies {
     background-color: lightblue;
     transition: opacity 3s ease, height 3s ease;
     /* Adjust based on your content */
     opacity: 1;
+}
+
+.post-toggle-reply {
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 1rem;
 }
 
 .hidden {
