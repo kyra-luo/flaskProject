@@ -22,11 +22,15 @@ Welcome to our project, a discussion forum designed to facilitate vibrant and en
 
 ### Comments
 
-- **Comment to posts**: Users can comment on the posts posted by other users, this can promote discussion among users.
+- **Comment to posts**: Users can comment on the posts posted by other users, share their thoughts about the post.
 
 ### Search Functionality
 
 - **Efficient Searching**: A search feature to help users find specific posts or topics based on keywords.
+
+### Replies (optional)
+
+- **Discussions**: This is something really nice to have, as it futher promotes the discussion among the users, if we do get time after implementing above essential functions, this should be considered first to be implemented.
 
 ### Messaging (optional)
 
