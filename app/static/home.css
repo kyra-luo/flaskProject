@@ -139,6 +139,10 @@ textarea.auto-expand:focus {
     border-radius: 15px;
 }
 
+.create-text:focus {
+    outline: none;
+}
+
 #topic-count {
     margin-top: 0.2rem;
     position: absolute;

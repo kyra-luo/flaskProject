@@ -17,3 +17,26 @@ document.addEventListener('DOMContentLoaded', function () {
         countDiv.textContent = `${currentLength}/${maxLength}`;
     }
 });
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const textareas = document.querySelectorAll('.create-text');
+
+    // Function to adjust textarea height
+    function adjustTextareaHeight(textarea) {
+        textarea.style.height = 'auto';  // Reset the height
+        textarea.style.height = textarea.scrollHeight + 'px';  // Set the height to scroll height
+    }
+
+    // Apply initial height adjustments and add event listeners
+    textareas.forEach(textarea => {
+        adjustTextareaHeight(textarea);  // Adjust initially
+        textarea.addEventListener('input', () => adjustTextareaHeight(textarea));
+    });
+
+    // Adjust height on window resize
+    window.addEventListener('resize', () => {
+        textareas.forEach(adjustTextareaHeight);
+    });
+});
+
