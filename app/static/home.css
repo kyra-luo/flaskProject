@@ -117,11 +117,13 @@ textarea.auto-expand:focus {
 
 .custom-create-post {
     max-width: 700px;
+    min-width: 250px;
+    background-color: #576f7634;
     border-radius: 15px;
     padding: 1rem;
     padding-bottom: 4rem;
-    margin-top: 1rem;
-    background-color: #ccc;
+    margin-top: 1.5rem;
+    background-color: none;
     position: relative;
 }
 
@@ -151,4 +153,14 @@ textarea.auto-expand:focus {
 
 .create-text:not(:first-of-type) {
     margin-top: 1rem;
+}
+
+#communities {
+    padding: 1rem 0.3rem 1rem 1rem;
+    border-radius: 15px;
+}
+
+#create-h1 {
+    color: #2A3C42;
+    margin-left: 1.1rem;
 }
