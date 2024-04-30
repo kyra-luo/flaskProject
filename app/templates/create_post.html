@@ -13,34 +13,36 @@
     <nav>
         <a href="{{url_for('index')}}">Home</a>
     </nav>
-    <h1>Create post</h1>
-    <form action="{{url_for('submit')}}" class="custom-create-post" method="post">
-        {{ form.hidden_tag() }}
-        <div class="mt-2">
-            {{ form.communities(class="create-dropdown")}}
-            {% for error in form.communities.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-        <div class="mt-4">
-            {{ form.topic(class="create-text", placeholder="Topic*") }}<br>
-            <div id="topic-count"></div>
-            {% for error in form.topic.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-        <div class="mt-5">
-            {{ form.post(class="create-text", placeholder="Say something...") }}<br>
-            {% for error in form.post.errors %}
-            <span style="color: red;">[{{ error }}]</span>
-            {% endfor %}
-        </div>
-        <div><button type="submit" class="btn btn-light create-submit">Submit</button></div>
-    </form>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-        crossorigin="anonymous"></script>
-    <script src="/static/create.js"></script>
+    <section class="mx-5">
+        <h1 id="create-h1">Create post</h1>
+        <form action="{{url_for('submit')}}" class="custom-create-post" method="post">
+            {{ form.hidden_tag() }}
+            <div class="mt-2">
+                {{ form.communities(class="create-dropdown")}}
+                {% for error in form.communities.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="mt-4">
+                {{ form.topic(class="create-text", placeholder="Topic*") }}<br>
+                <div id="topic-count"></div>
+                {% for error in form.topic.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div class="mt-5">
+                {{ form.post(class="create-text", placeholder="Say something...") }}<br>
+                {% for error in form.post.errors %}
+                <span style="color: red;">[{{ error }}]</span>
+                {% endfor %}
+            </div>
+            <div><button type="submit" class="btn btn-light create-submit">Submit</button></div>
+        </form>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+            crossorigin="anonymous"></script>
+        <script src="/static/create.js"></script>
+    </section>
 </body>
 
 </html>
