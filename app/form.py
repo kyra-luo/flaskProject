@@ -5,6 +5,5 @@ from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationE
 class PostForm(FlaskForm):
     title = TextAreaField('Your title', validators=[
         DataRequired(), Length(min=1, max=80)])
-    post = TextAreaField('Say something', validators=[
+    post = TextAreaField('Say something...', validators=[
         DataRequired(), Length(min=1, max=1000)])
-    submit = SubmitField('Submit')
