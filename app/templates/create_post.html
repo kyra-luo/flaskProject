@@ -24,7 +24,7 @@
         </div>
         <div class="mt-4">
             {{ form.topic(class="create-text", placeholder="Topic*") }}<br>
-            <div id="topic-count">0/300</div>
+            <div id="topic-count"></div>
             {% for error in form.topic.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
