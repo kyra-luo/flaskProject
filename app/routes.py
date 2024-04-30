@@ -9,8 +9,11 @@ from app.form import PostForm
 def index():
     return render_template('post.html', title='Home')
 
-
-@app.route('/submit', methods=['GET', 'POST'])
-def submit():
+@app.route('/create')
+def create():
     form=PostForm()
     return render_template('create_post.html', title='Submit Post', form=form)
+
+@app.route('/submit', methods=['GET'])
+def submit():
+    pass

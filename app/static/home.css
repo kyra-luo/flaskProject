@@ -119,6 +119,26 @@ textarea.auto-expand:focus {
     max-width: 700px;
     border-radius: 15px;
     padding: 1rem;
+    padding-bottom: 4rem;
     margin-top: 1rem;
     background-color: #ccc;
+    position: relative;
+}
+
+.create-submit {
+    margin-top: 1rem;
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+}
+
+.create-text {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+.create-text:not(:first-of-type) {
+    margin-top: 1rem;
 }
