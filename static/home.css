@@ -4,6 +4,17 @@ nav {
     background-color: gray;
 }
 
+.single-post>.post-user-info img {
+    width: 50px;
+    border-radius: 50%;
+}
+
+.post-single-reply>.post-user-info img {
+    width: 30px;
+    border-radius: 50%;
+
+}
+
 .post {
     max-width: 850px;
 }
@@ -66,12 +77,12 @@ nav {
 
 .auto-expand {
     width: 100%;
-    padding: 20px 0 10px 0;
+    padding: 10px 0 10px 0;
     border: none;
     box-sizing: border-box;
     overflow: hidden;
     /* Prevents scrollbar from affecting the layout */
-    min-height: 40px;
+    min-height: 10px;
     /* Minimum height */
     /* resize: none; */
     /* Disables manual resizing */
