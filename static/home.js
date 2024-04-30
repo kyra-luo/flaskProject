@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', function () {
         textarea.style.height = textarea.scrollHeight + 'px';
     }
 
+
     // Attach the input event listener to each textarea
     textareas.forEach(textarea => {
         textarea.addEventListener('input', function () {
@@ -33,4 +34,23 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 });
 
+document.addEventListener('DOMContentLoaded', function () {
+    const textareas = document.querySelectorAll('.auto-expand');
+
+    textareas.forEach(textarea => {
+        textarea.addEventListener('input', function () {
+            // Find the nearest sibling '.charCount' div to update
+            let charCountDiv = this.parentNode.querySelector('.charCount');
+            let maxLength = this.getAttribute('maxlength');
+            let currentLength = this.value.length;
+            charCountDiv.textContent = `${currentLength} / ${maxLength}`;
+        });
+
+        // Initialize the count on page load for pre-filled textareas
+        let initialLength = textarea.value.length;
+        let maxLength = textarea.getAttribute('maxlength');
+        let charCountDiv = textarea.parentNode.querySelector('.charCount');
+        charCountDiv.textContent = `${initialLength} / ${maxLength}`;
+    });
+});
 

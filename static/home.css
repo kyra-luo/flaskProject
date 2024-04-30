@@ -4,6 +4,10 @@ nav {
     background-color: gray;
 }
 
+.post {
+    max-width: 850px;
+}
+
 .single-post {
     border-radius: 15px;
     padding: 1rem;
@@ -90,4 +94,12 @@ textarea.auto-expand:focus {
     /* Padding inside the buttons */
     margin-left: 5px;
     /* Space between buttons */
+}
+
+.charCount {
+    position: absolute;
+    bottom: 4px;
+    left: 13px;
+    color: #ccc;
+    font-size: 12px;
 }
