@@ -1,0 +1,233 @@
+body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+}
+
+.navbar {
+    background-color: #f6f7f8;
+    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    position: fixed;
+    width: 100%;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.navbar-container {
+    width: 95%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.logo-container img {
+    height: 30px; /* Adjust size as needed */
+}
+
+.search-container input[type="text"] {
+    padding: 10px 10px 10px 30px;
+    border-radius: 20px;
+    border: none;
+    width: 300px; /* Adjust width as needed */
+}
+
+.button-container button {
+    padding: 5px 15px;
+    margin-left: 10px;
+    border-radius: 15px;
+    border: none;
+    background-color: #ff4500; /* Reddit Orange */
+    color: white;
+    cursor: pointer;
+}
+
+/* Optionally add hover effects */
+.button-container button:hover {
+    background-color: #cc3700;
+}
+
+
+.search-container {
+    position: relative;
+}
+
+.search-container i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #ccc;
+    pointer-events: none;
+}
+.content {
+    padding-top: 5rem;
+}
+
+nav {
+    width: 100%;
+    height: 50px;
+    background-color: gray;
+}
+
+.single-post>.post-user-info img {
+    width: 50px;
+    border-radius: 50%;
+}
+
+.post-single-reply>.post-user-info img {
+    width: 30px;
+    border-radius: 50%;
+
+}
+
+.post {
+    max-width: 850px;
+}
+
+.single-post {
+    border-radius: 15px;
+    padding: 1rem;
+}
+
+.single-post:hover {
+    background-color: rgba(211, 211, 211, 0.529);
+}
+
+
+.post-replies {
+    transition: opacity 3s ease, height 3s ease;
+    /* Adjust based on your content */
+    opacity: 1;
+    padding-top: 0.5rem;
+}
+
+.post-toggle-reply {
+    cursor: pointer;
+    width: 100%;
+}
+
+.post-single-reply {
+    border-bottom: 1px solid black;
+}
+
+
+.post-replies .post-single-reply:not(:first-child) {
+    /* CSS styles here will apply to all .post-single-reply within .post-replies except the first .post-single-reply */
+    margin-top: 0.5rem;
+}
+
+.post-replies .post-single-reply:last-child {
+    /* CSS styles here will apply to all .post-single-reply within .post-replies except the first .post-single-reply */
+    border-bottom: none;
+}
+
+.hidden {
+    opacity: 0;
+    height: 0;
+    overflow: hidden;
+    padding: 0;
+    /* Optional: remove padding when hidden */
+}
+
+.custom-textarea {
+    position: relative;
+    width: 100%;
+    /* Adjust width as needed */
+    border: 1px solid #ccc;
+    background-color: white;
+    padding: 10px;
+    padding-bottom: 40px;
+    border-radius: 15px;
+}
+
+.auto-expand {
+    width: 100%;
+    padding: 10px 0 10px 0;
+    border: none;
+    box-sizing: border-box;
+    overflow: hidden;
+    /* Prevents scrollbar from affecting the layout */
+    min-height: 10px;
+    /* Minimum height */
+    /* resize: none; */
+    /* Disables manual resizing */
+}
+
+textarea.auto-expand:focus {
+    outline: none;
+}
+
+.buttons {
+    position: absolute;
+    bottom: 4px;
+    /* Position buttons at the bottom of the container */
+    right: 13px;
+    /* Align buttons to the right */
+}
+
+.btns {
+    padding: 5px 10px;
+    /* Padding inside the buttons */
+    margin-left: 5px;
+    /* Space between buttons */
+}
+
+.charCount {
+    position: absolute;
+    bottom: 4px;
+    left: 13px;
+    color: #ccc;
+    font-size: 12px;
+}
+
+.custom-create-post {
+    max-width: 700px;
+    min-width: 250px;
+    background-color: #576f7634;
+    border-radius: 15px;
+    padding: 1rem;
+    padding-bottom: 4rem;
+    margin-top: 1.5rem;
+    background-color: none;
+    position: relative;
+}
+
+.create-submit {
+    margin-top: 1rem;
+    position: absolute;
+    right: 1rem;
+    bottom: 0.7rem;
+}
+
+.create-text {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 15px;
+}
+
+.create-text:focus {
+    outline: none;
+}
+
+#topic-count {
+    margin-top: 0.2rem;
+    position: absolute;
+    right: 1rem;
+}
+
+.create-text:not(:first-of-type) {
+    margin-top: 1rem;
+}
+
+#communities {
+    padding: 1rem 0.3rem 1rem 1rem;
+    border-radius: 15px;
+}
+
+#create-h1 {
+    color: #2A3C42;
+    margin-left: 1.1rem;
+}
