@@ -1,0 +1,225 @@
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body,input{
+    font-family: 'Poppins',sans-serif;
+}
+.container{
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    overflow: hidden;
+
+    margin: 0 auto;
+}
+.con_forms{
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    margin: 0 auto;
+}
+form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    margin: 0 auto;
+}
+.title{
+    font-size: 2.2rem;
+    color: hotpink;
+    margin-bottom: 10px;
+}
+.input_box {
+    max-height: 400px;
+    width: 80%;
+    min-width: 250px; /* Minimum width so it doesn't get too narrow */
+    background-color: ghostwhite;
+    margin: 10px 0;
+    border-radius: 55px;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.input_box i{
+    text-align: center;
+    line-height: 55px;
+    color: gray;
+    font-size: 1.2rem;
+}
+.input_box input{
+    flex: 1;
+    border: none;
+    background: none;
+    outline: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: large;
+    color: black;
+}
+.input_box input::placeholder{
+    color: pink;
+    text-align: center;
+}
+.btn{
+    width: 100px;
+    height: 50px;
+    border: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    background-color: skyblue;
+    border-radius: 46px;
+    outline: none;
+    color: ghostwhite;
+    text-transform: uppercase;
+    cursor: pointer;
+
+}
+
+.login_register {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh; /* Full height of the viewport */
+    width: 100%;
+}
+
+.button{
+    float: left;
+}
+
+.fa-eye{
+    margin-right: 10px;
+    position: relative;
+    top: 1px;
+    text-align: left;
+    line-height: 65px;
+    color: gray;
+    font-size: 1.2rem;
+}
+.fa-eye:hover{
+    color: plum;
+    border-color: dodgerblue;
+}
+select{
+    width: 260px;
+    height: 30px;
+    border: 1px solid #999;
+    font-size: 18px;
+    color: #1c87c9;
+    background-color: #eee;
+    border-radius: 5px;
+    box-shadow: 4px 4px #ccc;
+}
+
+.bg-text {
+    background-color: rebeccapurple;
+    color: white;
+    font-weight: bold;
+    border: 3px solid #f1f1f1;
+    padding: 40px;
+    text-align: center;
+    width: 50%; /* Adjust the width as necessary */
+    max-width: 500px; /* Optional: Set a max-width for larger screens */
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+    margin: auto; /* This will help to center the form */
+    border-radius: 20px; /* Optional: to have rounded corners */
+}
+.forget{
+    color: hotpink;
+}
+body::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('image/1.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.2; /* 背景透明度为0.1 */
+  z-index: -1; /* 确保伪元素在内容之下 */
+}
+
+body, html {
+  height: 100%; /* 为了让伪元素全屏显示 */
+  margin: 0; /* 去除默认的边距 */
+  overflow: hidden; /* 防止滚动条出现 */
+}
+
+.container {
+  position: relative; /* 这确保了.container内的内容相对于它进行定位 */
+  z-index: 1; /* 保证内容显示在背景之上 */
+}
+
+.gender{
+    color: pink;
+}
+
+input[type="radio"] + label {
+    margin-right: 75px; /* Adjust as needed */
+}
+
+.regi{
+    width: 140px;
+    height: 60px;
+    border: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    background-color: skyblue;
+    border-radius: 46px;
+    outline: none;
+    color: ghostwhite;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+.gender_box {
+    max-height: 400px;
+    width: 80%;
+    min-width: 250px; /* Minimum width so it doesn't get too narrow */
+    background-color: ghostwhite;
+    margin: 10px 0;
+    border-radius: 55px;
+    display: flex;
+    align-items: center;
+    position: relative;
+    justify-content: flex-start; /* 从左边开始排列内容 */
+    padding-left: 20px; /* 增加左内边距以保持图标在容器内 */
+}
+
+.gender_box i{
+    text-align: center;
+    line-height: 55px;
+    color: gray;
+    font-size: 1.2rem;
+}
+.gender_box input{
+    flex: 1;
+    border: none;
+    background: none;
+    outline: none;
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: large;
+    color: black;
+}
+.gender_box input::placeholder{
+    color: pink;
+    text-align: center;
+}
+
+.gender_box .gender {
+    margin-right: 10px; /* 减少标签之间的间隔 */
+    margin-left: 2px; /* 增加标签左侧的间隔，如果需要的话 */
+}

@@ -17,3 +17,10 @@ def create():
 @app.route('/submit', methods=['GET'])
 def submit():
     pass
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    return render_template('login.html', title='Sign In')
+
+@app.route('/register', methods=['GET', 'POST'])
+def regi():
+    return render_template('register.html',title='register')

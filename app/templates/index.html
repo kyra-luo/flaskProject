@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+{% extends "base.html" %}
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    {% block head %}
+        {{ super() }}
+        <title>Title</title>
+    {% endblock %}
+</head>
+<body>
+    {% block content %}
+   <a href="/login"> test</a>
+    {% endblock %}
+</body>
+</html>

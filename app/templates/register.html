@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/logo.ico') }}">
+    <link href="{{ url_for('static', filename='login.css') }}" rel="stylesheet">
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/f48b9c11bb.js"></script>
+    <title>Sign up</title>
+</head>
+<body>
+<div class="container">
+    <div class="con_forms">
+        <div class="login_register">
+            <div class="bg-text">
+            <form action="" class="sign_in">
+                <h2 class="title">SIGN IN</h2>
+              <div class="input_box">
+                    <i class="fa-solid fa-user"></i>
+                  <label for="ipt0"></label><input id="ipt0" placeholder="Enter You First Name" required type="text">
+                </div>
+                <div class="input_box">
+                    <i class="fa-solid fa-user"></i>
+                    <label for="ipt1"></label><input id="ipt1" placeholder="Enter You Last Name" required type="text">
+                </div>
+                <div class="gender_box">
+                    <i class="fa-solid fa-venus-mars"></i>
+                    <input type="radio" id="male" name="gender" value="Male">
+                    <label for="male" class="gender">Male</label>
+                    <input type="radio" id="female" name="gender" value="Female">
+                    <label for="female" class="gender">Female</label>
+                    <input type="radio" id="non" name="gender" value="non">
+                    <label for="non" class="gender">non</label>
+
+                </div>
+
+                <div class="input_box">
+                    <i class="fa-solid fa-lock"></i>
+                    <label>
+                        <input class="PIN1"  oninput="myfunction()" placeholder="Enter Your Password"  required type="password">
+                    </label>
+                    <i class="fa-solid fa-eye" onclick="Hid('PIN1')"></i>
+                </div>
+                <p class="message"> Enter 6-20 digit password</p>
+                <div class="input_box">
+                    <i class="fa-solid fa-lock"></i>
+                    <label>
+                        <input class="PIN2" oninput="checkpin()" placeholder="Conform Your Password" required type="password">
+                    </label>
+                    <i class="fa-solid fa-eye" onclick="Hid('PIN2')"></i>
+                </div>
+                <p class="message1"> Enter the password again</p>
+                <div class="input_box">
+                    <i class="fa-solid fa-envelope"></i>
+                    <label>
+                        <input class="ipt3"  placeholder="Enter Your Email" required type="email">
+                    </label>
+                </div>
+                <div class="button">
+
+                    <input class="regi" type="button" value="Register">
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+
+</div>
+</body>
+<script>
+
+</script>
+</html>
