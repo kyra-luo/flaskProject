@@ -60,3 +60,7 @@
 .edit-button:hover{
     background-color: #e6e6e6;
 }
+
+.resources button {
+    margin-bottom: 40px; /* 设置按钮之间的垂直间距 */
+}
