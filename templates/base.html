@@ -23,7 +23,7 @@
             </div>
             <div class="button-container">
                 <button>Get account</button>
-                <button>Log In</button>
+                <button onclick="loadlogin()">Log In</button>
             </div>
         </div>
     </nav>
@@ -33,5 +33,12 @@
         {% endblock %}
     </div>
 </body>
+<script>
+function loadlogin() {
+    window.location.href = '/login';
+}
+
+
+</script>
 </html>
 
