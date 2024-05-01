@@ -1,8 +1,8 @@
-.blue-header {
+.Userblue-header {
     height: 150px;  /* Adjust the height as needed */
     background-image: linear-gradient(45deg, #ebf0f4, #03274a); /* This sets the background color to blue */
-    width: 100%; 
-    display: flex; 
+    width: 100%;
+    display: flex;
     padding: 20px;
     border-radius: 20px;/* This makes sure the div covers the full width of the viewport */
 }
@@ -11,6 +11,7 @@
     width: 100%;
     border-collapse: collapse;
 }
+
 
 .UserTable th, td {
     text-align:center;
@@ -22,10 +23,10 @@
     background-color: #f4f4f4;
 }
 
-.separator {
+.Userseparator {
     height: 1.5px;  /* 线的厚度 */
     background-color: #0505052b;  /* 线的颜色 */
-    margin: 20px 0;  
+    margin: 20px 0;
     border-top: 1.5px dotted #392929; /* 在线上下添加一些空间 */
 }
 
@@ -61,6 +62,6 @@
     background-color: #e6e6e6;
 }
 
-.resources button {
+.userresources button {
     margin-bottom: 40px; /* 设置按钮之间的垂直间距 */
 }
