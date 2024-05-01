@@ -13,7 +13,7 @@
 }
 
 .UserTable th, td {
-    text-align:center
+    text-align:center;
     padding: 8px;
     border: 1px solid #ddd;
 }
