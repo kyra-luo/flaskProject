@@ -4,7 +4,7 @@ from app.form import PostForm
 
 
 @app.route('/')
-@app.route('/index')
+@app.route('/log')
 def index():
     return render_template('post.html', title='Home')
 
@@ -31,3 +31,6 @@ def commui():
 @app.route('/user', methods=['GET', 'POST'])
 def user():
     return render_template('user.html',title='User')
+@app.route('/base', methods=['GET', 'POST'])
+def base():
+    return render_template('base.html',title='base')
