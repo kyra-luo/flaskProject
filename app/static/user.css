@@ -1,0 +1,67 @@
+.Userblue-header {
+    height: 150px;  /* Adjust the height as needed */
+    background-image: linear-gradient(45deg, #ebf0f4, #03274a); /* This sets the background color to blue */
+    width: 100%;
+    display: flex;
+    padding: 20px;
+    border-radius: 20px;/* This makes sure the div covers the full width of the viewport */
+}
+
+.UserTable{
+    width: 100%;
+    border-collapse: collapse;
+}
+
+
+.UserTable th, td {
+    text-align:center;
+    padding: 8px;
+    border: 1px solid #ddd;
+}
+
+.UserTable th {
+    background-color: #f4f4f4;
+}
+
+.Userseparator {
+    height: 1.5px;  /* 线的厚度 */
+    background-color: #0505052b;  /* 线的颜色 */
+    margin: 20px 0;
+    border-top: 1.5px dotted #392929; /* 在线上下添加一些空间 */
+}
+
+
+.profile-section {
+    display: flex;
+    align-items: center;  /* 垂直居中 */
+    background-color: #f4f4f4;  /* 背景色 */
+    padding: 10px;
+    border-radius: 20px;  /* 圆角 */
+}
+
+.profile-icon {
+    width: 60px;  /* 图标大小 */
+    height: 60px;
+    margin-right: 20px;  /* 图标和文本之间的间隔 */
+}
+
+.profile-info {
+    flex-grow: 1;  /* 让文本区域填充多余的空间 */
+}
+
+.edit-button {
+    background-color: #ffffff;  /* 按钮背景色 */
+    border: 2px solid #ccc;  /* 边框 */
+    border-radius: 20px;  /* 圆角按钮 */
+    padding: 10px;  /* 按钮内边距 */
+    cursor: pointer;  /* 鼠标手势 */
+    font-weight: bold;  /* 字体加粗 */
+}
+
+.edit-button:hover{
+    background-color: #e6e6e6;
+}
+
+.userresources button {
+    margin-bottom: 60px; /* 设置按钮之间的垂直间距 */
+}

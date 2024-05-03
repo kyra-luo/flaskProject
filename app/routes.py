@@ -23,3 +23,7 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def regi():
     return render_template('register.html',title='register')
+
+@app.route('/user', methods=['GET', 'POST'])
+def user():
+    return render_template('user.html',title='User')
