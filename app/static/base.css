@@ -63,9 +63,6 @@ body, html {
     color: #ccc;
     pointer-events: none;
 }
-.content {
-    padding-top: 1rem;
-}
 
 /* post and create */
 
