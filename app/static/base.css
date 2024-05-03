@@ -233,3 +233,20 @@ textarea.auto-expand:focus {
     color: #2A3C42;
     margin-left: 1.1rem;
 }
+@media (max-width: 767px) {
+  .navbar-container {
+    width: 90%; /* 或任何您认为合适的值 */
+  }
+}
+
+.button-container {
+  display: flex;
+  align-items: center;
+}
+
+@media (max-width: 767px) {
+  .button-container button {
+    padding: 4px 8px; /* 调整按钮内边距,使其更加紧凑 */
+    font-size: 14px; /* 可选,调整按钮文本大小 */
+  }
+}
