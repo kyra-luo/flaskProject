@@ -1,0 +1,149 @@
+
+{% extends "base.html" %}
+{% block content %}
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 sidenav">
+            <ul class="nav nav-pills flex-column" role="tablist">
+                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="#popular">Popular</a></li>
+                <li class="nav-item"><a class="nav-link" href="#All">All</a></li>
+            </ul>
+            <hr>
+            <div class="mb-3">
+    <p class="userleft" onclick="toggleSection('custom-feeds', this)">
+        CUSTOM FEEDS<span class="arrow">&#9650;</span> <!-- 箭头向上表示展开 -->
+    </p>
+    <div class="custom-feeds" style="display:block;">
+        <button class="btn">
+            <i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s;"></i>
+            <a href="#">About Custom Feeds</a>
+        </button>
+    </div>
+</div>
+
+<hr>
+<div class="mb-3">
+    <p class="userleft" onclick="toggleSection('communities', this)">
+        COMMUNITIES<span class="arrow">&#9650;</span>
+    </p>
+    <div class="communities" style="display:block;">
+        <button class="btn">
+            <i class="fa-solid fa-users"></i>
+            <a href="#">Detail about Communities</a>
+        </button>
+    </div>
+</div>
+
+<hr>
+<div class="mb-3">
+    <p class="userleft" onclick="toggleSection('userresources', this)">
+        RESOURCES<span class="arrow">&#9650;</span>
+    </p>
+    <div class="userresources" style="display:block;">
+        <button class="btn">
+            <i class="fa-regular fa-bell"></i>
+            <a href="#">HELP</a>
+        </button>
+        <br>
+        <button class="btn">
+            <i class="fa-solid fa-info"></i>
+            <a href="#">ABOUT WEBSITE</a>
+        </button>
+        <br>
+        <button class="btn">
+            <i class="fa-solid fa-feather"></i>
+            <a href="#">USER AGREEMENT</a>
+        </button>
+        <br>
+        <button class="btn">
+            <i class="fa-solid fa-file-invoice"></i>
+            <a href="#">PRIVACY POLICY</a>
+        </button>
+    </div>
+</div>
+
+
+
+        </div>
+
+        <div class="col-sm-9">
+            <div class="row">
+            <div class="col-sm-8">
+                <div class="middle">
+                    <h2 style="margin: 20px">User name</h2>
+                    <h6 style="margin-left:20px ">ID: 1234567</h6>
+                    <br>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#">OVERVIEWS</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">POSTS<span class="badge bg-secondary">5</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">COMMENTS<span class="badge bg-secondary">10</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">SAVED<span class="badge bg-secondary">2</span></a>
+                        </li>
+                    </ul>
+                    <hr>
+                </div>
+            </div>
+
+                <div class="col-sm-4" style="background-color: rgba(197, 187, 174, 0.25);">
+                <div class="Userblue-header"></div>
+                <h4 style="margin: 20px">User name</h4>
+                <button id="shareButton" class="btn" style="margin: 15px;background-color: rgba(250, 235, 215, 0.567);">
+                    <i class="fa-solid fa-share"></i>Share
+                </button>
+                <div id="shareOptions" class="d-none">
+                    <ul>
+                        <li><a href="#">Facebook</a></li>
+                        <li><a href="#">Twitter</a></li>
+                        <li><a href="#">LinkedIn</a></li>
+                        <li><a href="#">Email</a></li>
+                    </ul>
+                </div>
+
+                <table class="UserTable" style="background-color: transparent">
+                    <tr>
+                        <th>Post Karma</th>
+                        <th>Comment Karma</th>
+                    </tr>
+                    <tr>
+                        <td id="postKarma">0</td>
+                        <td id="commentKarma">0</td>
+                    </tr>
+                    <tr>
+                        <th>Cake Day</th>
+                        <th>Gold Received</th>
+                    </tr>
+                    <tr>
+                        <td id="cakeDay">Apr 30, 2024</td>
+                        <td id="goldReceived">0</td>
+                    </tr>
+                </table>
+                <hr>
+                <h4 style="margin-top:20px "> Setting</h4>
+
+                <div class="profile-section">
+                    <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="Profile Icon" class="profile-icon">
+                    <div class="profile-info">
+                        <h3>Profile</h3>
+                        <p>Customize your profile</p>
+                    </div>
+                    <button class="useredit-button">Edit Profile</button>
+                </div>
+                <hr>
+                <h4>LINKS</h4>
+                <button class="useredit-button" style="margin: 20px" onclick="addSocialLink()">+ Add Social Link</button>
+                    <br>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+    {% endblock %}

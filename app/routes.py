@@ -27,3 +27,7 @@ def regi():
 @app.route('/community', methods=['GET', 'POST'])
 def commui():
     return render_template('community.html',title='community')
+
+@app.route('/user', methods=['GET', 'POST'])
+def user():
+    return render_template('user.html',title='User')
