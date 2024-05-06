@@ -1,4 +1,5 @@
-body, html {
+body,
+html {
     margin: 0;
     padding: 0;
     font-family: Arial, sans-serif;
@@ -6,7 +7,7 @@ body, html {
 
 .navbar {
     background-color: #f6f7f8;
-    box-shadow: 0 2px 4px rgba(0,0,0,.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, .1);
     position: sticky;
     /*top: 0;*/
     width: 100%;
@@ -25,14 +26,16 @@ body, html {
 }
 
 .logo-container img {
-    height: 30px; /* Adjust size as needed */
+    height: 30px;
+    /* Adjust size as needed */
 }
 
 .search-container input[type="text"] {
     padding: 10px 10px 10px 30px;
     border-radius: 20px;
     border: none;
-    width: 300px; /* Adjust width as needed */
+    width: 300px;
+    /* Adjust width as needed */
 }
 
 .button-container button {
@@ -40,7 +43,8 @@ body, html {
     margin-left: 10px;
     border-radius: 15px;
     border: none;
-    background-color: #ff4500; /* Reddit Orange */
+    background-color: #ff4500;
+    /* Reddit Orange */
     color: white;
     cursor: pointer;
 }
@@ -227,25 +231,174 @@ textarea.auto-expand:focus {
     margin-left: 1.1rem;
 }
 
+/* Community CSS - Chuan */
+.inner-wrapper {
+    position: relative;
+    height: calc(100vh - 3.5rem);
+    transition: transform 0.3s;
+}
+
+@media (min-width: 992px) {
+    .sticky-navbar .inner-wrapper {
+        height: calc(100vh - 3.5rem - 48px);
+    }
+}
+
+.inner-main,
+.inner-sidebar {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.inner-sidebar {
+    left: 0;
+    width: 235px;
+    border-right: 1px solid #cbd5e0;
+    background-color: #fff;
+    z-index: 1;
+}
+
+.inner-main {
+    right: 0;
+    left: 235px;
+}
+
+.inner-main-footer,
+.inner-main-header,
+.inner-sidebar-footer,
+.inner-sidebar-header {
+    height: 3.5rem;
+    border-bottom: 1px solid #cbd5e0;
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
+    flex-shrink: 0;
+}
+
+.inner-main-body,
+.inner-sidebar-body {
+    padding: 1rem;
+    overflow-y: auto;
+    position: relative;
+    flex: 1 1 auto;
+}
+
+.inner-main-body .sticky-top,
+.inner-sidebar-body .sticky-top {
+    z-index: 999;
+}
+
+.inner-main-footer,
+.inner-main-header {
+    background-color: #fff;
+}
+
+.inner-main-footer,
+.inner-sidebar-footer {
+    border-top: 1px solid #cbd5e0;
+    border-bottom: 0;
+    height: auto;
+    min-height: 3.5rem;
+}
+
+@media (max-width: 767.98px) {
+    .inner-sidebar {
+        left: -235px;
+    }
+
+    .inner-main {
+        left: 0;
+    }
+
+    .inner-expand .main-body {
+        overflow: hidden;
+    }
+
+    .inner-expand .inner-wrapper {
+        transform: translate3d(235px, 0, 0);
+    }
+}
+
+.nav .show>.nav-link.nav-link-faded,
+.nav-link.nav-link-faded.active,
+.nav-link.nav-link-faded:active,
+.nav-pills .nav-link.nav-link-faded.active,
+.navbar-nav .show>.nav-link.nav-link-faded {
+    color: #3367b5;
+    background-color: #c9d8f0;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show>.nav-link {
+    color: #fff;
+    background-color: #467bcb;
+}
+
+.nav-link.has-icon {
+    display: flex;
+    align-items: center;
+}
+
+.nav-link.active {
+    color: #467bcb;
+}
+
+.nav-pills .nav-link {
+    border-radius: .25rem;
+}
+
+.nav-link {
+    color: #4a5568;
+}
+
+.card {
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, .1), 0 1px 2px 0 rgba(0, 0, 0, .06);
+}
+
+.card {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    word-wrap: break-word;
+    background-color: #fff;
+    background-clip: border-box;
+    border: 0 solid rgba(0, 0, 0, .125);
+    border-radius: .25rem;
+}
+
+.card-body {
+    flex: 1 1 auto;
+    min-height: 1px;
+    padding: 1rem;
+}
+
 /* user part of css */
 
 .Userblue-header {
-    height: 150px;  /* Adjust the height as needed */
-    background-image: linear-gradient(45deg, #ebf0f4, #03274a); /* This sets the background color to blue */
+    height: 150px;
+    /* Adjust the height as needed */
+    background-image: linear-gradient(45deg, #ebf0f4, #03274a);
+    /* This sets the background color to blue */
     width: 100%;
     display: flex;
     padding: 20px;
-    border-radius: 20px;/* This makes sure the div covers the full width of the viewport */
+    border-radius: 20px;
+    /* This makes sure the div covers the full width of the viewport */
 }
 
-.UserTable{
+.UserTable {
     width: 100%;
     border-collapse: collapse;
 }
 
 
-.UserTable th, td {
-    text-align:center;
+.UserTable th,
+td {
+    text-align: center;
     padding: 8px;
     border: 1px solid #ddd;
 }
@@ -255,44 +408,60 @@ textarea.auto-expand:focus {
 }
 
 .Userseparator {
-    height: 1.5px;  /* 线的厚度 */
-    background-color: #0505052b;  /* 线的颜色 */
+    height: 1.5px;
+    /* 线的厚度 */
+    background-color: #0505052b;
+    /* 线的颜色 */
     margin: 20px 0;
-    border-top: 1.5px dotted #392929; /* 在线上下添加一些空间 */
+    border-top: 1.5px dotted #392929;
+    /* 在线上下添加一些空间 */
 }
 
 
 .profile-section {
     display: flex;
-    align-items: center;  /* 垂直居中 */
-    background-color: #f4f4f4;  /* 背景色 */
+    align-items: center;
+    /* 垂直居中 */
+    background-color: #f4f4f4;
+    /* 背景色 */
     padding: 10px;
-    border-radius: 20px;  /* 圆角 */
+    border-radius: 20px;
+    /* 圆角 */
 }
 
 .profile-icon {
-    width: 60px;  /* 图标大小 */
+    width: 60px;
+    /* 图标大小 */
     height: 60px;
-    margin-right: 20px;  /* 图标和文本之间的间隔 */
+    margin-right: 20px;
+    /* 图标和文本之间的间隔 */
 }
 
 .profile-info {
-    flex-grow: 1;  /* 让文本区域填充多余的空间 */
+    flex-grow: 1;
+    /* 让文本区域填充多余的空间 */
 }
 
 .useredit-button {
-    background-color: #ffffff;  /* 按钮背景色 */
-    border: 2px solid #ccc;  /* 边框 */
-    border-radius: 20px;  /* 圆角按钮 */
-    padding: 10px;  /* 按钮内边距 */
-    cursor: pointer;  /* 鼠标手势 */
-    font-weight: bold;  /* 字体加粗 */
+    background-color: #ffffff;
+    /* 按钮背景色 */
+    border: 2px solid #ccc;
+    /* 边框 */
+    border-radius: 20px;
+    /* 圆角按钮 */
+    padding: 10px;
+    /* 按钮内边距 */
+    cursor: pointer;
+    /* 鼠标手势 */
+    font-weight: bold;
+    /* 字体加粗 */
 }
 
-.useredit-button:hover{
+.useredit-button:hover {
     background-color: #e6e6e6;
 }
 
 .userresources button {
-    margin-bottom: 40px; /* 设置按钮之间的垂直间距 */
+    margin-bottom: 40px;
+    /* 设置按钮之间的垂直间距 */
 }
