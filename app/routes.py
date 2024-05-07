@@ -21,7 +21,7 @@ def login():
     if form.validate_on_submit():
         # 执行登录逻辑
         pass
-    return render_template('login.html', title='Sign In',form=form)
+    return render_template('login.html', title='Sign In', form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def regi():
@@ -29,7 +29,7 @@ def regi():
     if form.validate_on_submit():
         # add some conditions
         pass
-    return render_template('register.html',title='register')
+    return render_template('register.html', title='register', form=form)
 
 @app.route('/community', methods=['GET', 'POST'])
 def commui():

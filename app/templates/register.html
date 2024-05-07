@@ -17,20 +17,16 @@
                 <h2 class="title">SIGN IN</h2>
               <div class="input_box">
                     <i class="fa-solid fa-user"></i>
-                  <label for="ipt0"></label><input id="ipt0" placeholder="Enter You First Name" required type="text">
+                  {{form.Firstname(id="ipt0",placeholder="Enter You First Name")}}
                 </div>
                 <div class="input_box">
                     <i class="fa-solid fa-user"></i>
-                    <label for="ipt1"></label><input id="ipt1" placeholder="Enter You Last Name" required type="text">
+                    {{form.Lastname(id="ipt1",placeholder="Enter You Last Name")}}
                 </div>
-                <div class="gender_box">
+                <div class="input_box">
                     <i class="fa-solid fa-venus-mars"></i>
-                    <input type="radio" id="male" name="gender" value="Male">
-                    <label for="male" class="gender">Male</label>
-                    <input type="radio" id="female" name="gender" value="Female">
-                    <label for="female" class="gender">Female</label>
-                    <input type="radio" id="non" name="gender" value="non">
-                    <label for="non" class="gender">non</label>
+                    {{form.gender(id='gendertype')}}
+
 
                 </div>
 

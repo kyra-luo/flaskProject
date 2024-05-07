@@ -24,7 +24,7 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     Firstname = StringField(validators=[DataRequired()])
     Lastname = StringField(validators=[DataRequired()])
-    gender = SelectField(choices=[('1', 'Male'), ('2', 'Female'),('3', 'non')], validators=[DataRequired()])
+    gender = SelectField(choices=[('1', 'Male'), ('2', 'Female'),('3', 'non-binary')], validators=[DataRequired()])
     Password = PasswordField(validators=[DataRequired()])
     confirm_Password = PasswordField('Confirm Password', validators=[
         DataRequired(),
