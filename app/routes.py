@@ -31,6 +31,7 @@ def regi():
         pass
     return render_template('register.html', title='register', form=form)
 
+
 @app.route('/community', methods=['GET', 'POST'])
 def commui():
     return render_template('community.html',title='community')

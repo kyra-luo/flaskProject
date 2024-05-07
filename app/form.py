@@ -22,12 +22,14 @@ class LoginForm(FlaskForm):
 
 # Defining register form
 class RegisterForm(FlaskForm):
-    Firstname = StringField(validators=[DataRequired()])
-    Lastname = StringField(validators=[DataRequired()])
+    Firstname = StringField(validators=[DataRequired(), Length(min=1, max=10)])
+    Lastname = StringField(validators=[DataRequired(), Length(min=1, max=10)])
     gender = SelectField(choices=[('1', 'Male'), ('2', 'Female'),('3', 'non-binary')], validators=[DataRequired()])
-    Password = PasswordField(validators=[DataRequired()])
+    Password = PasswordField(validators=[DataRequired(), Length(min=6, max=20)])
     confirm_Password = PasswordField('Confirm Password', validators=[
         DataRequired(),
-        EqualTo('Password', message='Passwords must match.')
+        EqualTo('Password', message='Passwords must match.'),
+        Length(min=6, max=20)
     ])
+    email_address = StringField(validators=[DataRequired(), Email()])
     submit = SubmitField('Register')
