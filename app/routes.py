@@ -1,7 +1,7 @@
 from flask import render_template
 from app import app
 from app.form import PostForm
-
+from app.form import LoginForm
 
 @app.route('/')
 @app.route('/log')
@@ -18,7 +18,11 @@ def submit():
     pass
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    return render_template('login.html', title='Sign In')
+    form = LoginForm()  # 创建登录表单的实例
+    if form.validate_on_submit():
+        # 执行登录逻辑
+        pass
+    return render_template('login.html', title='Sign In',form=form)
 
 @app.route('/register', methods=['GET', 'POST'])
 def regi():
