@@ -7,4 +7,9 @@ class PostForm(FlaskForm):
     topic = TextAreaField('Your topic', validators=[
         DataRequired(), Length(min=1, max=200)])
     post = TextAreaField('Say something...', validators=[
-        DataRequired(), Length(min=1, max=1000)])
+        DataRequired(), Length(min=1, max=5000)])
+    
+class CommentForm(FlaskForm):
+    comment = TextAreaField('Comment', validators=[
+        DataRequired(), Length(min=1, max=400)])
+    submit = SubmitField('Submit')

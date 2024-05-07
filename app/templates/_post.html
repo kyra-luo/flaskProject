@@ -1,0 +1,42 @@
+<!-- _post.html -->
+<section class="container-md mt-2 post">
+    <div class="single-post">
+        <!-- Post content -->
+        <div class="post-user-info">
+            <img src="/static/avatar/Screenshot 2024-03-22 at 5.56.01 pm.jpeg" alt="" class="post-user-avatar">
+            <span class="post-user-name">{{ posts.author }}</span>
+            <span class="post-date">{{ posts.time_stamp }}</span>
+        </div>
+        <div class="post-content">
+            <p class="post-text">{{ posts.body }}</p>
+        </div>
+
+        <!-- Comment Form -->
+        <form method="POST" action="/post_comment">
+            {{ form.hidden_tag() }}
+            <div class="form-group">
+                {{ form.comment(class="auto-expand", maxlength="400", placeholder="Place a comment") }}
+                {{ form.comment.errors }}
+            </div>
+            <div class="form-group">
+                {{ form.submit(class="btn btn-primary") }}
+            </div>
+        </form>
+
+        <!-- List of Comments -->
+        <div class="post-replies">
+            {% for comment in comments %}
+            <div class="post-single-reply">
+                <div class="post-user-info">
+                    <img src="/static/avatar/Screenshot 2024-03-22 at 5.56.01 pm.jpeg" alt="" class="post-user-avatar">
+                    <span class="post-user-name">{{ comment.author }}</span>
+                    <span class="post-date">{{ comment.time_stamp }}</span>
+                </div>
+                <div class="post-content">
+                    <p class="post-text">{{ comment.comment_body }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
