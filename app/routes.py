@@ -8,26 +8,29 @@ sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore 
 @app.route('/post')
 @app.route('/index')
 def index():
-    posts = {'topic': 'Topic', 
-             'body': sample_posts,
-             'author': 'Jake',
-             'time_stamp': '2020-01-01 12:00:00' 
-             }
-    comments = [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': 'Jace', 'time_stamp': '2020-01-01 12:00:00'},
-                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': 'James', 'time_stamp': '2020-01-01 12:00:00'}]
-    return render_template('post.html', title='Home', posts=posts, comments=comments)
+    return render_template('post.html', title='Home')
 
 @app.route('/test')
 def test():
     form = CommentForm()
-    posts = {'topic': 'Topic', 
+    posts = [{'id': 1,
+             'topic': 'Topic', 
              'body': sample_posts,
              'author': 'Jake',
-             'time_stamp': '2020-01-01 12:00:00' 
-             }
-    comments = [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': 'Jace', 'time_stamp': '2020-01-01 12:00:00'},
-                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': 'James', 'time_stamp': '2020-01-01 12:00:00'}]
-    return render_template('test.html', title='Home', posts=posts, comments=comments, form=form)
+             'time_stamp': '2020-01-01 12:00:00',
+             'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': 'Jace', 'time_stamp': '2020-01-01 12:00:00'},
+                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': 'James', 'time_stamp': '2020-01-01 12:00:00'}] 
+             },
+             {'id': 2,
+             'topic': 'Topic', 
+             'body': sample_posts,
+             'author': 'Jonathon',
+             'time_stamp': '2020-02-01 13:00:00',
+             'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': 'Kyra', 'time_stamp': '2020-02-01 12:00:00'},
+                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': 'Chloe', 'time_stamp': '2020-02-01 12:00:00'}] 
+             }]
+    
+    return render_template('test.html', title='Home', posts=posts, form=form)
 
 @app.route('/create')
 def create():
