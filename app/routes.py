@@ -1,7 +1,6 @@
 from flask import render_template
 from app import app
-from app.form import PostForm
-from app.form import LoginForm
+from app.form import PostForm, RegisterForm,LoginForm
 
 @app.route('/')
 @app.route('/log')
@@ -26,6 +25,10 @@ def login():
 
 @app.route('/register', methods=['GET', 'POST'])
 def regi():
+    form = RegisterForm()
+    if form.validate_on_submit():
+        # add some conditions
+        pass
     return render_template('register.html',title='register')
 
 @app.route('/community', methods=['GET', 'POST'])

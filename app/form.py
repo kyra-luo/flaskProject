@@ -17,7 +17,17 @@ class LoginForm(FlaskForm):
     U_type = SelectField(choices=[('1', 'User'), ('2', 'Admin')], validators=[DataRequired(message=None)])
     # get password, input required.
     password = PasswordField(validators=[DataRequired()])
+    # This will display on the HTML
     submit = SubmitField('Sign In')
 
+# Defining register form
 class RegisterForm(FlaskForm):
-    username = StringField(validators=[DataRequired()])
+    Firstname = StringField(validators=[DataRequired()])
+    Lastname = StringField(validators=[DataRequired()])
+    gender = SelectField(choices=[('1', 'Male'), ('2', 'Female'),('3', 'non')], validators=[DataRequired()])
+    Password = PasswordField(validators=[DataRequired()])
+    confirm_Password = PasswordField('Confirm Password', validators=[
+        DataRequired(),
+        EqualTo('Password', message='Passwords must match.')
+    ])
+    submit = SubmitField('Register')
