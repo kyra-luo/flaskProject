@@ -10,7 +10,7 @@ sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore 
 def test():
     form = CommentForm()
     posts = [{'id': 1,
-             'topic': 'Topic', 
+             'topic': 'This is the first topic', 
              'body': sample_posts,
              'author': 'Jake',
              'time_stamp': '2020-01-01 12:00:00',
@@ -18,7 +18,7 @@ def test():
                 {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': 'James', 'time_stamp': '2020-01-01 12:00:00'}] 
              },
              {'id': 2,
-             'topic': 'Topic', 
+             'topic': 'This is the second topic', 
              'body': sample_posts,
              'author': 'Jonathon',
              'time_stamp': '2020-02-01 13:00:00',
