@@ -9,6 +9,7 @@ class PostForm(FlaskForm):
     post = TextAreaField('Say something...', validators=[
         DataRequired(), Length(min=1, max=5000)])
     
+    
 class CommentForm(FlaskForm):
     comment = TextAreaField('Comment', validators=[
         DataRequired(), Length(min=1, max=400)])

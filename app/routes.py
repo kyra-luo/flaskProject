@@ -7,10 +7,6 @@ sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore 
 @app.route('/')
 @app.route('/post')
 @app.route('/index')
-def index():
-    return render_template('post.html', title='Home')
-
-@app.route('/test')
 def test():
     form = CommentForm()
     posts = [{'id': 1,
@@ -30,7 +26,7 @@ def test():
                 {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': 'Chloe', 'time_stamp': '2020-02-01 12:00:00'}] 
              }]
     
-    return render_template('test.html', title='Home', posts=posts, form=form)
+    return render_template('post.html', title='Home', posts=posts, form=form)
 
 @app.route('/create')
 def create():
@@ -39,6 +35,10 @@ def create():
 
 @app.route('/submit', methods=['GET', 'POST'])
 def submit():
+    pass
+
+@app.route('/post_comment', methods=['GET', 'POST'])
+def post_comment():
     pass
 
 @app.route('/login', methods=['GET', 'POST'])
