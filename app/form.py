@@ -15,7 +15,7 @@ class PostForm(FlaskForm):
 # Defining login form
 class LoginForm(FlaskForm):
     # get username, input required.
-    username = StringField(validators=[DataRequired()])
+    email_addr = StringField(validators=[DataRequired(), Email()])
     # get Type, input required.
     U_type = SelectField(choices=[('1', 'User'), ('2', 'Admin')], validators=[DataRequired(message=None)])
     # get password, input required.
@@ -28,6 +28,7 @@ class LoginForm(FlaskForm):
 class RegisterForm(FlaskForm):
     Firstname = StringField(validators=[DataRequired(), Length(min=1, max=10)])
     Lastname = StringField(validators=[DataRequired(), Length(min=1, max=10)])
+    Username = StringField(validators=[DataRequired(), Length(min=2, max=10)])
     gender = SelectField(choices=[('1', 'Male'), ('2', 'Female'), ('3', 'non-binary')], validators=[DataRequired()])
     Password = PasswordField(validators=[DataRequired(), Length(min=6, max=20)])
     confirm_Password = PasswordField('Confirm Password', validators=[
