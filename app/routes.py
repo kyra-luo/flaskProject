@@ -1,6 +1,6 @@
-from flask import render_template
+from flask import render_template, flash, redirect, url_for
 from app import app
-from app.form import PostForm
+from app.form import PostForm, CommunityForm
 
 
 @app.route('/')
@@ -26,7 +26,12 @@ def regi():
 
 @app.route('/community', methods=['GET', 'POST'])
 def commui():
-    return render_template('community.html',title='community')
+    form = CommunityForm()
+    if form.validate_on_submit():
+        flash('Community created requested for user {}, category={}'.format(form.communityame.data,
+            form.category.data))
+        return redirect(url_for('community'))
+    return render_template('community.html',title='community', form=form)
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():

@@ -8,3 +8,9 @@ class PostForm(FlaskForm):
         DataRequired(), Length(min=1, max=200)])
     post = TextAreaField('Say something...', validators=[
         DataRequired(), Length(min=1, max=1000)])
+    
+class CommunityForm(FlaskForm):
+    communityame = StringField('CommunityName', validators=[DataRequired(), Length(min=1, max=15) ])
+    category = SelectField('Category', choices=[('1','Mathmatic'), ('2','IT'), ('3','Physics')])
+    description = TextAreaField('What is this community all about', validators=[
+        DataRequired(), Length(min=1, max=1000)])
