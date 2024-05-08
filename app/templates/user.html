@@ -1,6 +1,9 @@
 
 {% extends "base.html" %}
 {% block content %}
+
+<form action="" method="post" novalidate>
+    {{ form.hidden_tag() }}
     <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 sidenav">
@@ -71,8 +74,17 @@
             <div class="row">
             <div class="col-sm-8">
                 <div class="middle">
-                    <h2 style="margin: 20px">User name</h2>
-                    <h6 style="margin-left:20px ">ID: 1234567</h6>
+                    <h2 style="margin: 20px">
+                        {{ form.name.label }}<br>
+                        {{ form.name(size=32) }}
+                        
+                    
+                    </h2>
+                    <h6 style="margin-left:20px ">
+                        {{ form.id.label }}<br>
+                        {{ form.id(size=32) }}
+                    
+                    </h6>
                     <br>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
@@ -93,8 +105,11 @@
             </div>
 
                 <div class="col-sm-4" style="background-color: rgba(197, 187, 174, 0.25);">
-                <div class="Userblue-header"></div>
-                <h4 style="margin: 20px">User name</h4>
+                <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="Profile Icon" class="profile-icon">
+                <h4 style="margin: 20px">
+                    {{ form.name.label }}<br>
+                    {{ form.name(size=32) }}
+                </h4>
                 <button id="shareButton" class="btn" style="margin: 15px;background-color: rgba(250, 235, 215, 0.567);">
                     <i class="fa-solid fa-share"></i>Share
                 </button>
@@ -107,32 +122,15 @@
                     </ul>
                 </div>
 
-                <table class="UserTable" style="background-color: transparent">
-                    <tr>
-                        <th>Post Karma</th>
-                        <th>Comment Karma</th>
-                    </tr>
-                    <tr>
-                        <td id="postKarma">0</td>
-                        <td id="commentKarma">0</td>
-                    </tr>
-                    <tr>
-                        <th>Cake Day</th>
-                        <th>Gold Received</th>
-                    </tr>
-                    <tr>
-                        <td id="cakeDay">Apr 30, 2024</td>
-                        <td id="goldReceived">0</td>
-                    </tr>
-                </table>
+                
                 <hr>
-                <h4 style="margin-top:20px "> Setting</h4>
+                <h4 style="margin-top:20px "> About Me</h4>
 
                 <div class="profile-section">
-                    <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="Profile Icon" class="profile-icon">
                     <div class="profile-info">
                         <h3>Profile</h3>
-                        <p>Customize your profile</p>
+                        <p>{{ form.about_me.label }}<br>
+                            {{ form.about_me(rows=4, cols=32) }}</p>
                     </div>
                     <button class="useredit-button">Edit Profile</button>
                 </div>
@@ -145,5 +143,6 @@
         </div>
     </div>
 </div>
+</form>
 
     {% endblock %}

@@ -1,6 +1,7 @@
 from flask import render_template
 from app import app
 from app.form import PostForm
+from app.form import UserForm
 
 
 @app.route('/')
@@ -12,6 +13,12 @@ def index():
 def create():
     form=PostForm()
     return render_template('create_post.html', title='Submit Post', form=form)
+
+
+@app.route('/user')
+def userf():
+    form = UserForm()
+    return render_template('user.html', title='User Page', form=form)
 
 @app.route('/submit', methods=['GET'])
 def submit():
