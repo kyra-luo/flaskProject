@@ -12,18 +12,18 @@ def test():
     posts = [{'id': 1,
              'topic': 'This is the first topic', 
              'body': sample_posts,
-             'author': 'Jake',
+             'author': {'username': "Jake"},
              'time_stamp': '2020-01-01 12:00:00',
-             'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': 'Jace', 'time_stamp': '2020-01-01 12:00:00'},
-                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': 'James', 'time_stamp': '2020-01-01 12:00:00'}] 
+             'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
+                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}] 
              },
              {'id': 2,
              'topic': 'This is the second topic', 
              'body': sample_posts,
-             'author': 'Jonathon',
+             'author': {'username': "Jonathon"},
              'time_stamp': '2020-02-01 13:00:00',
-             'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': 'Kyra', 'time_stamp': '2020-02-01 12:00:00'},
-                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': 'Chloe', 'time_stamp': '2020-02-01 12:00:00'}] 
+             'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Kyra"}, 'time_stamp': '2020-02-01 12:00:00'},
+                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "Chole"}, 'time_stamp': '2020-02-01 12:00:00'}] 
              }]
     
     return render_template('post.html', title='Home', posts=posts, form=form)
