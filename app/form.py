@@ -8,3 +8,11 @@ class PostForm(FlaskForm):
         DataRequired(), Length(min=1, max=200)])
     post = TextAreaField('Say something...', validators=[
         DataRequired(), Length(min=1, max=1000)])
+    
+class UserForm(FlaskForm):
+    id = StringField('ID', validators=[DataRequired()])
+    name = StringField('Name', validators=[DataRequired()])
+    gender = SelectField('Gender', choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], validators=[DataRequired()])
+    about_me = TextAreaField('About Me', validators=[Length(max=140)])
+    preference = SelectField('Communities', choices=[('1', 'Community 1'), ('2', 'Community 2'), ('3', 'Community 3')], validators=[DataRequired()])
+    
