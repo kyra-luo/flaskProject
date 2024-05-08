@@ -5,7 +5,7 @@
         <div class="inner-wrapper">
             <div class="inner-sidebar">
                 <div class="inner-sidebar-header justify-content-center">
-                    <button class="btn btn-primary has-icon btn-block" type="button" data-toggle="modal" data-target="#threadModal">
+                    <button class="btn btn-primary has-icon btn-block" type="button" data-bs-toggle="modal" data-bs-target="#threadModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-2">
                             <line x1="12" y1="5" x2="12" y2="19"></line>
                             <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -60,9 +60,9 @@
                     <div class="card mb-2">
                         <div class="card-body p-2 p-sm-3">
                             <div class="media forum-item">
-                                <a href="#" data-toggle="collapse" data-target=".forum-content"><img src="" class="mr-3 rounded-circle" width="50" alt="Forum picture" /></a>
+                                <a href="#" data-bs-toggle="collapse" data-bs-target=".forum-content"><img src="" class="mr-3 rounded-circle" width="50" alt="Forum picture" /></a>
                                 <div class="media-body">
-                                <h6><a href="#" data-toggle="collapse" data-target=".forum-content" class="text-body">Data Science</a></h6>
+                                <h6><a href="#" data-bs-toggle="collapse" data-bs-target=".forum-content" class="text-body">Data Science</a></h6>
                                 <p class="text-secondary">
                                    lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet
                                 </p>
@@ -86,8 +86,9 @@
                         <a class="page-link has-icon" href="javascript:void(0)"><i class="material-icons">chevron_right</i></a>
                         </li>
                     </ul>
+                </div>
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content">
-                    <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-toggle="collapse" data-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a>
+                    <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-bs-toggle="collapse" data-bs-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a>
                     <div class="card mb-2">
                         <div class="card-body">                   
                             <div class="media forum-item">                   
@@ -118,7 +119,7 @@
                         <div class="card-body">
                             <div class="media forum-item">
                                 <a href="javascript:void(0)" class="card-link">
-                                <img src="https://bootdey.com/img/Content/avatar/avatar2.png" class="rounded-circle" width="50" alt="User" />
+                                <img src="" class="rounded-circle" width="50" alt="User" />
                                 <small class="d-block text-center text-muted">Pro</small>
                             </a>
                             <div class="media-body ml-3">
@@ -144,7 +145,7 @@
                         {{ form.hidden_tag() }}
                         <div class="modal-header d-flex align-items-center bg-primary text-white">
                             <h6 class="modal-title mb-0" id="threadModalLabel">New Forum</h6>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                                 <span aria-hidden="true">x</span>
                             </button>
                         </div>
@@ -166,11 +167,12 @@
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
                             </div>
-                            <div class="mt-5">
+                            <div class="mt-6">
                                 {{ form.description(class="create-text", placeholder="What is this community all about") }}<br>
                                 {% for error in form.description.errors %}
                                 <span style="color: red;">[{{ error }}]</span>
                                 {% endfor %}
+                            </div>
                             <!--
                             <textarea class="form-control summernote" style="display: none;"></textarea>
                             <div class="custom-file form-control-sm mt-3" style="max-width: 300px;">
@@ -180,12 +182,9 @@
                         </div>
                             -->
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-light" data-dismiss="modal">Cancel</button>
                                 {{ form.submit() }}
-                                <!--<button type="button" class="btn btn-primary">Post</button>-->
                             </div>
                     </form>
-                    {% endblock %}
                 </div>
             </div>
         </div>

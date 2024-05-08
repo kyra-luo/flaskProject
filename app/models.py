@@ -9,8 +9,10 @@ class Community(db.Model):
                                                 unique=True)
     category: so.Mapped[str] = so.mapped_column(sa.String(10), index=True,
                                              unique=True)
-    #host: so.Mapped[int] = so.mapped_column(sa.ForeignKey(???),index=True)
+    #timestamp:
+    #host: so.Mapped[int] = so.mapped_column(sa.ForeignKey(???),index=True) -- optional
     #posts: so.Mapped[Posts] = so.relationship(back_populates='???')
+    #members: so,Mapped[Users]
 
 
     def __repr__(self):
