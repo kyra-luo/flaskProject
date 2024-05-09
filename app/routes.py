@@ -1,7 +1,7 @@
-from flask import render_template
-from app import app
+from flask import render_template,redirect,url_for,flash
+from app import app, db
 from app.form import PostForm, RegisterForm, LoginForm
-
+from .models import User
 
 @app.route('/')
 @app.route('/log')
@@ -32,9 +32,14 @@ def login():
 @app.route('/register', methods=['GET', 'POST'])
 def regi():
     form = RegisterForm()
+    # if the request method == POST and the form.validate == TRUE.
     if form.validate_on_submit():
-        # add some conditions
-        pass
+        user = User(form.Firstname.data, form.Lastname.data,form.Username.data,
+                    form.gender.data,form.Password.data,form.confirm_Password.data,
+                    form.email_address.data)
+        db.session.add(user)
+        flash("You are now registered")
+        return redirect(url_for('/login'))
     return render_template('register.html', title='register', form=form)
 
 
