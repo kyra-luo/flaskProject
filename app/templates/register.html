@@ -14,10 +14,11 @@
     <div class="con_forms">
         <div class="login_register">
             <div class="bg-text">
-            <form action="" class="sign_in" id="f_register">
+            <form action="" class="sign_in" id="f_register" method="post" action="/register">
                 <h2 class="title">SIGN UP</h2>
               <div class="input_box">
                     <i class="fa-solid fa-user"></i>
+                  {{ form.hidden_tag() }}
                   {{form.Firstname(id="ipt0",placeholder="Enter You First Name")}}
                 </div>
                 <div class="input_box">
@@ -58,6 +59,17 @@
     </div>
 
 </div>
+{% if registered %}
+<script>
+    alert("Registration successful! You can now login.");
+</script>
+{% endif %}
+
+{% if failed %}
+<script>
+    alert("Registration failed. Please check your input.");
+</script>
+{% endif %}
 
 </body>
 

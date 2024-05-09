@@ -2,7 +2,11 @@ from flask import render_template,redirect,url_for,flash
 from app import app, db
 from app.form import PostForm, RegisterForm, LoginForm
 from .models import User
+from random import randint
+from sqlalchemy.exc import IntegrityError
 
+def generate_user_id():
+    return '{:06d}'.format(randint(0, 999999))
 @app.route('/')
 @app.route('/log')
 def index():
@@ -34,12 +38,19 @@ def regi():
     form = RegisterForm()
     # if the request method == POST and the form.validate == TRUE.
     if form.validate_on_submit():
-        user = User(form.Firstname.data, form.Lastname.data,form.Username.data,
-                    form.gender.data,form.Password.data,form.confirm_Password.data,
-                    form.email_address.data)
-        db.session.add(user)
-        flash("You are now registered")
-        return redirect(url_for('/login'))
+        try:
+            user = User(User_id=generate_user_id(),
+                    fname=form.Firstname.data,
+                    lname=form.Lastname.data,
+                    username=form.Username.data,
+                    email=form.email_address.data,
+                    password_hash=form.Password.data)
+            db.session.add(user)
+            db.session.commit()
+            flash("You are now registered")
+            return redirect(url_for('login'))
+        except IntegrityError:
+            flash("Registration failed. Please check your input.")
     return render_template('register.html', title='register', form=form)
 
 

@@ -3,12 +3,14 @@ from typing import Optional
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from app import db
+from random import randint
 
 # Create a new database callled user, for user register, which content id(UI&PK), id after format, Firstname,
 # lastname,username and the email and password_hash to
+def generate_user_id():
+    return '{:06d}'.format(randint(0, 999999))
 class User(db.Model):
-    # __tablename__ = 'users'
-    __table_args__ = {'extend_existing': True}
+    __tablename__ = 'users'
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     User_id: so.Mapped[str] = so.mapped_column(sa.String(6), unique=True, nullable=False)
     fname: so.Mapped[str] = so.mapped_column(sa.String(20), nullable=False)
@@ -16,21 +18,13 @@ class User(db.Model):
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
-
-    def __init__(self, **kwargs):
-        super(User, self).__init__(**kwargs)
-        self.User_id = '{:06d}'.format(self.id)  # 在初始化时自动生成六位数的id字符串
+    def __init__(self, User_id, fname, lname, username, email, password_hash):
+        self.User_id = User_id
+        self.fname = fname
+        self.lname = lname
+        self.username = username
+        self.email = email
+        self.password_hash = password_hash
 
     def __repr__(self):
         return f"<User {self.username}>"
-
-    def encrypted_password(self, password):
-        self.password_hash = generate_password_hash(password)
-
-    # Display id at inner HTML
-    @property
-    def display_id(self):
-        return self.User_id
-
-
-
