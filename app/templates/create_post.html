@@ -2,10 +2,19 @@
 {% block content %}
 <section class="mx-5 mt-3">
     <h1 id="create-h1">Create post</h1>
-    <form action="{{url_for('submit')}}" class="custom-create-post" method="post">
+    <form action="{{url_for('submit')}}" class="custom-create-post" method="get">
         {{ form.hidden_tag() }}
         <div class="mt-2">
-            {{ form.communities(class="create-dropdown")}}
+            <label for="communities">{{ form.communities.label }}</label>
+            <select id="communities" name="communities" class="form-select create-text">
+                {% for value, label in form.communities.choices %}
+                {% if loop.first %}
+                <option value="" disabled selected>{{ label }}</option>
+                {% else %}
+                <option value="{{ value }}">{{ label }}</option>
+                {% endif %}
+                {% endfor %}
+            </select>
             {% for error in form.communities.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
@@ -18,8 +27,8 @@
             {% endfor %}
         </div>
         <div class="mt-5">
-            {{ form.post(class="create-text", placeholder="Say something...") }}<br>
-            {% for error in form.post.errors %}
+            {{ form.body(class="create-text", placeholder="Say something...") }}<br>
+            {% for error in form.body.errors %}
             <span style="color: red;">[{{ error }}]</span>
             {% endfor %}
         </div>

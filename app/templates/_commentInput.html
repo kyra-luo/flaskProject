@@ -1,6 +1,6 @@
 <form method="POST" class="custom-textarea" , action="/post_comment">
     {{ form.hidden_tag() }}
-    {{ form.comment(class="auto-expand", placeholder="Place a comment") }}
+    {{ form.comment_body(class="auto-expand", placeholder="Place a comment") }}
     <div class="charCount"></div>
     <div class="buttons">
         <button type="submit" class="btn btn-sm btns btn-outline-primary comment post-comment">Comment</button>
