@@ -5,9 +5,11 @@ from app import db
 
 class Community(db.Model):
     communityid: so.Mapped[int] = so.mapped_column(primary_key=True)
-    communityname: so.Mapped[str] = so.mapped_column(sa.String(15), index=True,
+    communityName: so.Mapped[str] = so.mapped_column(sa.String(15), index=True,
                                                 unique=True)
     category: so.Mapped[str] = so.mapped_column(sa.String(10), index=True,
+                                             unique=True)
+    description: so.Mapped[str] = so.mapped_column(sa.String(50),
                                              unique=True)
     #timestamp:
     #host: so.Mapped[int] = so.mapped_column(sa.ForeignKey(???),index=True) -- optional
@@ -16,4 +18,4 @@ class Community(db.Model):
 
 
     def __repr__(self):
-        return '<Community {}>'.format(self.communityname)
+        return '<Community {}>'.format(self.communityName)
