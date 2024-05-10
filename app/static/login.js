@@ -16,12 +16,15 @@ function myfunction(){
 // hid or not hid the psw
 
 function Hid(className) {
-    const pin = document.querySelector('.' + className);
-    if (pin.type === "password") {
-        pin.type = 'text';
-    } else {
-        pin.type = 'password';
-    }
+    const pins = document.querySelectorAll('.' + className);
+    console.log("test test")
+    pins.forEach((pin) => {
+        if (pin.type === "password") {
+            pin.type = 'text';
+        } else {
+            pin.type = 'password';
+        }
+    });
 }
 
 function checkpin() {
