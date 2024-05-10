@@ -1,9 +1,10 @@
-from flask import render_template,redirect,url_for,flash
+from flask import render_template, redirect, url_for, flash
 from app import app, db
 from app.form import PostForm, RegisterForm, LoginForm
 from .models import User
 from random import randint
 from sqlalchemy.exc import IntegrityError
+from werkzeug.security import generate_password_hash, check_password_hash
 
 def generate_user_id():
     return '{:06d}'.format(randint(0, 999999))
@@ -44,7 +45,7 @@ def regi():
                     lname=form.Lastname.data,
                     username=form.Username.data,
                     email=form.email_address.data,
-                    password_hash=form.Password.data)
+                    password_hash=generate_password_hash(form.Password.data, method='pbkdf2:sha256'))
             db.session.add(user)
             db.session.commit()
             flash("You are now registered")
