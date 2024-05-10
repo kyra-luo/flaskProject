@@ -1,11 +1,13 @@
-
-sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa."
 from flask import render_template,redirect,url_for,flash
 from app import app, db
 from app.form import PostForm, RegisterForm, LoginForm, CommentForm
-from .models import User
+import sqlalchemy as sa
+from .models import User, Post
 from random import randint
 from sqlalchemy.exc import IntegrityError
+
+sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa."
+
 
 def generate_user_id():
     return '{:06d}'.format(randint(0, 999999))
@@ -14,21 +16,23 @@ def generate_user_id():
 @app.route('/index')
 def test():
     form = CommentForm()
-    posts = [{'id': 1,
+    query = sa.select(Post)
+    post_all=db.session.scalars(query).all()
+    posts = [{'id': post_all[0].id,
               'community': 'Community 1',
-             'topic': 'This is the first topic', 
-             'body': sample_posts,
-             'author': {'username': "Jake"},
-             'time_stamp': '2020-01-01 12:00:00',
+             'topic': post_all[0].topic, 
+             'body': post_all[0].body,
+             'author': post_all[0].author,
+             'time_stamp': post_all[0].timestamp,
              'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
                 {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}] 
              },
-             {'id': 2,
+             {'id': post_all[1].id,
               'community': 'Community 2',
-             'topic': 'This is the second topic', 
-             'body': sample_posts,
-             'author': {'username': "Jonathon"},
-             'time_stamp': '2020-02-01 13:00:00',
+             'topic': post_all[1].topic, 
+             'body': post_all[1].body,
+             'author': post_all[1].author,
+             'time_stamp': post_all[1].timestamp,
              'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Kyra"}, 'time_stamp': '2020-02-01 12:00:00'},
                 {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "Chole"}, 'time_stamp': '2020-02-01 12:00:00'}] 
              }]
@@ -36,14 +40,17 @@ def test():
     return render_template('post.html', title='Home', posts=posts, form=form)
 
 
-@app.route('/create')
+@app.route('/create', methods=['GET', 'POST'])
 def create():
     form = PostForm()
-    return render_template('create_post.html', title='Submit Post', form=form)
+    if form.validate_on_submit():
+        user=db.session.get(User, 1)
+        post = Post(body=form.body.data,topic=form.topic.data, author=user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is now live!')
+    return render_template('create_post.html', title='Create Post', form=form)
 
-@app.route('/submit', methods=['GET', 'POST'])
-def submit():
-    pass
 
 @app.route('/post_comment', methods=['GET', 'POST'])
 def post_comment():

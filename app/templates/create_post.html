@@ -2,7 +2,7 @@
 {% block content %}
 <section class="mx-5 mt-3">
     <h1 id="create-h1">Create post</h1>
-    <form action="{{url_for('submit')}}" class="custom-create-post" method="get">
+    <form action="" class="custom-create-post" method="post">
         {{ form.hidden_tag() }}
         <div class="mt-2">
             <label for="communities">{{ form.communities.label }}</label>

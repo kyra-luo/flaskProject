@@ -14,28 +14,28 @@ class User(db.Model):
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
 
-    # posts: so.WriteOnlyMapped['Post'] = so.relationship(
-    #     back_populates='author')
+    posts: so.WriteOnlyMapped['Post'] = so.relationship(
+        back_populates='author')
     # write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
         
-# class Post(db.Model):
-#     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-#     topic: so.Mapped[str] = so.mapped_column(sa.String(140))
-#     body: so.Mapped[str] = so.mapped_column(sa.String(140))
-#     timestamp: so.Mapped[datetime] = so.mapped_column(
-#         index=True, default=lambda: datetime.now(timezone.utc))
-#     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
-#                                                index=True)
-#     community_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey('community.id'),
-#                                                   index=True)
-#     author: so.Mapped[User] = so.relationship(back_populates='posts')
+class Post(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    topic: so.Mapped[str] = so.mapped_column(sa.String(250))
+    body: so.Mapped[str] = so.mapped_column(sa.String(50000))
+    timestamp: so.Mapped[datetime] = so.mapped_column(
+        index=True, default=lambda: datetime.now(timezone.utc))
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
+                                               index=True)
+    # community_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey('community.id'),
+    #                                               index=True)
+    author: so.Mapped[User] = so.relationship(back_populates='posts')
 #     comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='UnderPost')
 
-#     def __repr__(self):
-#         return '<Post {}>'.format(self.body)
+    def __repr__(self):
+        return '<Post {}>'.format(self.body)
     
 # class Comment(db.Model):
 #     id: so.Mapped[int] = so.mapped_column(primary_key=True)
