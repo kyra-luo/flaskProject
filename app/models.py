@@ -9,7 +9,6 @@ from random import randint
 # lastname,username and the email and password_hash to
 
 class User(db.Model):
-    # __tablename__ = 'users'
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     User_id: so.Mapped[str] = so.mapped_column(sa.String(6), unique=True, nullable=False)
     fname: so.Mapped[str] = so.mapped_column(sa.String(20), nullable=False)
