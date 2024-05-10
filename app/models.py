@@ -7,8 +7,8 @@ from random import randint
 
 # Create a new database callled user, for user register, which content id(UI&PK), id after format, Firstname,
 # lastname,username and the email and password_hash to
-def generate_user_id():
-    return '{:06d}'.format(randint(0, 999999))
+# def generate_user_id():
+#     return '{:06d}'.format(randint(0, 999999))
 class User(db.Model):
     # __tablename__ = 'users'
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
