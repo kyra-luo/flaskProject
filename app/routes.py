@@ -1,51 +1,70 @@
-from flask import render_template,redirect,url_for,flash
+from flask import render_template, redirect, url_for, flash
+from flask_login import current_user, login_required, login_user, logout_user
+import sqlalchemy as sa
+
 from app import app, db
 from app.form import PostForm, RegisterForm, LoginForm, CommentForm
 import sqlalchemy as sa
 from .models import User, Post
 from random import randint
 from sqlalchemy.exc import IntegrityError
+from werkzeug.security import generate_password_hash, check_password_hash
 
 sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa."
 
 
 def generate_user_id():
     return '{:06d}'.format(randint(0, 999999))
+
 @app.route('/')
-@app.route('/post')
 @app.route('/index')
+def index():
+    return render_template('index.html', title='Home')
+
+@app.route('/explore')
 def test():
     form = CommentForm()
     query = sa.select(Post)
     post_all=db.session.scalars(query).all()
-    posts = [{'id': post_all[0].id,
+    posts =[]
+    for i in range(0, len(post_all) - 1):
+        posts.append({'id': post_all[i].id,
               'community': 'Community 1',
-             'topic': post_all[0].topic, 
-             'body': post_all[0].body,
-             'author': post_all[0].author,
-             'time_stamp': post_all[0].timestamp,
+             'topic': post_all[i].topic, 
+             'body': post_all[i].body,
+             'author': post_all[i].author,
+             'time_stamp': post_all[i].timestamp,
              'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
                 {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}] 
-             },
-             {'id': post_all[1].id,
-              'community': 'Community 2',
-             'topic': post_all[1].topic, 
-             'body': post_all[1].body,
-             'author': post_all[1].author,
-             'time_stamp': post_all[1].timestamp,
-             'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Kyra"}, 'time_stamp': '2020-02-01 12:00:00'},
-                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "Chole"}, 'time_stamp': '2020-02-01 12:00:00'}] 
-             }]
+             })
+    # posts = [{'id': post_all[0].id,
+    #           'community': 'Community 1',
+    #          'topic': post_all[0].topic, 
+    #          'body': post_all[0].body,
+    #          'author': post_all[0].author,
+    #          'time_stamp': post_all[0].timestamp,
+    #          'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
+    #             {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}] 
+    #          },
+    #          {'id': post_all[1].id,
+    #           'community': 'Community 2',
+    #          'topic': post_all[1].topic, 
+    #          'body': post_all[1].body,
+    #          'author': post_all[1].author,
+    #          'time_stamp': post_all[1].timestamp,
+    #          'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Kyra"}, 'time_stamp': '2020-02-01 12:00:00'},
+    #             {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "Chole"}, 'time_stamp': '2020-02-01 12:00:00'}] 
+    #          }]
     
     return render_template('post.html', title='Home', posts=posts, form=form)
 
 
 @app.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
     form = PostForm()
     if form.validate_on_submit():
-        user=db.session.get(User, 1)
-        post = Post(body=form.body.data,topic=form.topic.data, author=user)
+        post = Post(body=form.body.data,topic=form.topic.data, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
@@ -58,10 +77,24 @@ def post_comment():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()  # 创建登录表单的实例
+    if current_user.is_authenticated:
+        return redirect(url_for('base'))
+    form = LoginForm()
     if form.validate_on_submit():
-        # 执行登录逻辑
-        pass
+        print('Form data received:', form.email_addr.data, form.password.data)
+
+        user = db.session.scalar(
+            sa.select(User).where(User.email == form.email_addr.data))
+        print('User found:', user)  # Add this line to check if user is retrieved
+
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid email or password')
+            print('Invalid email or password')  # Add this line to check if this condition is met
+            return redirect(url_for('login'))
+
+        login_user(user)
+        print(current_user.is_authenticated)
+        return redirect(url_for('base'))  # Redirect to index page
     return render_template('login.html', title='Sign In', form=form)
 
 
@@ -76,7 +109,7 @@ def regi():
                     lname=form.Lastname.data,
                     username=form.Username.data,
                     email=form.email_address.data,
-                    password_hash=form.Password.data)
+                    password_hash=generate_password_hash(form.Password.data, method='pbkdf2:sha256'))
             db.session.add(user)
             db.session.commit()
             flash("You are now registered")
@@ -99,3 +132,8 @@ def user():
 @app.route('/base', methods=['GET', 'POST'])
 def base():
     return render_template('base.html', title='base')
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))
