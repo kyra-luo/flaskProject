@@ -23,5 +23,5 @@ class User(UserMixin, db.Model):
         return f"<User {self.username}>"
 
 @login.user_loader
-def load_user(user_id):
-    return db.session.get(User, int(user_id))
+def load_user(id):
+    return db.session.get(User, int(id))

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <script src="{{ url_for('static', filename='login.js') }}"></script>
@@ -8,40 +9,42 @@
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/f48b9c11bb.js"></script>
     <title>Sign in</title>
 </head>
+
 <body>
-<div class="container">
-    <div class="con_forms">
-        <div class="login_register">
-            <div class="bg-text">
-            <form action="" class="sign_in" method="POST">
-                {{ form.csrf_token }}
-                <h2 class="title">SIGN IN</h2>
-                <div class="input_box">
-                     <i class="fa-solid fa-envelope"></i>
-                    {{form.email_addr(class="email", id="email",placeholder="Enter Your email")}}
+    <div class="container">
+        <div class="con_forms">
+            <div class="login_register">
+                <div class="bg-text">
+                    <form action="" class="sign_in" method="POST">
+                        {{ form.hidden_tag() }}
+                        <h2 class="title">SIGN IN</h2>
+                        <div class="input_box">
+                            <i class="fa-solid fa-envelope"></i>
+                            {{form.email_addr(class="email", id="email",placeholder="Enter Your email")}}
+                        </div>
+                        <div class="input_box">
+                            <i class="fa-solid fa-user"></i>
+                            {{ form.userid(id='Acctype', placeholder="Enter your User ID") }}
+                        </div>
+                        <div class="input_box">
+                            <i class="fa-solid fa-lock"></i>
+                            {{form.password(class="PIN0", id="PIN", placeholder="Enter You password")}}
+                            <i class="fa-solid fa-eye" onclick="Hid('PIN0')"></i>
+                        </div>
+                        <div class="button">
+                            {{form.submit(class='btn')}}
+                            <input class="btn" onclick="location.href=('/register')" type="button" value="Register">
+                        </div>
+                        <br>
+                        <a href="#">
+                            <p class="forget">Can't remember your password?</p>
+                        </a>
+                    </form>
                 </div>
-                <div class="input_box">
-                    <i class="fa-solid fa-user"></i>
-                   {{ form.userid(id='Acctype', placeholder="Enter your User ID") }}
-                </div>
-                <div class="input_box">
-                     <i class="fa-solid fa-lock"></i>
-                    {{form.password(class="PIN0", id="PIN", placeholder="Enter You password")}}
-                    <i class="fa-solid fa-eye" onclick="Hid('PIN0')"></i>
-                </div>
-                <div class="button">
-                    {{form.submit(class='btn')}}
-                        <input class="btn" onclick="location.href=('/register')" type="button" value="Register">
-                </div>
-                <br>
-                <a href="#">
-                    <p class="forget">Can't remember your password?</p>
-                </a>
-            </form>
             </div>
         </div>
-    </div>
 
-</div>
+    </div>
 </body>
+
 </html>
