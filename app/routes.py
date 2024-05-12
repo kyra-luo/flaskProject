@@ -1,32 +1,66 @@
 from flask import render_template, redirect, url_for, flash
-from flask_login import current_user, login_user, logout_user
-import sqlalchemy as sa
-
+from flask_login import current_user, login_required, login_user, logout_user
 from app import app, db
-from app.form import PostForm, RegisterForm, LoginForm
-from .models import User
+from app.form import PostForm, RegisterForm, LoginForm, CommentForm
+import sqlalchemy as sa
+from app.models import User, Post
 from random import randint
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
 
+sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa."
+
+
 def generate_user_id():
     return '{:06d}'.format(randint(0, 999999))
+
 @app.route('/')
-@app.route('/log')
+@app.route('/index')
 def index():
-    return render_template('post.html', title='Home')
+    return render_template('index.html', title='Home')
+
+@app.route('/explore')
+def test():
+    form = CommentForm()
+    query = sa.select(Post).order_by(Post.timestamp.desc())
+    post_all=db.session.scalars(query).all()
+    if post_all is None:
+        return redirect(url_for('create'))
+    else:
+        posts =[]
+        for post in post_all:
+            posts.append({
+                'id': post.id,
+                'community': 'Community 1',
+                'topic': post.topic, 
+                'body': post.body,
+                'author': post.author,
+                'time_stamp': post.timestamp,
+                'comments': [
+                    {'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
+                    {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'},
+                    {'comment': 'Comment 3', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}
+                ]
+            })
+    
+    return render_template('post.html', title='Home', posts=posts, form=form)
 
 
-@app.route('/create')
+@app.route('/create', methods=['GET', 'POST'])
+@login_required
 def create():
     form = PostForm()
-    return render_template('create_post.html', title='Submit Post', form=form)
+    if form.validate_on_submit():
+        post = Post(body=form.body.data,topic=form.topic.data, author=current_user)
+        db.session.add(post)
+        db.session.commit()
+        flash('Your post is now live!')
+    return render_template('create_post.html', title='Create Post', form=form)
 
 
-@app.route('/submit', methods=['GET'])
-def submit():
+@app.route('/post_comment', methods=['GET', 'POST'])
+def post_comment():
     pass
-
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
