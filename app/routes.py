@@ -1,7 +1,7 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_required, login_user, logout_user
 from app import app, db
-from app.form import PostForm, RegisterForm, LoginForm, CommentForm
+from app.form import PostForm, RegisterForm, LoginForm, CommentForm, CommunityForm
 import sqlalchemy as sa
 from app.models import User, Post
 from random import randint
