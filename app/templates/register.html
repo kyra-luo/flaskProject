@@ -2,63 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <script src="{{ url_for('static', filename='js/login.js') }}"></script>
+    <script src="{{ url_for('static', filename='login.js') }}"></script>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/logo.ico') }}">
     <link href="{{ url_for('static', filename='login.css') }}" rel="stylesheet">
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/f48b9c11bb.js"></script>
     <title>Sign up</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
 <div class="container">
     <div class="con_forms">
         <div class="login_register">
             <div class="bg-text">
-            <form action="" class="sign_in">
-                <h2 class="title">SIGN IN</h2>
+            <form action="" class="sign_in" id="f_register" method="post" action="/register">
+                <h2 class="title">SIGN UP</h2>
               <div class="input_box">
                     <i class="fa-solid fa-user"></i>
-                  <label for="ipt0"></label><input id="ipt0" placeholder="Enter You First Name" required type="text">
+                  {{ form.hidden_tag() }}
+                  {{form.Firstname(id="ipt0",placeholder="Enter You First Name")}}
                 </div>
                 <div class="input_box">
                     <i class="fa-solid fa-user"></i>
-                    <label for="ipt1"></label><input id="ipt1" placeholder="Enter You Last Name" required type="text">
+                    {{form.Lastname(id="ipt1",placeholder="Enter You Last Name")}}
                 </div>
-                <div class="gender_box">
+                <div class="input_box">
+                    <i class="fa-solid fa-user"></i>
+                  {{form.Username(id="ipt2",placeholder="Enter You User Name")}}
+                </div>
+                <div class="input_box">
                     <i class="fa-solid fa-venus-mars"></i>
-                    <input type="radio" id="male" name="gender" value="Male">
-                    <label for="male" class="gender">Male</label>
-                    <input type="radio" id="female" name="gender" value="Female">
-                    <label for="female" class="gender">Female</label>
-                    <input type="radio" id="non" name="gender" value="non">
-                    <label for="non" class="gender">non</label>
-
+                    {{form.gender(id='gendertype')}}
                 </div>
 
                 <div class="input_box">
                     <i class="fa-solid fa-lock"></i>
-                    <label>
-                        <input class="PIN1"  oninput="myfunction()" placeholder="Enter Your Password"  required type="password">
-                    </label>
+                        {{ form.Password(class='PIN1', oninput='myfunction()', placeholder='Enter Your Password', required=True) }}
                     <i class="fa-solid fa-eye" onclick="Hid('PIN1')"></i>
                 </div>
                 <p class="message"> Enter 6-20 digit password</p>
                 <div class="input_box">
                     <i class="fa-solid fa-lock"></i>
-                    <label>
-                        <input class="PIN2" oninput="checkpin()" placeholder="Conform Your Password" required type="password">
-                    </label>
+                        {{form.confirm_Password(class='PIN2',oninput='checkpin()',placeholder='Conform Your Password',required=True)}}
                     <i class="fa-solid fa-eye" onclick="Hid('PIN2')"></i>
                 </div>
                 <p class="message1"> Enter the password again</p>
                 <div class="input_box">
                     <i class="fa-solid fa-envelope"></i>
-                    <label>
-                        <input class="ipt3"  placeholder="Enter Your Email" required type="email">
-                    </label>
+                        {{form.email_address(class='ipt3',placeholder='Enter Your Email')}}
                 </div>
                 <div class="button">
-
-                    <input class="regi" type="button" value="Register">
+                    {{form.submit(class='regi')}}
                 </div>
             </form>
             </div>
@@ -66,8 +59,18 @@
     </div>
 
 </div>
-</body>
+{% if registered %}
 <script>
-
+    alert("Registration successful! You can now login.");
 </script>
+{% endif %}
+
+{% if failed %}
+<script>
+    alert("Registration failed. Please check your input.");
+</script>
+{% endif %}
+
+</body>
+
 </html>
