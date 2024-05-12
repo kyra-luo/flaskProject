@@ -1,4 +1,7 @@
 from flask import render_template, redirect, url_for, flash
+from flask_login import current_user, login_user, logout_user
+import sqlalchemy as sa
+
 from app import app, db
 from app.form import PostForm, RegisterForm, LoginForm
 from .models import User
@@ -27,10 +30,19 @@ def submit():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    form = LoginForm()  # 创建登录表单的实例
+    if current_user.is_authenticated:
+        return redirect(url_for('log'))
+    form = LoginForm()
     if form.validate_on_submit():
-        # 执行登录逻辑
-        pass
+        user = db.session.scalar(
+            sa.select(User).where(User.email == form.email_addr.data))
+        if user is None or not user.check_password(form.password.data):
+            flash('Invalid email or password')
+            print('login error')
+            return redirect(url_for('login'))
+        login_user(user)
+        print(current_user.is_authenticated)
+        return redirect(url_for('log'))  # 重定向到 index 页面
     return render_template('login.html', title='Sign In', form=form)
 
 
@@ -68,3 +80,8 @@ def user():
 @app.route('/base', methods=['GET', 'POST'])
 def base():
     return render_template('base.html', title='base')
+
+@app.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('index'))

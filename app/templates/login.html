@@ -13,7 +13,7 @@
     <div class="con_forms">
         <div class="login_register">
             <div class="bg-text">
-            <form action="" class="sign_in">
+            <form action="" class="sign_in" method="post">
                 <h2 class="title">SIGN IN</h2>
                 <div class="input_box">
                      <i class="fa-solid fa-envelope"></i>
@@ -21,7 +21,7 @@
                 </div>
                 <div class="input_box">
                     <i class="fa-solid fa-user"></i>
-                   {{ form.U_type(id='Acctype') }}
+                   {{ form.userid(id='Acctype', placeholder="Enter your User ID") }}
                 </div>
                 <div class="input_box">
                      <i class="fa-solid fa-lock"></i>
