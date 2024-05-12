@@ -31,18 +31,23 @@ def submit():
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('log'))
+        return redirect(url_for('base'))
     form = LoginForm()
     if form.validate_on_submit():
+        print('Form data received:', form.email_addr.data, form.userid.data, form.password.data)
+
         user = db.session.scalar(
             sa.select(User).where(User.email == form.email_addr.data))
+        print('User found:', user)  # Add this line to check if user is retrieved
+
         if user is None or not user.check_password(form.password.data):
             flash('Invalid email or password')
-            print('login error')
+            print('Invalid email or password')  # Add this line to check if this condition is met
             return redirect(url_for('login'))
+
         login_user(user)
         print(current_user.is_authenticated)
-        return redirect(url_for('log'))  # 重定向到 index 页面
+        return redirect(url_for('base'))  # Redirect to index page
     return render_template('login.html', title='Sign In', form=form)
 
 
