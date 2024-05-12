@@ -12,6 +12,7 @@ migrate = Migrate(app, db)
 # csrf = CSRFProtect(app)
 #inital the login
 login = LoginManager(app)
+login.login_view = 'login'
 print(app.config['SQLALCHEMY_DATABASE_URI'])
 
 from app import routes, models
