@@ -1,11 +1,9 @@
 from flask import render_template, redirect, url_for, flash
 from flask_login import current_user, login_required, login_user, logout_user
-import sqlalchemy as sa
-
 from app import app, db
 from app.form import PostForm, RegisterForm, LoginForm, CommentForm
 import sqlalchemy as sa
-from .models import User, Post
+from app.models import User, Post
 from random import randint
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -26,38 +24,24 @@ def test():
     form = CommentForm()
     query = sa.select(Post).order_by(Post.timestamp.desc())
     post_all=db.session.scalars(query).all()
-    posts =[]
-    for post in post_all:
-        posts.append({
-            'id': post.id,
-            'community': 'Community 1',
-            'topic': post.topic, 
-            'body': post.body,
-            'author': post.author,
-            'time_stamp': post.timestamp,
-            'comments': [
-                {'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
-                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}
-            ]
-        })
-    # posts = [{'id': post_all[0].id,
-    #           'community': 'Community 1',
-    #          'topic': post_all[0].topic, 
-    #          'body': post_all[0].body,
-    #          'author': post_all[0].author,
-    #          'time_stamp': post_all[0].timestamp,
-    #          'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
-    #             {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}] 
-    #          },
-    #          {'id': post_all[1].id,
-    #           'community': 'Community 2',
-    #          'topic': post_all[1].topic, 
-    #          'body': post_all[1].body,
-    #          'author': post_all[1].author,
-    #          'time_stamp': post_all[1].timestamp,
-    #          'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Kyra"}, 'time_stamp': '2020-02-01 12:00:00'},
-    #             {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "Chole"}, 'time_stamp': '2020-02-01 12:00:00'}] 
-    #          }]
+    if post_all is None:
+        return redirect(url_for('create'))
+    else:
+        posts =[]
+        for post in post_all:
+            posts.append({
+                'id': post.id,
+                'community': 'Community 1',
+                'topic': post.topic, 
+                'body': post.body,
+                'author': post.author,
+                'time_stamp': post.timestamp,
+                'comments': [
+                    {'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
+                    {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'},
+                    {'comment': 'Comment 3', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}
+                ]
+            })
     
     return render_template('post.html', title='Home', posts=posts, form=form)
 
