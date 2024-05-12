@@ -34,7 +34,7 @@ def login():
         return redirect(url_for('base'))
     form = LoginForm()
     if form.validate_on_submit():
-        print('Form data received:', form.email_addr.data, form.userid.data, form.password.data)
+        print('Form data received:', form.email_addr.data, form.password.data)
 
         user = db.session.scalar(
             sa.select(User).where(User.email == form.email_addr.data))

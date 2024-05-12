@@ -17,7 +17,7 @@ class LoginForm(FlaskForm):
     # get username, input required.
     email_addr = StringField(validators=[DataRequired(), Email()])
     # get Type, input required.
-    userid = StringField(validators=[DataRequired()])
+    # userid = StringField(validators=[DataRequired()])
     # get password, input required.
     password = PasswordField(validators=[DataRequired()])
     # This will display on the HTML
