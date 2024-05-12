@@ -31,7 +31,7 @@ def regi():
 def community():
     form = CommunityForm()
     if form.validate_on_submit():
-        flash('Community created requested for user {}, category={}'.format(form.communityame.data,
+        flash('Community created requested for user {}, category={}'.format(form.communityName.data,
             form.category.data))
         return redirect(url_for('community'))
     return render_template('community.html',title='community', form=form)

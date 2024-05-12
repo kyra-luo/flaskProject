@@ -11,7 +11,8 @@ class Community(db.Model):
                                              unique=True)
     description: so.Mapped[str] = so.mapped_column(sa.String(50),
                                              unique=True)
-    #timestamp:
+    #createddate: so.Mapped[Optional[datetime]] = so.mapped_column(
+        #default=lambda: datetime.now(timezone.utc))
     #host: so.Mapped[int] = so.mapped_column(sa.ForeignKey(???),index=True) -- optional
     #posts: so.Mapped[Posts] = so.relationship(back_populates='???')
     #members: so,Mapped[Users]
