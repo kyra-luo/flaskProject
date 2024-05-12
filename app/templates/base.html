@@ -12,23 +12,28 @@
     {% endblock %}
 </head>
 <body>
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="logo-container">
-                <img src="#" alt="our Logo">
-            </div>
-            <div class="search-container" id="search-icon">
-                <label>
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search" class="Search-input">
-                </label>
-            </div>
-            <div class="button-container">
-                <button>Get account</button>
-                <button onclick="loadlogin()">Log In</button>
-            </div>
+    <div class="navbar">
+    <div class="navbar-container">
+        <div class="logo-container">
+            <img src="#" alt="our Logo">
         </div>
-    </nav>
+        <div class="search-container" id="search-icon">
+            <label>
+                <i class="fa-solid fa-magnifying-glass"></i>
+                <input type="text" placeholder="Search" class="Search-input">
+            </label>
+        </div>
+        <div class="button-container">
+            {% if current_user.is_authenticated %}
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% else %}
+            <button onclick="loadlogin()">Log In</button>
+            <button>Get account</button>
+            {% endif %}
+        </div>
+    </div>
+    </div>
+
    <div class="content">
         {% block content %}
         <!-- 子模板的内容会显示在这里 -->
