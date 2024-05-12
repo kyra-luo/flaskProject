@@ -42,8 +42,9 @@ class Post(db.Model):
         index=True, default=lambda: datetime.now(timezone.utc))
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
                                                index=True)
-    community_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey('community.id'),
-                                              index=True)
+    # community_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey("community.id"),
+    #                                           index=True)
+    community_id = db.Column(db.Integer, db.ForeignKey('community.id'), nullable=True)
     community: so.Mapped['Community'] = so.relationship(back_populates='community_posts')
     author: so.Mapped[User] = so.relationship(back_populates='posts')
 #     comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='UnderPost')
@@ -75,19 +76,14 @@ class Post(db.Model):
 #     def __repr__(self):
 #         return f"<User {self.username}>"
 
-@login.user_loader
-def load_user(id):
-    return db.session.get(User, int(id))
-
-
 class Community(db.Model):
+    __tablename__ = "community"
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     communityName: so.Mapped[str] = so.mapped_column(sa.String(15), index=True,
                                                 unique=True)
     category: so.Mapped[str] = so.mapped_column(sa.String(10), index=True,
                                              unique=True)
-    description: so.Mapped[str] = so.mapped_column(sa.String(50),
-                                             unique=True)
+    description: so.Mapped[str] = so.mapped_column(sa.String(50))
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc))  
     
@@ -99,3 +95,7 @@ class Community(db.Model):
     def __repr__(self):
         return '<Community {}>'.format(self.communityName)
 
+
+@login.user_loader
+def load_user(id):
+    return db.session.get(User, int(id))
