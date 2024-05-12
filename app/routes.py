@@ -24,19 +24,22 @@ def index():
 @app.route('/explore')
 def test():
     form = CommentForm()
-    query = sa.select(Post)
+    query = sa.select(Post).order_by(Post.timestamp.desc())
     post_all=db.session.scalars(query).all()
     posts =[]
-    for i in range(0, len(post_all) - 1):
-        posts.append({'id': post_all[i].id,
-              'community': 'Community 1',
-             'topic': post_all[i].topic, 
-             'body': post_all[i].body,
-             'author': post_all[i].author,
-             'time_stamp': post_all[i].timestamp,
-             'comments': [{'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
-                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}] 
-             })
+    for post in post_all:
+        posts.append({
+            'id': post.id,
+            'community': 'Community 1',
+            'topic': post.topic, 
+            'body': post.body,
+            'author': post.author,
+            'time_stamp': post.timestamp,
+            'comments': [
+                {'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
+                {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}
+            ]
+        })
     # posts = [{'id': post_all[0].id,
     #           'community': 'Community 1',
     #          'topic': post_all[0].topic, 
