@@ -1,5 +1,5 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
 
 
@@ -14,12 +14,7 @@ class PostForm(FlaskForm):
 class CommentForm(FlaskForm):
     comment_body = TextAreaField('Comment', validators=[
         DataRequired(), Length(min=1, max=1000)])
-    communities = SelectField('Communities', choices=[('1', 'Community 1'), ('2', 'Community 2'), ('3', 'Community 3')],
-                              validators=[DataRequired()])
-    topic = TextAreaField('Your topic', validators=[
-        DataRequired(), Length(min=1, max=200)])
-    post = TextAreaField('Say something...', validators=[
-        DataRequired(), Length(min=1, max=1000)])
+    post_id = IntegerField('Post ID', validators=[DataRequired()])
 
 
 # Defining login form

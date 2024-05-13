@@ -20,7 +20,8 @@ def generate_user_id():
 def index():
     return render_template('index.html', title='Home')
 
-@app.route('/explore')
+@app.route('/explore', methods=['GET', 'POST'])
+@login_required
 def test():
     form = CommentForm()
     query = sa.select(Post).order_by(Post.timestamp.desc())
@@ -41,7 +42,16 @@ def test():
                 'time_stamp': post.timestamp,
                 'comments': db.session.scalars(comment_query).all()
             })
-    
+    if request.method == 'POST':        
+        if form.validate_on_submit():
+            post_id = form.post_id.data
+            current_post = db.session.scalar(sa.select(Post).where(Post.id == int(post_id)))
+            comment = Comment(comment=form.comment_body.data, underPost=current_post, commentor=current_user)
+            db.session.add(comment)
+            db.session.commit()
+            flash('Your comment is now live!')
+            return redirect(url_for('test'))
+        
     return render_template('post.html', title='Home', posts=posts, form=form)
 
 
@@ -57,10 +67,20 @@ def create():
     return render_template('create_post.html', title='Create Post', form=form)
 
 
-@app.route('/post_comment', methods=['GET', 'POST'])
+@app.route('/post_comment', methods=['POST'])
 @login_required
 def post_comment():
-    pass
+    if request.method == 'POST':
+        form = CommentForm()        
+        if form.validate_on_submit():
+            post_id = form.post_id.data
+            current_post = db.session.scalar(sa.select(Post).where(Post.id == int(post_id)))
+            comment = Comment(comment=form.comment_body.data, underPost=current_post, commentor=current_user)
+            db.session.add(comment)
+            db.session.commit()
+            flash('Your comment is now live!')
+            return redirect(url_for('test')) 
+    return render_template('base.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
