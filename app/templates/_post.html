@@ -25,7 +25,7 @@
             {% include "_commentInput.html" %}
 
             <!-- List of comments -->
-            <div id="post_comment{{ post.id }}" class="post-replies">
+            <div id="comments-{{ post.id }}" class="post-replies">
                 {% for comment in post.comments %}
                 {% include "_comment.html" %}
                 {% endfor %}

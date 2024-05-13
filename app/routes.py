@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash, request
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from flask_login import current_user, login_required, login_user, logout_user
 from urllib.parse import urlsplit
 from app import app, db
@@ -32,7 +32,7 @@ def test():
     else:
         posts =[]
         for post in post_all:
-            comment_query = sa.select(Comment).where(Comment.post_id == post.id)
+            comment_query = sa.select(Comment).where(Comment.post_id == post.id).order_by(Comment.timestamp.asc())
             posts.append({
                 'id': post.id,
                 'community': 'Community 1',
@@ -42,15 +42,6 @@ def test():
                 'time_stamp': post.timestamp,
                 'comments': db.session.scalars(comment_query).all()
             })
-    if request.method == 'POST':        
-        if form.validate_on_submit():
-            post_id = form.post_id.data
-            current_post = db.session.scalar(sa.select(Post).where(Post.id == int(post_id)))
-            comment = Comment(comment=form.comment_body.data, underPost=current_post, commentor=current_user)
-            db.session.add(comment)
-            db.session.commit()
-            flash('Your comment is now live!')
-            return redirect(url_for('test'))
         
     return render_template('post.html', title='Home', posts=posts, form=form)
 
@@ -79,8 +70,11 @@ def post_comment():
             db.session.add(comment)
             db.session.commit()
             flash('Your comment is now live!')
-            return redirect(url_for('test')) 
-    return render_template('base.html')
+            comment_html = render_template('_comment.html', comment=comment)
+            print(comment_html)
+            return jsonify({'comment_html': comment_html})
+    
+    return jsonify({'error': 'Invalid data'}), 400
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
