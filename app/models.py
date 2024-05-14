@@ -33,7 +33,7 @@ class User(UserMixin, db.Model):
     
     communities: so.WriteOnlyMapped['Community'] = so.relationship(
         secondary=commembers, primaryjoin=(commembers.c.member_id == id),
-        secondaryjoin=(commembers.c.community_id == 'community.id'),
+        secondaryjoin=(commembers.c.community_id == id),
         back_populates='members')
     # write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
 
