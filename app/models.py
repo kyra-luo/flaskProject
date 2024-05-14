@@ -86,11 +86,13 @@ class Community(db.Model):
     description: so.Mapped[str] = so.mapped_column(sa.String(50))
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc))  
+    member_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=True)
+
     
     community_posts: so.WriteOnlyMapped[Post] = so.relationship(back_populates='community')
 
     members:  so.WriteOnlyMapped[User] = so.relationship(back_populates='communities')
-
+    
 
     def __repr__(self):
         return '<Community {}>'.format(self.communityName)
