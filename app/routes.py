@@ -1,9 +1,10 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request, jsonify
 from flask_login import current_user, login_required, login_user, logout_user
+from urllib.parse import urlsplit
 from app import app, db
 from app.form import PostForm, RegisterForm, LoginForm, CommentForm
 import sqlalchemy as sa
-from app.models import User, Post
+from app.models import User, Post, Comment
 from random import randint
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -19,16 +20,19 @@ def generate_user_id():
 def index():
     return render_template('index.html', title='Home')
 
-@app.route('/explore')
+@app.route('/explore', methods=['GET', 'POST'])
+@login_required
 def test():
     form = CommentForm()
     query = sa.select(Post).order_by(Post.timestamp.desc())
+    
     post_all=db.session.scalars(query).all()
     if post_all is None:
         return redirect(url_for('create'))
     else:
         posts =[]
         for post in post_all:
+            comment_query = sa.select(Comment).where(Comment.post_id == post.id).order_by(Comment.timestamp.asc())
             posts.append({
                 'id': post.id,
                 'community': 'Community 1',
@@ -36,13 +40,9 @@ def test():
                 'body': post.body,
                 'author': post.author,
                 'time_stamp': post.timestamp,
-                'comments': [
-                    {'comment': 'Comment 1', 'comment_body': sample_posts, 'author': {'username': "Jace"}, 'time_stamp': '2020-01-01 12:00:00'},
-                    {'comment': 'Comment 2', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'},
-                    {'comment': 'Comment 3', 'comment_body': sample_posts, 'author': {'username': "James"}, 'time_stamp': '2020-01-01 12:00:00'}
-                ]
+                'comments': db.session.scalars(comment_query).all()
             })
-    
+        
     return render_template('post.html', title='Home', posts=posts, form=form)
 
 
@@ -58,9 +58,23 @@ def create():
     return render_template('create_post.html', title='Create Post', form=form)
 
 
-@app.route('/post_comment', methods=['GET', 'POST'])
+@app.route('/post_comment', methods=['POST'])
+@login_required
 def post_comment():
-    pass
+    if request.method == 'POST':
+        form = CommentForm()        
+        if form.validate_on_submit():
+            post_id = form.post_id.data
+            current_post = db.session.scalar(sa.select(Post).where(Post.id == int(post_id)))
+            comment = Comment(comment=form.comment_body.data, underPost=current_post, commentor=current_user)
+            db.session.add(comment)
+            db.session.commit()
+            flash('Your comment is now live!')
+            comment_html = render_template('_comment.html', comment=comment)
+            print(comment_html)
+            return jsonify({'comment_html': comment_html})
+    
+    return jsonify({'error': 'Invalid data'}), 400
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -80,6 +94,10 @@ def login():
             return redirect(url_for('login'))
 
         login_user(user)
+        next_page = request.args.get('next')
+        if not next_page or urlsplit(next_page).netloc != '':
+            next_page = url_for('index')
+        return redirect(next_page)
         print(current_user.is_authenticated)
         return redirect(url_for('base'))  # Redirect to index page
     return render_template('login.html', title='Sign In', form=form)
