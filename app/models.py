@@ -103,7 +103,7 @@ class Community(db.Model):
 
     members:  so.WriteOnlyMapped[User] = so.relationship(
         secondary=commembers, primaryjoin=(commembers.c.community_id == id),
-        secondaryjoin=(commembers.c.member_id == 'user.id'),
+        secondaryjoin=(commembers.c.member_id == User.id),
         back_populates='communities')
     
 
