@@ -8,7 +8,8 @@ user1 = User(
     lname="Johnson", 
     username="alicej", 
     email="alice.johnson@example.com", 
-    password_hash="cat"
+    password_hash="cat",
+    communities="community1"
 )
 
 
@@ -29,7 +30,8 @@ community1 = Community(
     communityName = "Community 1",
     category = "IT",
     description = "CITS",
-    community_posts=post1
+    community_posts=post1,
+    members=user1
 )
 commembers = [
     {'member_id': user1.id, 'community_id': community1.id},
