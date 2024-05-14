@@ -1,6 +1,8 @@
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from app import db, SQLAlchemy as sa
+from app.models import User, Post, Comment
 
 
 class PostForm(FlaskForm):
