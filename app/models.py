@@ -10,6 +10,15 @@ from flask_login import UserMixin
 # Create a new database callled user, for user register, which content id(UI&PK), id after format, Firstname,
 # lastname,username and the email and password_hash to
 
+commembers = sa.Table(
+    'commembers',
+    db.metadata,
+    sa.Column('member_id', sa.Integer, sa.ForeignKey('user.id'),
+              primary_key=True),
+    sa.Column('community_id', sa.Integer, sa.ForeignKey('community.id'),
+              primary_key=True)
+)
+
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     User_id: so.Mapped[str] = so.mapped_column(sa.String(6), unique=True, nullable=False)
@@ -21,7 +30,10 @@ class User(UserMixin, db.Model):
 
     posts: so.WriteOnlyMapped['Post'] = so.relationship(
         back_populates='author')
+    
     communities: so.WriteOnlyMapped['Community'] = so.relationship(
+        secondary=commembers, primaryjoin=(commembers.c.member_id == id),
+        secondaryjoin=(commembers.c.community_id == 'community.id'),
         back_populates='members')
     # write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
 
@@ -86,12 +98,13 @@ class Community(db.Model):
     description: so.Mapped[str] = so.mapped_column(sa.String(50))
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc))  
-    member_id = db.Column(db.Integer, db.ForeignKey(User.id), nullable=True)
-
     
     community_posts: so.WriteOnlyMapped[Post] = so.relationship(back_populates='community')
 
-    members:  so.WriteOnlyMapped[User] = so.relationship(back_populates='communities')
+    members:  so.WriteOnlyMapped[User] = so.relationship(
+        secondary=commembers, primaryjoin=(commembers.c.community_id == id),
+        secondaryjoin=(commembers.c.member_id == 'user.id'),
+        back_populates='communities')
     
 
     def __repr__(self):
