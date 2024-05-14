@@ -3,7 +3,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from app import app, db
 from app.form import PostForm, RegisterForm, LoginForm, CommentForm, CommunityForm
 import sqlalchemy as sa
-from app.models import User, Post
+from app.models import User, Post, Community
 from random import randint
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash

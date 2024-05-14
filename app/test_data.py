@@ -1,5 +1,5 @@
 from app import db
-from app.models import User, Post
+from app.models import User, Post, Community
 
 # Create fake users
 user1 = User(
@@ -57,6 +57,16 @@ post2 = Post(
     topic="topic2",
     body="Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa.",
     author=user2
+)
+
+community1 = Community(
+    Community_id = "111",
+    communityName = "Community 1",
+    category = "IT",
+    description = "CITS",
+    members=user3,
+    community_posts=post1
+
 )
 
 # Add users to the database session
