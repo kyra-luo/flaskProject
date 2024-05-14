@@ -6,29 +6,34 @@ user = db.session.get(User, 1)
 
 
 
-post1 = Post(
-    topic="topic1",
+community2 = Community(
+   communityName = "Community 2",
+    category = "It",
+    description = "CS",
+)
+
+post2 = Post(
+    topic="topic2",
     body="Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa.",
-    author=user
-)
-
-community1 = Community(
-   communityName = "Community 1",
-    category = "IT",
-    description = "CITS",
-    community_posts=post1
+    author=user,
+    community=community2
 )
 
 
-user.communities.append(community1)
-community1.members.append(user)
 
-#commembers = [
-#    {'member_id': user.id, 'community_id': community1.id},
-#]
 
+
+db.session.rollback()
 # Add users to the database session
-db.session.add_all([user, post1, community1])
+db.session.add_all([community2, post2])
 
 # Commit the session to the database
+db.session.commit()
+
+db.session.rollback()
+
+community = db.session.get(Community, 2)
+user.communities.add(community)
+community.members.add(user)
+
 db.session.commit()

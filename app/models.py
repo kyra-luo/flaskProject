@@ -32,8 +32,7 @@ class User(UserMixin, db.Model):
         back_populates='author')
     
     communities: so.WriteOnlyMapped['Community'] = so.relationship(
-        secondary=commembers, primaryjoin=(commembers.c.member_id == id),
-        secondaryjoin=(commembers.c.community_id == id),
+        secondary=commembers,
         back_populates='members')
     # write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
 
@@ -54,9 +53,7 @@ class Post(db.Model):
         index=True, default=lambda: datetime.now(timezone.utc))
     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
                                                index=True)
-    # community_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey("community.id"),
-    #                                           index=True)
-    community_id = db.Column(db.Integer, db.ForeignKey('community.id'), nullable=True)
+    community_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey("community.id"))
     community: so.Mapped['Community'] = so.relationship(back_populates='community_posts')
     author: so.Mapped[User] = so.relationship(back_populates='posts')
 #     comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='UnderPost')
@@ -102,8 +99,7 @@ class Community(db.Model):
     community_posts: so.WriteOnlyMapped[Post] = so.relationship(back_populates='community')
 
     members:  so.WriteOnlyMapped[User] = so.relationship(
-        secondary=commembers, primaryjoin=(commembers.c.community_id == id),
-        secondaryjoin=(commembers.c.member_id == User.id),
+        secondary=commembers,
         back_populates='communities')
     
 
