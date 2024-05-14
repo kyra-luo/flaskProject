@@ -65,3 +65,8 @@
 .userresources button {
     margin-bottom: 60px; /* 设置按钮之间的垂直间距 */
 }
+
+
+editModal {
+    display: block !important;
+}

@@ -11,6 +11,10 @@ from werkzeug.security import check_password_hash
 # Create a new database callled user, for user register, which content id(UI&PK), id after format, Firstname,
 # lastname,username and the email and password_hash to
 
+
+
+
+
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     User_id: so.Mapped[str] = so.mapped_column(sa.String(6), unique=True, nullable=False)
@@ -19,7 +23,9 @@ class User(UserMixin, db.Model):
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
-    about_me: so.Mapped[str] = so.mapped_column(sa.String(250))
+    about_me: so.Mapped[str] = so.mapped_column(sa.String(250),nullable=True)
+
+
 
     posts: so.WriteOnlyMapped['Post'] = so.relationship(
         back_populates='author')

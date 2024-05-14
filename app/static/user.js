@@ -14,28 +14,53 @@ function toggleSection(className, headerRow) {
 }
 
 
-document.getElementById('shareButton').addEventListener('click', () => {
-    const shareOptions = document.getElementById('shareOptions');
-    shareOptions.classList.toggle('d-none');
-});
+// document.getElementById('shareButton').addEventListener('click', () => {
+//     const shareOptions = document.getElementById('shareOptions');
+//     shareOptions.classList.toggle('d-none');
+// });
 
-document.addEventListener('DOMContentLoaded', async () => {
-    async function fetchData() {
-        try {
-            const response = await fetch('https://example.com/api/user-stats');  // 替换为你的API URL
-            const data = await response.json();
-            document.getElementById('postKarma').textContent = data.postKarma;
-            document.getElementById('commentKarma').textContent = data.commentKarma;
-            document.getElementById('goldReceived').textContent = data.goldReceived;
-        } catch (error) {
-            console.error('Error fetching data: ', error);
-        }
-    }
 
-    setInterval(fetchData, 30000);  // 定时刷新数据，每30秒更新一次
-    fetchData();  // 初始加载数据
-});
 
 function addSocialLink() {
     alert("Add social link functionality to be implemented.");
 }
+
+
+
+function editAboutMe() {
+    console.log("Function called"); // 检查是否被调用
+    console.log("test test")
+    document.getElementById('editModal').style.display = 'block'; // 显示编辑框
+}
+
+function saveAboutMe() {
+    const newContent = document.getElementById('newAboutMe').value; // 获取新输入的内容
+    document.getElementById('editModal').style.display = 'none'; // 隐藏编辑框
+
+    fetch('/user', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': document.querySelector('input[name="csrf_token"]').value // 确保传递 CSRF 令牌
+        },
+        body: JSON.stringify({ aboutMe: newContent })
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            document.getElementById('aboutMeText').innerText = newContent; // 更新页面显示
+            alert('Profile updated successfully!');
+        } else {
+            throw new Error(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error:', error);
+        alert('Error updating profile: ' + error);
+    });
+}
+ function test_click() {
+     document.getElementsByClassName('useredit-button')
+     console.log("hello")
+ }
+

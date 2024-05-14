@@ -54,7 +54,5 @@ class RegisterForm(FlaskForm):
 
 class UserForm(FlaskForm):
     name = StringField('Name', validators=[DataRequired()])
-    gender = SelectField('Gender', choices=[('male', 'Male'), ('female', 'Female'), ('other', 'Other')], validators=[DataRequired()])
     about_me = TextAreaField('About Me', validators=[Length(max=250)])
     Communities = SelectField('Communities', choices=[('1', 'communities 1'), ('2', 'communities 2'), ('3', 'communities 3')], validators=[DataRequired()])
-    submit = SubmitField('Submit')

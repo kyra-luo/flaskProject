@@ -119,39 +119,21 @@ def commui():
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():
+    user = current_user
     form = UserForm()
     if form.validate_on_submit():
         try:
-            # 创建新用户或更新现有用户
-            user = User(name=form.name.data,
-                gender=form.gender.data,
-                about_me=form.about_me.data,
-                community_id=form.Communities.data
-            )
-            db.session.add(user)
+            # Assuming you want to update the current user rather than creating a new one
+            user.username = form.name.data  # Note: Updated to set attributes on current_user directly
+            user.about_me = form.about_me.data
+            user.Communities = form.Communities.data
+            # db.session.add(user)  # This might not be necessary if updating the current user
             db.session.commit()
             flash('Profile updated successfully!', 'success')
         except Exception as e:
-            db.session.rollback()  # 发生错误时回滚
+            db.session.rollback()  # Rollback in case of error
             flash('Error updating profile: ' + str(e), 'error')
-    return render_template('user.html', title='User', form=form)
-
-@app.route('/user/<username>/posts')
-def user_posts(username):
-    user = db.first_or_404(sa.select(User).where(User.username == username))
-    posts = [
-        {'author': user, 'body': 'Test post #1'},
-        {'author': user, 'body': 'Test post #2'}
-    ]
-    return render_template('user.html', user=user, posts=posts)
-@app.route('/user/<username>/comments')
-def user_comments(username):
-    user = db.first_or_404(sa.select(User).where(User.username == username))
-    comments = [
-        {'author': user, 'body': 'Test comments #1'},
-        {'author': user, 'body': 'Test comments #2'}
-    ]
-    return render_template('user.html', user=user, posts=comments)
+    return render_template('user.html', title='User', form=form, user=user)
 
 
 @app.route('/base', methods=['GET', 'POST'])

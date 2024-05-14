@@ -25,15 +25,21 @@
                 </div>
                 <hr>
 
-                <h4 style="margin-top:20px">Setting</h4>
-                <div class="profile-section">
-                    <img src="{{ url_for('static', filename='image/01.png') }}" alt="Profile Icon" class="profile-icon">
-                    <div class="profile-info">
-                        <h3>Profile</h3>
-                        <p>Customize your profile</p>
-                    </div>
-                    <button class="useredit-button">Edit Profile</button>
-                </div>
+                <h4 style="margin-top:20px">About me</h4>
+   <div class="profile-section">
+    <img src="{{ url_for('static', filename='image/01.png') }}" alt="Profile Icon" class="profile-icon">
+    <div class="profile-info">
+        <p id="aboutMeText">Customize your profile</p>
+    </div>
+    <button class="useredit-button" onclick="test_click()">Edit about me</button>
+</div>
+
+<!-- Modal for input -->
+<div id="editModal" style="display:none;">
+    <textarea id="newAboutMe"></textarea>
+    <button onclick="saveAboutMe()">Save Changes</button>
+</div>
+
                 <hr>
 
                 <h4>LINKS</h4>
@@ -91,4 +97,6 @@
             </div>
         </div>
     </div>
+ <button class="useredit-button" onclick=test_click()>Edit about me</button>
+
 {% endblock %}
