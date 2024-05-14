@@ -14,6 +14,9 @@ sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore 
 def generate_user_id():
     return '{:06d}'.format(randint(0, 999999))
 
+def generate_community_id():
+    return '{:06d}'.format(randint(0, 999999))
+
 @app.route('/')
 @app.route('/index')
 def index():
@@ -110,8 +113,18 @@ def regi():
 def community():
     form = CommunityForm()
     if form.validate_on_submit():
-        flash('Community created requested for user {}, category={}'.format(form.communityName.data,
+        try:
+            community = Community(id=generate_community_id(),
+                    communityName=form.communityName.data,
+                    category=form.category.data,
+                    description=form.description.data
+                    )
+            db.session.add(community)
+            db.session.commit()
+            flash('Community {} created, category={}'.format(form.communityName.data,
             form.category.data))
+        except IntegrityError:
+            flash("Registration failed. Please check your input.")
         return redirect(url_for('community'))
     return render_template('community.html',title='community', form=form)
 
@@ -121,6 +134,7 @@ def cate(category):
     subforums = [ {'name': forums, 'description': forums }  ] # or don't need this line
     form = CommunityForm()
     if form.validate_on_submit():
+
         flash('Community created requested for user {}, category={}'.format(form.communityame.data,
             form.category.data))
         return redirect(url_for('community'))

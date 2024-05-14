@@ -3,6 +3,7 @@ from app.models import User, Post, Community
 
 # Create fake users
 user = db.session.get(User, 1)
+community = db.session.get(Community, 1)
 
 
 
@@ -32,7 +33,6 @@ db.session.commit()
 
 db.session.rollback()
 
-community = db.session.get(Community, 2)
 user.communities.add(community)
 community.members.add(user)
 

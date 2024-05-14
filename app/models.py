@@ -87,7 +87,7 @@ class Post(db.Model):
 
 class Community(db.Model):
     __tablename__ = "community"
-    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    id: so.Mapped[int] = so.mapped_column(sa.String(6), primary_key=True)
     communityName: so.Mapped[str] = so.mapped_column(sa.String(15), index=True,
                                                 unique=True)
     category: so.Mapped[str] = so.mapped_column(sa.String(10), index=True,
