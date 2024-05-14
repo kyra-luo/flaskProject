@@ -26,7 +26,6 @@ post2 = Post(
 )
 
 community1 = Community(
-    Community_id = "111",
     communityName = "Community 1",
     category = "IT",
     description = "CITS",
@@ -36,7 +35,7 @@ commembers = [
     {'member_id': user1.id, 'community_id': community1.id},
 ]
 # Add users to the database session
-db.session.add_all([user1, user2, user3, user4, user5])
+db.session.add_all([user1])
 
 # Commit the session to the database
 db.session.commit()
