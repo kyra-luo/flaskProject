@@ -26,11 +26,11 @@
                                         <div class="simplebar-content" style="padding: 16px;">
                                             <nav class="nav nav-pills nav-gap-y-1 flex-column">
                                                 <a href="{{ url_for('community')}}" class="nav-link nav-link-faded has-icon active">All Forums</a>
-                                                <a href="{{ url_for('community', category='IT') }}" class="nav-link nav-link-faded has-icon">IT Forums</a>
-                                                <a href="{{ url_for('community', category='Mathmatic') }}" class="nav-link nav-link-faded has-icon">Mathmatic Forums</a>
-                                                <a href="{{ url_for('community', category='Physics') }}" class="nav-link nav-link-faded has-icon">Physics Forums</a>
-                                                <a href="{{ url_for('community', category='Engineering') }}" class="nav-link nav-link-faded has-icon">Engineering Forums</a>
-                                                <a href="{{ url_for('community', category='Sport') }}" class="nav-link nav-link-faded has-icon">Sport Forums</a>
+                                                <a href="{{ url_for('cate', category='1') }}" class="nav-link nav-link-faded has-icon">IT Forums</a>
+                                                <a href="{{ url_for('cate', category='2') }}" class="nav-link nav-link-faded has-icon">Mathmatic Forums</a>
+                                                <a href="{{ url_for('cate', category='3') }}" class="nav-link nav-link-faded has-icon">Physics Forums</a>
+                                                <a href="{{ url_for('cate', category='4') }}" class="nav-link nav-link-faded has-icon">Engineering Forums</a>
+                                                <a href="{{ url_for('cate', category='5') }}" class="nav-link nav-link-faded has-icon">Sport Forums</a>
                                             </nav>
                                         </div>
                                     </div>
@@ -62,10 +62,10 @@
                             <div class="media forum-item">
                                 <a href="#" data-bs-toggle="collapse" data-bs-target=".forum-content"><img src="" class="mr-3 rounded-circle" width="50" alt="Forum picture" /></a>
                                 <div class="media-body">
-                                {% for sf in subforums %}
-                                <h6><a href="#" data-bs-toggle="collapse" data-bs-target=".forum-content" class="text-body">{{sf.name.communityName}}</a></h6>
+                                {% for f in forums %}
+                                <h6><a href="#" data-bs-toggle="collapse" data-bs-target=".forum-content" class="text-body">{{f.communityName}}</a></h6>
                                 <p class="text-secondary">
-                                   {{sf.description.description}}
+                                   {{f.description}}
                                 </p>
                                 {% endfor %}
                                 <p class="text-muted"><a href="javascript:void(0)">drew</a> replied <span class="text-secondary font-weight-bold">13 minutes ago</span></p>

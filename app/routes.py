@@ -135,21 +135,25 @@ def community():
                     )
             db.session.add(community)
             db.session.commit()
-            flash('Community {} created, category={}'.format(form.communityName.data,
-            form.category.data))
+            flash('Community {} created, category={}'.format(form.communityName.data, form.category.data))
     return render_template('community.html',title='community', form=form)
 
-# @app.route('/community/<category>', methods=['GET', 'POST'])
-# def cate(category):
-#     forums = db.first_or_404(sa.select(Community).where(Community.category == category))
-#     # subforums = [ {'name': forums, 'description': forums }  ] # or don't need this line
-#     form = CommunityForm()
-#     if form.validate_on_submit():
-
-#         flash('Community created requested for user {}, category={}'.format(form.communityame.data,
-#             form.category.data))
-#         return redirect(url_for('community'))
-#     return render_template('community.html',title='community', forums=forums, subforums=subforums, form=form)
+@app.route('/community/<category>', methods=['GET', 'POST'])
+def cate(category):
+     forums = db.session.query(Community).filter_by(category=category).all()
+     # subforums = [ {'name': forums, 'description': forums }  ] # or don't need this line
+     form = CommunityForm()
+     if form.validate_on_submit():
+            community = Community(
+                    communityName=form.communityName.data,
+                    category=form.category.data,
+                    description=form.description.data
+                    )
+            db.session.add(community)
+            db.session.commit()
+            flash('Community created requested for user {}, category={}'.format(form.communityame.data, form.category.data))
+            return redirect(url_for('community'))
+     return render_template('community.html',title='community', forums=forums, form=form)
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():
