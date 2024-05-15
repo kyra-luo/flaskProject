@@ -73,8 +73,7 @@ class Comment(db.Model):
     commentor: so.Mapped[User] = so.relationship(back_populates='write_comments')
 
 class Community(db.Model):
-    __tablename__ = "community"
-    id: so.Mapped[int] = so.mapped_column(sa.String(6), primary_key=True)
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
     communityName: so.Mapped[str] = so.mapped_column(sa.String(15), index=True,
                                                 unique=True)
     category: so.Mapped[str] = so.mapped_column(sa.String(10), index=True,
@@ -89,7 +88,7 @@ class Community(db.Model):
         secondary=commembers,
         back_populates='communities')
     
-
+    __tablename__ = "community"
     def __repr__(self):
         return '<Community {}>'.format(self.communityName)
 

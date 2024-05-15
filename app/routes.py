@@ -128,7 +128,6 @@ def regi():
 def community():
     form = CommunityForm()
     if form.validate_on_submit():
-        try:
             community = Community(
                     communityName=form.communityName.data,
                     category=form.category.data,
@@ -138,22 +137,19 @@ def community():
             db.session.commit()
             flash('Community {} created, category={}'.format(form.communityName.data,
             form.category.data))
-        except IntegrityError:
-            flash("Registration failed. Please check your input.")
-        return redirect(url_for('community'))
     return render_template('community.html',title='community', form=form)
 
-@app.route('/community/<category>', methods=['GET', 'POST'])
-def cate(category):
-    forums = db.first_or_404(sa.select(Community).where(Community.category == category))
-    subforums = [ {'name': forums, 'description': forums }  ] # or don't need this line
-    form = CommunityForm()
-    if form.validate_on_submit():
+# @app.route('/community/<category>', methods=['GET', 'POST'])
+# def cate(category):
+#     forums = db.first_or_404(sa.select(Community).where(Community.category == category))
+#     # subforums = [ {'name': forums, 'description': forums }  ] # or don't need this line
+#     form = CommunityForm()
+#     if form.validate_on_submit():
 
-        flash('Community created requested for user {}, category={}'.format(form.communityame.data,
-            form.category.data))
-        return redirect(url_for('community'))
-    return render_template('community.html',title='community', forums=forums, subforums=subforums, form=form)
+#         flash('Community created requested for user {}, category={}'.format(form.communityame.data,
+#             form.category.data))
+#         return redirect(url_for('community'))
+#     return render_template('community.html',title='community', forums=forums, subforums=subforums, form=form)
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():
