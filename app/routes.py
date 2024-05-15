@@ -15,9 +15,6 @@ sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore 
 def generate_user_id():
     return '{:06d}'.format(randint(0, 999999))
 
-def generate_community_id():
-    return '{:06d}'.format(randint(0, 999999))
-
 @app.route('/')
 @app.route('/index')
 def index():
@@ -132,7 +129,7 @@ def community():
     form = CommunityForm()
     if form.validate_on_submit():
         try:
-            community = Community(id=generate_community_id(),
+            community = Community(
                     communityName=form.communityName.data,
                     category=form.category.data,
                     description=form.description.data
