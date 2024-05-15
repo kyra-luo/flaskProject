@@ -23,7 +23,8 @@ class User(UserMixin, db.Model):
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
-    about_me: so.Mapped[str] = so.mapped_column(sa.String(250),nullable=True)
+    about_me: so.Mapped[str] = so.mapped_column(sa.String(250), nullable=True)
+    #Communities: so.Mapped[str] = so.mapped_column(sa.String(250),nullable=True)
 
 
 

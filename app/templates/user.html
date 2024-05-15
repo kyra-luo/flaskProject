@@ -1,100 +1,110 @@
 {% extends "base.html" %}
 {% block content %}
 
-    <form action="" method="post" novalidate>
-        {{ form.hidden_tag() }}
+<div class="container-fluid mt-3">
+    <div class="row">
+        <div class="col-sm-3 sidenav" style="background-color: rgba(197, 187, 174, 0.25);">
+            <ul class="nav nav-pills flex-column" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
+            </ul>
+            <hr>
 
-    <div class="container-fluid mt-3">
-        <div class="row">
-            <!-- Sidebar for navigation and settings -->
-            <div class="col-sm-3 sidenav" style="background-color: rgba(197, 187, 174, 0.25);">
-                <ul class="nav nav-pills flex-column" role="tablist">
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Home</a>
-                    </li>
-                </ul>
-                <hr>
+            <h4 style="margin-top:20px">Communities</h4>
+            <div class="custom-feeds" style="display:block;">
+                <button class="btn">
+                    <i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s;"></i>
+                    <a href="#">About Custom Feeds</a>
+                </button>
+            </div>
+            <hr>
 
-                <h4 style="margin-top:20px">Communities</h4>
-                <div class="custom-feeds" style="display:block;">
-                    <button class="btn">
-                        <i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s;"></i>
-                        <a href="#">About Custom Feeds</a>
-                    </button>
+            <h4 style="margin-top:20px">About me</h4>
+            <div class="profile-section">
+                <img src="{{ url_for('static', filename='image/01.png') }}" alt="Profile Icon" class="profile-icon">
+                <div class="profile-info">
+                    <p id="aboutMeText">{{ user.about_me or 'Customize your profile' }}</p>
                 </div>
-                <hr>
+                <button type="button" class="useredit-button" data-bs-toggle="modal" data-bs-target="#editModal">Edit about me</button>
 
-                <h4 style="margin-top:20px">About me</h4>
-   <div class="profile-section">
-    <img src="{{ url_for('static', filename='image/01.png') }}" alt="Profile Icon" class="profile-icon">
-    <div class="profile-info">
-        <p id="aboutMeText">Customize your profile</p>
-    </div>
-    <button  type="button" class="useredit-button" onclick="editAboutMe() ">Edit about me</button>
-</div>
-
-<!-- Modal for input -->
-<div id="editModal" style="display:none;">
-    <textarea id="newAboutMe"></textarea>
-    <button onclick="saveAboutMe()">Save Changes</button>
-</div>
-
-                <hr>
-
-                <h4>LINKS</h4>
-                <button class="useredit-button" style="margin: 20px" onclick="addSocialLink()">+ Add Social Link</button>
             </div>
 
-            <!-- Main content area -->
-            <div class="col-sm-9">
-                <div class="row">
-                    <div class="middle">
-                        <h2>{{ user.username }}</h2>
-                        <button id="shareButton" class="btn" style="margin: 15px;background-color: rgba(250, 235, 215, 0.567);">
-                            <i class="fa-solid fa-share"></i>Share
-                        </button>
-                        <ul class="nav nav-tabs" role="tablist">
-                            <li class="nav-item">
-                                <a class="nav-link active" data-bs-toggle="tab" href="#personalized">personalized</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#POSTS">POSTS<span class="badge bg-secondary">5</span></a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-bs-toggle="tab" href="#COMMENTS">COMMENTS<span class="badge bg-secondary">10</span></a>
-                            </li>
-                        </ul>
-                        <div class="tab-content">
-                            <div id="personalized" class="container tab-pane active"><br>
-                                <h3>personalized</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                            </div>
-    <div id="POSTS" class="container tab-pane fade"><br>
-      <h3>POSTS</h3>
-      {% for post in posts %}
-    <p>
-    {{ post.author.username }} says: <b>{{ post.body }}</b>
-    </p>
-    {% endfor %}
-    </div>
-    <div id="COMMENTS" class="container tab-pane fade"><br>
-      <h3>COMMENTS</h3>
-      {% for post in comments %}
-    <p>
-    {{ post.author.username }} says: <b>{{ post.body }}</b>
-    </p>
-    {% endfor %}
-    </div>
-  </div>
+            <hr>
 
+            <h4>LINKS</h4>
+            <button class="useredit-button" style="margin: 20px" onclick="addSocialLink()">+ Add Social Link</button>
+        </div>
 
-
-
-                        <hr>
+        <div class="col-sm-9">
+            <div class="row">
+                <div class="middle">
+                    <h2>{{ user.username }}</h2>
+                    <button id="shareButton" class="btn" style="margin: 15px;background-color: rgba(250, 235, 215, 0.567);">
+                        <i class="fa-solid fa-share"></i>Share
+                    </button>
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-bs-toggle="tab" href="#personalized">personalized</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#POSTS">POSTS<span class="badge bg-secondary">5</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-bs-toggle="tab" href="#COMMENTS">COMMENTS<span class="badge bg-secondary">10</span></a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div id="personalized" class="container tab-pane active"><br>
+                            <h3>personalized</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                        <div id="POSTS" class="container tab-pane fade"><br>
+                            <h3>POSTS</h3>
+                            {% for post in posts %}
+                                <p>{{ post.author.username }} says: <b>{{ post.body }}</b></p>
+                            {% endfor %}
+                        </div>
+                        <div id="COMMENTS" class="container tab-pane fade"><br>
+                            <h3>COMMENTS</h3>
+                            {% for comment in comments %}
+                                <p>{{ comment.author.username }} says: <b>{{ comment.body }}</b></p>
+                            {% endfor %}
+                        </div>
                     </div>
+                    <hr>
                 </div>
             </div>
         </div>
     </div>
-    </form>
+</div>
+
+<!-- Edit About Me Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit About Me</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editAboutMeForm" method="post" action="{{ url_for('user') }}">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ form.name.label(class="form-label") }}
+                        {{ form.name(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.about_me.label(class="form-label") }}
+                        {{ form.about_me(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ form.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
 {% endblock %}

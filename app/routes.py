@@ -1,4 +1,4 @@
-from flask import render_template, redirect, url_for, flash
+from flask import render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_required, login_user, logout_user
 from app import app, db
 from app.form import PostForm, RegisterForm, LoginForm, CommentForm, UserForm
@@ -118,23 +118,25 @@ def commui():
 
 
 @app.route('/user', methods=['GET', 'POST'])
+@login_required
 def user():
-    user = current_user
     form = UserForm()
     if form.validate_on_submit():
         try:
-            # Assuming you want to update the current user rather than creating a new one
-            user.username = form.name.data  # Note: Updated to set attributes on current_user directly
-            user.about_me = form.about_me.data
-            user.Communities = form.Communities.data
-            # db.session.add(user)  # This might not be necessary if updating the current user
+            current_user.username = form.name.data
+            current_user.about_me = form.about_me.data
             db.session.commit()
             flash('Profile updated successfully!', 'success')
+            return redirect(url_for('user'))
         except Exception as e:
-            db.session.rollback()  # Rollback in case of error
+            db.session.rollback()
             flash('Error updating profile: ' + str(e), 'error')
-    return render_template('user.html', title='User', form=form, user=user)
+    elif request.method == 'GET':
+        form.name.data = current_user.username
+        form.about_me.data = current_user.about_me
 
+    users = User.query.all()
+    return render_template('user.html', title='User Profile', user=current_user, users=users, form=form)
 
 @app.route('/base', methods=['GET', 'POST'])
 def base():
