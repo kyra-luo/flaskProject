@@ -124,26 +124,29 @@ def regi():
     return render_template('register.html', title='register', form=form)
 
 
-@app.route('/community', methods=['GET', 'POST'])
-def community():
-    form = CommunityForm()
-    if form.validate_on_submit():
-            community = Community(
-                    communityName=form.communityName.data,
-                    category=form.category.data,
-                    description=form.description.data
-                    )
-            db.session.add(community)
-            db.session.commit()
-            flash('Community {} created, category={}'.format(form.communityName.data, form.category.data))
-    return render_template('community.html',title='community', form=form)
+# @app.route('/community', methods=['GET', 'POST'])
+# def community():
+#     form = CommunityForm()
+#     if form.validate_on_submit():
+#             community = Community(
+#                     communityName=form.communityName.data,
+#                     category=form.category.data,
+#                     description=form.description.data
+#                     )
+#             db.session.add(community)
+#             db.session.commit()
+#             flash('Community {} created, category={}'.format(form.communityName.data, form.category.data))
+#     return render_template('community.html',title='community', form=form)
 
+@app.route('/community', defaults={'category': None}, methods=['GET', 'POST'])
 @app.route('/community/<category>', methods=['GET', 'POST'])
-def cate(category):
-     forums = db.session.query(Community).filter_by(category=category).all()
-     # subforums = [ {'name': forums, 'description': forums }  ] # or don't need this line
-     form = CommunityForm()
-     if form.validate_on_submit():
+def community(category):
+        if category:
+            forums = db.session.query(Community).filter_by(category=category).all()
+        else:
+            forums = db.session.query(Community).all()
+        form = CommunityForm()
+        if form.validate_on_submit():
             community = Community(
                     communityName=form.communityName.data,
                     category=form.category.data,
@@ -153,7 +156,7 @@ def cate(category):
             db.session.commit()
             flash('Community created requested for user {}, category={}'.format(form.communityame.data, form.category.data))
             return redirect(url_for('community'))
-     return render_template('community.html',title='community', forums=forums, form=form)
+        return render_template('community.html',title='community', form=form, forums=forums)
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():
