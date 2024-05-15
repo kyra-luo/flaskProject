@@ -1,4 +1,8 @@
 from flask_wtf import FlaskForm
+from wtforms import StringField, PasswordField, BooleanField, SubmitField, TextAreaField, SelectField, IntegerField
+from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+from app import db, SQLAlchemy as sa
+from app.models import User, Post, Comment
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
 
@@ -14,13 +18,8 @@ class PostForm(FlaskForm):
 class CommentForm(FlaskForm):
     comment_body = TextAreaField('Comment', validators=[
         DataRequired(), Length(min=1, max=1000)])
-    communities = SelectField('Communities', choices=[('1', 'Community 1'), ('2', 'Community 2'), ('3', 'Community 3')],
-                              validators=[DataRequired()])
-    topic = TextAreaField('Your topic', validators=[
-        DataRequired(), Length(min=1, max=200)])
-    post = TextAreaField('Say something...', validators=[
-        DataRequired(), Length(min=1, max=1000)])
-    
+    post_id = IntegerField('Post ID', validators=[DataRequired()])
+
 class CommunityForm(FlaskForm):
     communityName = StringField('CommunityName', validators=[DataRequired(), Length(min=1, max=15) ])
     category = SelectField('Category', choices=[('1','IT'), ('2','Mathmatic'), ('3','Physics'),('4','Engineering'),('5','Sport')])

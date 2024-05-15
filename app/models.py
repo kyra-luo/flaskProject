@@ -34,7 +34,7 @@ class User(UserMixin, db.Model):
     communities: so.WriteOnlyMapped['Community'] = so.relationship(
         secondary=commembers,
         back_populates='members')
-    # write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
+    write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -42,7 +42,6 @@ class User(UserMixin, db.Model):
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
     
-  
 
         
 class Post(db.Model):
@@ -56,34 +55,22 @@ class Post(db.Model):
     community_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey("community.id"))
     community: so.Mapped['Community'] = so.relationship(back_populates='community_posts')
     author: so.Mapped[User] = so.relationship(back_populates='posts')
-#     comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='UnderPost')
+    comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='underPost')
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
     
-# class Comment(db.Model):
-#     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-#     comment: so.Mapped[str] = so.mapped_column(sa.String(140))
-#     timestamp: so.Mapped[datetime] = so.mapped_column(
-#         index=True, default=lambda: datetime.now(timezone.utc))
-#     user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
-#                                                index=True)
-#     post_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(Post.id),
-#                                                index=True)
-#     UnderPost: so.Mapped[Post] = so.relationship(back_populates='comments')
-#     Commentor: so.Mapped[User] = so.relationship(back_populates='write_comments')
-
-# class User(db.Model):
-#     id: so.Mapped[int] = so.mapped_column(primary_key=True)
-#     User_id: so.Mapped[str] = so.mapped_column(sa.String(6), unique=True, nullable=False)
-#     fname: so.Mapped[str] = so.mapped_column(sa.String(20), nullable=False)
-#     lname: so.Mapped[str] = so.mapped_column(sa.String(20), nullable=False)
-#     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
-#     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
-#     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
-
-#     def __repr__(self):
-#         return f"<User {self.username}>"
+class Comment(db.Model):
+    id: so.Mapped[int] = so.mapped_column(primary_key=True)
+    comment: so.Mapped[str] = so.mapped_column(sa.String(140))
+    timestamp: so.Mapped[datetime] = so.mapped_column(
+        index=True, default=lambda: datetime.now(timezone.utc))
+    user_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(User.id),
+                                               index=True)
+    post_id: so.Mapped[int] = so.mapped_column(sa.ForeignKey(Post.id),
+                                               index=True)
+    underPost: so.Mapped[Post] = so.relationship(back_populates='comments')
+    commentor: so.Mapped[User] = so.relationship(back_populates='write_comments')
 
 class Community(db.Model):
     __tablename__ = "community"
