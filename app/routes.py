@@ -154,7 +154,7 @@ def community(category):
                     )
             db.session.add(community)
             db.session.commit()
-            flash('Community created requested for user {}, category={}'.format(form.communityame.data, form.category.data))
+            flash('Community created requested for user {}, category={}'.format(form.communityName.data, form.category.data))
             return redirect(url_for('community'))
         return render_template('community.html',title='community', form=form, forums=forums)
 
