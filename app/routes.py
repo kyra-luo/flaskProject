@@ -2,12 +2,13 @@ from flask import render_template, redirect, url_for, flash, request, jsonify
 from flask_login import current_user, login_required, login_user, logout_user
 from urllib.parse import urlsplit
 from app import app, db
-from app.form import PostForm, RegisterForm, LoginForm, CommentForm
+from app.form import PostForm, RegisterForm, LoginForm, CommentForm, ResetPasswordRequestForm, ResetPasswordForm
 import sqlalchemy as sa
 from app.models import User, Post, Comment
 from random import randint
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
+from app.email import send_password_reset_email
 
 sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa."
 
@@ -117,6 +118,7 @@ def regi():
                     password_hash=generate_password_hash(form.Password.data, method='pbkdf2:sha256'))
             db.session.add(user)
             db.session.commit()
+            send_password_reset_email(user)
             flash("You are now registered")
             return redirect(url_for('login'))
         except IntegrityError:
@@ -142,3 +144,52 @@ def base():
 def logout():
     logout_user()
     return redirect(url_for('index'))
+
+
+@app.route('/reset_password_request', methods=['GET', 'POST'])
+def reset_password_request():
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    form = ResetPasswordRequestForm()
+    if form.validate_on_submit():
+        user = db.session.scalar(
+            sa.select(User).where(User.email == form.email.data))
+        if user:
+            send_password_reset_email(user)  # 修改这里，不再需要传递 form 参数
+        flash('Check your email for the instructions to reset your password')
+        return redirect(url_for('login'))
+    return render_template('reset_password_request.html',
+                           title='Reset Password', form=form)
+
+# @app.route('/reset_password/<token>', methods=['GET', 'POST'])
+# def reset_password(token):
+#     if current_user.is_authenticated:
+#         return redirect(url_for('index'))
+#     user = User.verify_reset_password_token(token)
+#     if not user:
+#         return redirect(url_for('index'))
+#     form = ResetPasswordForm()
+#     if form.validate_on_submit():
+#         user.set_password(form.password.data)
+#         db.session.commit()
+#         flash('Your password has been reset.')
+#         return redirect(url_for('login'))
+#     return render_template('reset_password.html', form=form)
+
+@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+def reset_password(token):
+    if current_user.is_authenticated:
+        return redirect(url_for('index'))
+    user = User.verify_reset_password_token(token)
+    if not user:
+        return redirect(url_for('index'))
+    form = ResetPasswordForm()
+    if form.validate_on_submit():
+        print("11111")
+        user.set_password(form.password.data)
+        db.session.commit()
+        print("1111111")
+        flash('Your password has been reset.')
+        return redirect(url_for('login'))
+    return render_template('reset_password.html', form=form)
+
