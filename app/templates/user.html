@@ -62,14 +62,14 @@
                         <div id="POSTS" class="container tab-pane fade"><br>
                             <h3>POSTS</h3>
                             {% for post in posts %}
-                                <p>{{ post.author.username }} says: <b>{{ post.body }}</b></p>
+                                {% include "_post.html" %}
                             {% endfor %}
                         </div>
                         <div id="COMMENTS" class="container tab-pane fade"><br>
                             <h3>COMMENTS</h3>
-                            {% for comment in comments %}
-                                <p>{{ comment.author.username }} says: <b>{{ comment.body }}</b></p>
-                            {% endfor %}
+                              {% for comment in comments %}
+                                 Comment: {{comment.comment}}
+                              {% endfor %}
                         </div>
                     </div>
                     <hr>
@@ -91,15 +91,15 @@
                 <form id="editAboutMeForm" method="post" action="{{ url_for('user') }}">
                     {{ form.hidden_tag() }}
                     <div class="mb-3">
-                        {{ form.name.label(class="form-label") }}
-                        {{ form.name(class="form-control") }}
+                        {{ userform.name.label(class="form-label") }}
+                        {{ userform.name(class="form-control") }}
                     </div>
                     <div class="mb-3">
-                        {{ form.about_me.label(class="form-label") }}
-                        {{ form.about_me(class="form-control") }}
+                        {{ userform.about_me.label(class="form-label") }}
+                        {{ userform.about_me(class="form-control") }}
                     </div>
                     <div class="mb-3">
-                        {{ form.submit(class="btn btn-primary") }}
+                        {{ userform.submit(class="btn btn-primary") }}
                     </div>
                 </form>
             </div>

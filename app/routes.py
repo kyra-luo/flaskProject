@@ -134,11 +134,30 @@ def commui():
 @app.route('/user', methods=['GET', 'POST'])
 @login_required
 def user():
-    form = UserForm()
-    if form.validate_on_submit():
+    query = sa.select(Post).order_by(Post.timestamp.desc())
+    post_all = db.session.scalars(query).all()
+
+    posts = []
+    for post in post_all:
+        comment_query = sa.select(Comment).where(Comment.post_id == post.id).order_by(Comment.timestamp.asc())
+        posts.append({
+            'id': post.id,
+            'community': 'Community 1',
+            'topic': post.topic,
+            'body': post.body,
+            'author': post.author,
+            'time_stamp': post.timestamp,
+            'comments': db.session.scalars(comment_query).all()
+        })
+    comment_query = sa.select(Comment).order_by(Comment.timestamp.asc())
+    comments = db.session.scalars(comment_query).all()
+    form = CommentForm()
+    userform = UserForm()
+
+    if userform.validate_on_submit():
         try:
-            current_user.username = form.name.data
-            current_user.about_me = form.about_me.data
+            current_user.username = userform.name.data
+            current_user.about_me = userform.about_me.data
             db.session.commit()
             flash('Profile updated successfully!', 'success')
             return redirect(url_for('user'))
@@ -146,11 +165,12 @@ def user():
             db.session.rollback()
             flash('Error updating profile: ' + str(e), 'error')
     elif request.method == 'GET':
-        form.name.data = current_user.username
-        form.about_me.data = current_user.about_me
+        userform.name.data = current_user.username
+        userform.about_me.data = current_user.about_me
 
     users = User.query.all()
-    return render_template('user.html', title='User Profile', user=current_user, users=users, form=form)
+    return render_template('user.html', title='User Profile', user=current_user, users=users, form=form, userform=userform, posts=posts, comments=comments)
+
 
 @app.route('/base', methods=['GET', 'POST'])
 def base():
