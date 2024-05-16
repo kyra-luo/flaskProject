@@ -11,7 +11,7 @@ html {
     position: sticky;
     /*top: 0;*/
     width: 100%;
-    height: 65px;
+    height: 75px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -464,4 +464,8 @@ td {
 .userresources button {
     margin-bottom: 40px;
     /* 设置按钮之间的垂直间距 */
+}
+#logo_nav{
+    height: 55px;
+    width: 55px;
 }
