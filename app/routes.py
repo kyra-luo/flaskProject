@@ -72,7 +72,7 @@ def post_comment():
             db.session.commit()
             flash('Your comment is now live!')
             comment_html = render_template('_comment.html', comment=comment)
-            print(comment_html)
+            # print(comment_html)
             return jsonify({'comment_html': comment_html})
     
     return jsonify({'error': 'Invalid data'}), 400
