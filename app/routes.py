@@ -131,14 +131,21 @@ def commui():
     return render_template('community.html', title='community')
 
 
-@app.route('/user', methods=['GET', 'POST'])
+@app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
-def user():
+def user(username):
+    # 获取指定用户名的用户信息
+    user = db.session.execute(sa.select(User).where(User.username == username)).scalars().first()
+    if not user:
+        abort(404)
+
+    # 获取所有帖子并按时间戳降序排列
     query = sa.select(Post).order_by(Post.timestamp.desc())
     post_all = db.session.scalars(query).all()
 
     posts = []
     for post in post_all:
+        # 获取每个帖子的评论并按时间戳升序排列
         comment_query = sa.select(Comment).where(Comment.post_id == post.id).order_by(Comment.timestamp.asc())
         posts.append({
             'id': post.id,
@@ -149,28 +156,30 @@ def user():
             'time_stamp': post.timestamp,
             'comments': db.session.scalars(comment_query).all()
         })
+
+    # 获取所有评论
     comment_query = sa.select(Comment).order_by(Comment.timestamp.asc())
     comments = db.session.scalars(comment_query).all()
+
     form = CommentForm()
     userform = UserForm()
 
     if userform.validate_on_submit():
         try:
-            current_user.username = userform.name.data
-            current_user.about_me = userform.about_me.data
+            user.username = userform.name.data
+            user.about_me = userform.about_me.data
             db.session.commit()
             flash('Profile updated successfully!', 'success')
-            return redirect(url_for('user'))
+            return redirect(url_for('user', username=user.username))
         except Exception as e:
             db.session.rollback()
             flash('Error updating profile: ' + str(e), 'error')
     elif request.method == 'GET':
-        userform.name.data = current_user.username
-        userform.about_me.data = current_user.about_me
+        userform.name.data = user.username
+        userform.about_me.data = user.about_me
 
     users = User.query.all()
-    return render_template('user.html', title='User Profile', user=current_user, users=users, form=form, userform=userform, posts=posts, comments=comments)
-
+    return render_template('user.html', title='User Profile', user=user, users=users, form=form, userform=userform, posts=posts, comments=comments)
 
 @app.route('/base', methods=['GET', 'POST'])
 def base():

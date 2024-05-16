@@ -88,7 +88,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editAboutMeForm" method="post" action="{{ url_for('user') }}">
+                <form id="editAboutMeForm" method="post" action="{{ url_for('user', username=user.username) }}">
                     {{ form.hidden_tag() }}
                     <div class="mb-3">
                         {{ userform.name.label(class="form-label") }}
