@@ -25,10 +25,12 @@ def index():
 def test():
     comment_form = CommentForm()
     query = sa.select(Post).order_by(Post.timestamp.desc())
-    
     post_all=db.session.scalars(query).all()
+    communities = db.session.query(Community).all()
     if post_all is None:
         return redirect(url_for('create'))
+    elif communities is None:
+        return redirect(url_for('community'))
     else:
         posts =[]
         for post in post_all:
@@ -42,7 +44,6 @@ def test():
                 'time_stamp': post.timestamp,
                 'comments': db.session.scalars(comment_query).all()
             })
-        
     return render_template('post.html', title='Home', posts=posts, comment_form=comment_form)
 
 
@@ -50,6 +51,12 @@ def test():
 @login_required
 def create():
     form = PostForm()
+    community_list = db.session.query(Community).all()
+    if community_list is None:
+        community_choices = []
+    else:
+        community_choices = [(str(community.id), community.communityName) for community in community_list]
+    form.communities.choices = [('', 'Select a community...')] + community_choices
     if form.validate_on_submit():
         post = Post(body=form.body.data,topic=form.topic.data, author=current_user)
         db.session.add(post)
