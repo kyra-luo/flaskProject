@@ -35,7 +35,7 @@ def test():
             comment_query = sa.select(Comment).where(Comment.post_id == post.id).order_by(Comment.timestamp.asc())
             posts.append({
                 'id': post.id,
-                'community': 'Community 1',
+                'community': post.community_id,
                 'topic': post.topic, 
                 'body': post.body,
                 'author': post.author,

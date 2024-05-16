@@ -21,28 +21,29 @@ post1 = Post(
 
 )
 
-comment1_post1 = Comment(
-    comment="post1_1 " + sample_posts,
-    commentor=user,
-    underPost=post1
-)
+# comment1_post1 = Comment(
+#     comment="post1_1 " + sample_posts,
+#     commentor=user,
+#     underPost=post1
+# )
 
-comment2_post1 = Comment(
-    comment="post1_2 " + sample_posts,
-    commentor=user,
-    underPost=post1
-)
+# comment2_post1 = Comment(
+#     comment="post1_2 " + sample_posts,
+#     commentor=user,
+#     underPost=post1
+# )
 
-comment3_post1 = Comment(
-    comment="post1_3 " + sample_posts,
-    commentor=user,
-    underPost=post1
-)
+# comment3_post1 = Comment(
+#     comment="post1_3 " + sample_posts,
+#     commentor=user,
+#     underPost=post1
+# )
 
 post2 = Post(
     topic="topic2",
     body="Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa.",
-    author=user
+    author=user,
+    community=community
 )
 comment1_post2 = Comment(
     comment="post2_1 " + sample_posts,
