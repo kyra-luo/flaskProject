@@ -8,6 +8,7 @@ from app.models import User, Post, Community, Comment
 from random import randint
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
+from app.helpers import process_posts_with_comments
 
 sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa."
 
@@ -32,18 +33,7 @@ def test():
     elif communities is None:
         return redirect(url_for('community'))
     else:
-        posts =[]
-        for post in post_all:
-            comment_query = sa.select(Comment).where(Comment.post_id == post.id).order_by(Comment.timestamp.asc())
-            posts.append({
-                'id': post.id,
-                'community': post.community_id,
-                'topic': post.topic, 
-                'body': post.body,
-                'author': post.author,
-                'time_stamp': post.timestamp,
-                'comments': db.session.scalars(comment_query).all()
-            })
+        posts = process_posts_with_comments(post_all)
     return render_template('post.html', title='Home', posts=posts, comment_form=comment_form)
 
 
@@ -58,7 +48,9 @@ def create():
         community_choices = [(str(community.id), community.communityName) for community in community_list]
     form.communities.choices = [('', 'Select a community...')] + community_choices
     if form.validate_on_submit():
-        post = Post(body=form.body.data,topic=form.topic.data, author=current_user)
+        community_id = form.communities.data
+        current_community = db.session.scalar(sa.select(Community).where(Community.id == int(community_id)))
+        post = Post(body=form.body.data,topic=form.topic.data, community=current_community, author=current_user)
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
@@ -157,18 +149,7 @@ def community(category):
         if post_all is None:
              return redirect(url_for('create'))
         else:
-            posts =[]
-            for post in post_all:
-                comment_query = sa.select(Comment).where(Comment.post_id == post.id).order_by(Comment.timestamp.asc())
-                posts.append({
-                    'id': post.id,
-                    'community': post.community_id,
-                    'topic': post.topic, 
-                    'body': post.body,
-                    'author': post.author,
-                    'time_stamp': post.timestamp,
-                    'comments': db.session.scalars(comment_query).all()
-                })
+            posts = process_posts_with_comments(post_all)
         community_form = CommunityForm()
         if community_form.validate_on_submit():
             community = Community(
