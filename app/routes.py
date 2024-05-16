@@ -23,7 +23,7 @@ def index():
 @app.route('/explore', methods=['GET', 'POST'])
 @login_required
 def test():
-    form = CommentForm()
+    comment_form = CommentForm()
     query = sa.select(Post).order_by(Post.timestamp.desc())
     
     post_all=db.session.scalars(query).all()
@@ -43,7 +43,7 @@ def test():
                 'comments': db.session.scalars(comment_query).all()
             })
         
-    return render_template('post.html', title='Home', posts=posts, form=form)
+    return render_template('post.html', title='Home', posts=posts, comment_form=comment_form)
 
 
 @app.route('/create', methods=['GET', 'POST'])
@@ -71,7 +71,6 @@ def post_comment():
             db.session.commit()
             flash('Your comment is now live!')
             comment_html = render_template('_comment.html', comment=comment)
-            print(comment_html)
             return jsonify({'comment_html': comment_html})
     
     return jsonify({'error': 'Invalid data'}), 400
@@ -145,18 +144,36 @@ def community(category):
             forums = db.session.query(Community).filter_by(category=category).all()
         else:
             forums = db.session.query(Community).all()
-        form = CommunityForm()
-        if form.validate_on_submit():
+        comment_form = CommentForm()
+        query = sa.select(Post).order_by(Post.timestamp.desc())
+        post_all=db.session.scalars(query).all()
+        if post_all is None:
+             return redirect(url_for('create'))
+        else:
+            posts =[]
+            for post in post_all:
+                comment_query = sa.select(Comment).where(Comment.post_id == post.id).order_by(Comment.timestamp.asc())
+                posts.append({
+                    'id': post.id,
+                    'community': post.community_id,
+                    'topic': post.topic, 
+                    'body': post.body,
+                    'author': post.author,
+                    'time_stamp': post.timestamp,
+                    'comments': db.session.scalars(comment_query).all()
+                })
+        community_form = CommunityForm()
+        if community_form.validate_on_submit():
             community = Community(
-                    communityName=form.communityName.data,
-                    category=form.category.data,
-                    description=form.description.data
+                    communityName=community_form.communityName.data,
+                    category=community_form.category.data,
+                    description=community_form.description.data
                     )
             db.session.add(community)
             db.session.commit()
-            flash('Community created requested for user {}, category={}'.format(form.communityName.data, form.category.data))
+            flash('Community created requested for user {}, category={}'.format(community_form.communityName.data, community_form.category.data))
             return redirect(url_for('community'))
-        return render_template('community.html',title='community', form=form, forums=forums)
+        return render_template('community.html',title='community', comment_form=comment_form, forums=forums, posts=posts, community_form=community_form)
 
 @app.route('/user', methods=['GET', 'POST'])
 def user():
