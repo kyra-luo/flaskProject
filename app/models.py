@@ -12,6 +12,7 @@ from time import time
 import jwt
 from app import app
 
+
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     User_id: so.Mapped[str] = so.mapped_column(sa.String(6), unique=True, nullable=False)
@@ -24,7 +25,7 @@ class User(UserMixin, db.Model):
     posts: so.WriteOnlyMapped['Post'] = so.relationship(
         back_populates='author')
 
-    # write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
+    write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
@@ -48,7 +49,6 @@ class User(UserMixin, db.Model):
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password, method="pbkdf2:sha256")
-        
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     topic: so.Mapped[str] = so.mapped_column(sa.String(250))

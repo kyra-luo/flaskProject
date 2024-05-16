@@ -8,7 +8,7 @@ from app.models import User, Post, Comment
 from random import randint
 from sqlalchemy.exc import IntegrityError
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.email import send_password_reset_email
+from app.email import send_password_reset_email, send_welcome_email
 
 sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa."
 
@@ -103,7 +103,6 @@ def login():
         return redirect(url_for('base'))  # Redirect to index page
     return render_template('login.html', title='Sign In', form=form)
 
-
 @app.route('/register', methods=['GET', 'POST'])
 def regi():
     form = RegisterForm()
@@ -118,7 +117,7 @@ def regi():
                     password_hash=generate_password_hash(form.Password.data, method='pbkdf2:sha256'))
             db.session.add(user)
             db.session.commit()
-            send_password_reset_email(user)
+            send_welcome_email(user)
             flash("You are now registered")
             return redirect(url_for('login'))
         except IntegrityError:
@@ -192,4 +191,3 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('login'))
     return render_template('reset_password.html', form=form)
-
