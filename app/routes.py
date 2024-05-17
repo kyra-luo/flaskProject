@@ -34,7 +34,7 @@ def test():
     form = CommentForm()
     query = sa.select(Post).order_by(Post.timestamp.desc())
     
-    post_all=db.session.scalars(query).all()
+    post_all = db.session.scalars(query).all()
     if post_all is None:
         return redirect(url_for('create'))
     else:
@@ -138,11 +138,7 @@ def commui():
     return render_template('community.html', title='community')
 
 
-def get_user_posts_and_comments(user_id):
-    user = db.session.get(User, user_id)
-    if not user:
-        return None, None
-
+def get_user_posts(user_id):
     # 获取用户的所有帖子和每个帖子的评论
     query = (
         db.session.query(Post, Comment, User)
@@ -167,52 +163,54 @@ def get_user_posts_and_comments(user_id):
             'commentor': comment_user
         })
 
-    return user, posts
+    return posts
+
+def get_user_comments(user_id):
+    # 获取用户的所有评论及其相关的帖子信息
+    query = (
+        db.session.query(Comment, Post, User)
+        .join(Post, Comment.post_id == Post.id)
+        .join(User, Post.user_id == User.id)
+        .filter(Comment.user_id == user_id)
+        .order_by(Comment.timestamp.asc())
+    )
+
+    results = query.all()
+
+    comments = []
+    for comment, post, post_author in results:
+        comments.append({
+            'comment': comment,
+            'post': post,
+            'post_author': post_author
+        })
+
+    return comments
+
 
 
 @app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
     # 获取指定用户名的用户信息
-    user = db.session.execute(sa.select(User).where(User.username == username)).scalars().first()
+    user = db.session.query(User).filter_by(username=username).first_or_404()
     if not user:
         abort(404)
 
+    # 获取用户的帖子及其评论
+    posts = get_user_posts(user.id)
+    post_count = len(posts)
 
-
-
-
-    # 获取所有帖子并按时间戳降序排列
-    query = sa.select(Post).where(Post.user_id == user.id).order_by(Post.timestamp.desc())
-    post_all = db.session.scalars(query).all()
-    post_count = len(post_all)
-
-
-    posts = []
-    for post in post_all:
-        # 获取每个帖子的评论并按时间戳升序排列
-        comment_query = sa.select(Comment).where(Comment.post_id == post.id).order_by(Comment.timestamp.asc())
-        posts.append({
-            'id': post.id,
-            'community': 'Community 1',
-            'topic': post.topic,
-            'body': post.body,
-            'author': post.author,
-            'time_stamp': post.timestamp,
-            'comments': db.session.scalars(comment_query).all()
-        })
-
-    # 获取所有评论
-    comment_query = sa.select(Comment).where(Comment.user_id == user.id).order_by(Comment.timestamp.asc())
-    comments = db.session.scalars(comment_query).all()
-    comment_count = db.session.query(Comment).filter_by(user_id=user.id).count()
+    # 获取用户的评论及其相关帖子信息
+    comments = get_user_comments(user.id)
+    comment_count = len(comments)
 
     form = CommentForm()
     userform = UserForm()
 
     if userform.validate_on_submit():
         try:
-            user.username = userform.name.data
+            user.username = userform.username.data
             user.about_me = userform.about_me.data
             db.session.commit()
             flash('Profile updated successfully!', 'success')
@@ -221,13 +219,10 @@ def user(username):
             db.session.rollback()
             flash('Error updating profile: ' + str(e), 'error')
     elif request.method == 'GET':
-        userform.name.data = user.username
+        userform.username.data = user.username
         userform.about_me.data = user.about_me
 
-    users = User.query.all()
-    return render_template('user.html', title='User Profile', user=user, users=users, form=form, userform=userform, posts=posts, comments=comments, post_count=post_count, comment_count=comment_count)
-
-
+    return render_template('user.html', title='User Profile', user=user, form=form, userform=userform, posts=posts, comments=comments, post_count=post_count, comment_count=comment_count)
 @app.route('/base', methods=['GET', 'POST'])
 def base():
     return render_template('base.html', title='base')

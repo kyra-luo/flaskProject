@@ -26,7 +26,6 @@
                 <div class="profile-info">
                     <p id="aboutMeText">{{ user.about_me or 'That is who am I' }}</p>
                 </div>
-
             </div>
 
             <hr>
@@ -71,15 +70,36 @@
                         </div>
                         <div id="POSTS" class="container tab-pane fade"><br>
                             <h3>POSTS</h3>
-                            {% for post in posts %}
-                                {% include "_post.html" %}
+                            {% for post_id, post_data in posts.items() %}
+                                <div class="list-group-item">
+
+                                <div class="userpost1">
+                                    <h3>{{ post_data.post.topic }}</h3>
+                                    <p>{{ post_data.post.body }}</p>
+                                    <small>Posted by {{ post_data.post.author.username }} on {{ post_data.post.timestamp }}</small>
+                                </div>
+                                <div class="userpost2">
+                                    <div class="comments mt-3">
+                                        <h5>Comments:</h5>
+                                        {% for comment in post_data.comments %}
+                                            <div class="comment">
+                                                <p>{{ comment.comment.comment }}</p>
+                                                <small>Commented by <a href="{{ url_for('user', username=comment.commentor.username) }}">{{ comment.commentor.username }}</a> on {{ comment.comment.timestamp }}</small>
+                                            </div>
+                                        {% endfor %}
+                                    </div>
+                                    </div>
+                                </div>
                             {% endfor %}
                         </div>
                         <div id="COMMENTS" class="container tab-pane fade"><br>
                             <h3>COMMENTS</h3>
-                              {% for comment in comments %}
-                                 {{ user.username }} Comment: {{ comment.comment }}
-                              {% endfor %}
+                            {% for comment in comments %}
+                                <div class="comment">
+                                    <p>{{ comment.comment.comment }}</p>
+                                    <small>Commented on <a href="{{ url_for('test', post_id=comment.post.id) }}">{{ comment.post.topic }}</a> by <a href="{{ url_for('user', username=comment.post_author.username) }}">{{ comment.post_author.username }}</a> on {{ comment.comment.timestamp }}</small>
+                                </div>
+                            {% endfor %}
                         </div>
                     </div>
                     <hr>
@@ -101,8 +121,8 @@
                 <form id="editAboutMeForm" method="post" action="{{ url_for('user', username=user.username) }}">
                     {{ form.hidden_tag() }}
                     <div class="mb-3">
-                        {{ userform.name.label(class="form-label") }}
-                        {{ userform.name(class="form-control") }}
+                        {{ userform.username.label(class="form-label") }}
+                        {{ userform.username(class="form-control") }}
                     </div>
                     <div class="mb-3">
                         {{ userform.about_me.label(class="form-label") }}

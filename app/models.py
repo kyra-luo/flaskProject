@@ -12,37 +12,6 @@ from hashlib import md5
 # lastname,username and the email and password_hash to
 
 
-def get_user_posts_and_comments(user_id):
-    user = db.session.get(User, user_id)
-    if not user:
-        return None
-
-    # 获取用户的所有帖子和每个帖子的评论
-    query = (
-        db.session.query(Post, Comment, User)
-        .join(Comment, Post.id == Comment.post_id)
-        .join(User, User.id == Comment.user_id)
-        .filter(Post.user_id == user_id)
-        .order_by(Post.timestamp.desc(), Comment.timestamp.asc())
-    )
-
-    results = query.all()
-
-    # 组织数据
-    posts = {}
-    for post, comment, comment_user in results:
-        if post.id not in posts:
-            posts[post.id] = {
-                'post': post,
-                'comments': []
-            }
-        posts[post.id]['comments'].append({
-            'comment': comment,
-            'commentor': comment_user
-        })
-
-    return user, posts
-
 
 class User(UserMixin, db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
@@ -55,11 +24,7 @@ class User(UserMixin, db.Model):
     about_me: so.Mapped[str] = so.mapped_column(sa.String(250), nullable=True)
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(default=lambda: datetime.now(timezone.utc))
     #Communities: so.Mapped[str] = so.mapped_column(sa.String(250),nullable=True)
-
-
-
-    posts: so.WriteOnlyMapped['Post'] = so.relationship(
-        back_populates='author')
+    posts: so.WriteOnlyMapped['Post'] = so.relationship(back_populates='author')
 
     # write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
     write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
@@ -67,6 +32,10 @@ class User(UserMixin, db.Model):
     def avatar(self, size):
         digest = md5(self.email.lower().encode('utf-8')).hexdigest()
         return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
+
+
+
+
 
     def __repr__(self):
         return '<User {}>'.format(self.username)
