@@ -14,7 +14,7 @@ from app.email import send_password_reset_email, send_welcome_email
 from app.helpers import process_posts_with_comments
 from datetime import datetime, timezone
 
-@app.before_request
+@main.before_request
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.now(timezone.utc)
