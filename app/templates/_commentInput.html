@@ -1,7 +1,7 @@
 <form action="/post_comment" method="POST" class="custom-textarea comment-form">
-    {{ form.hidden_tag() }}
-    {{ form.comment_body(class="auto-expand", placeholder="Place a comment", id="comment_input" ~ post.id ) }}
-    {{ form.post_id(type="hidden", value=post.id) }}
+    {{ comment_form.hidden_tag() }}
+    {{ comment_form.comment_body(class="auto-expand", placeholder="Place a comment", id="comment_input" ~ post.id ) }}
+    {{ comment_form.post_id(type="hidden", value=post.id) }}
     <div class="charCount"></div>
     <div class="buttons">
         <button type="submit" class="btn btn-sm btns btn-outline-primary comment post-comment">Comment</button>

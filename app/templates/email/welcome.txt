@@ -1,0 +1,6 @@
+Dear {{ user.username }},
+
+Welcome to Our Website! We are excited to have you join our community.
+
+Best regards,
+The Communication Forum board Team

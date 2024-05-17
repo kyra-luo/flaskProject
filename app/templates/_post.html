@@ -7,7 +7,7 @@
                 <img src="{{ post.author.avatar(36) }}" alt="" class="post-user-avatar">
             </a>
             <span class="post-user-name">{{ post.author.username }}</span>
-            <span class="post-date">{{ moment(post.time_stamp).fromNow() }}</span>
+            <span class="post-date">{{ moment(post.timestamp).fromNow() }}</span>
         </div>
         <div class="post-topic">
             <h1>{{ post.topic }}</h1>
