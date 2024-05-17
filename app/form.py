@@ -22,7 +22,7 @@ class CommentForm(FlaskForm):
 
 class CommunityForm(FlaskForm):
     communityName = StringField('CommunityName', validators=[DataRequired(), Length(min=1, max=15) ])
-    category = SelectField('Category', choices=[('1','IT'), ('2','Mathmatic'), ('3','Physics'),('4','Engineering'),('5','Sport')])
+    category = SelectField('Category', choices=[('1','IT'), ('3','Mathmatic'), ('4','Physics'),('5','Engineering'),('6','Sport')])
     description = TextAreaField('What is this community all about', validators=[
         DataRequired(), Length(min=1, max=1000)])
     submit = SubmitField('Create new community')

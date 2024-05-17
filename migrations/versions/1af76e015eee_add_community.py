@@ -1,8 +1,8 @@
 """add community
 
-Revision ID: de4b81a4909b
+Revision ID: 1af76e015eee
 Revises: 753a46794e77
-Create Date: 2024-05-16 01:33:51.484227
+Create Date: 2024-05-17 18:26:37.315530
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'de4b81a4909b'
+revision = '1af76e015eee'
 down_revision = '753a46794e77'
 branch_labels = None
 depends_on = None
@@ -27,7 +27,7 @@ def upgrade():
     sa.PrimaryKeyConstraint('id')
     )
     with op.batch_alter_table('community', schema=None) as batch_op:
-        batch_op.create_index(batch_op.f('ix_community_category'), ['category'], unique=True)
+        batch_op.create_index(batch_op.f('ix_community_category'), ['category'], unique=False)
         batch_op.create_index(batch_op.f('ix_community_communityName'), ['communityName'], unique=True)
         batch_op.create_index(batch_op.f('ix_community_timestamp'), ['timestamp'], unique=False)
 

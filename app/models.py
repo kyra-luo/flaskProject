@@ -16,7 +16,6 @@ from hashlib import md5
 # lastname,username and the email and password_hash to
 from time import time 
 import jwt
-from app import app
 
 
 commembers = sa.Table(
@@ -67,6 +66,7 @@ class User(UserMixin, db.Model):
 
     def set_password(self, password):
         self.password_hash = generate_password_hash(password, method="pbkdf2:sha256")
+        
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     topic: so.Mapped[str] = so.mapped_column(sa.String(250))
@@ -99,8 +99,7 @@ class Community(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     communityName: so.Mapped[str] = so.mapped_column(sa.String(15), index=True,
                                                 unique=True)
-    category: so.Mapped[str] = so.mapped_column(sa.String(10), index=True,
-                                             unique=True)
+    category: so.Mapped[str] = so.mapped_column(sa.String(10), index=True)
     description: so.Mapped[str] = so.mapped_column(sa.String(50))
     timestamp: so.Mapped[datetime] = so.mapped_column(
         index=True, default=lambda: datetime.now(timezone.utc))  
