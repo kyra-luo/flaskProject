@@ -24,9 +24,8 @@
             <div class="profile-section">
                 <img src="{{ url_for('static', filename='image/01.png') }}" alt="Profile Icon" class="profile-icon">
                 <div class="profile-info">
-                    <p id="aboutMeText">{{ user.about_me or 'Customize your profile' }}</p>
+                    <p id="aboutMeText">{{ user.about_me or 'That is who am I' }}</p>
                 </div>
-                <button type="button" class="useredit-button" data-bs-toggle="modal" data-bs-target="#editModal">Edit about me</button>
 
             </div>
 
@@ -49,9 +48,7 @@
                 <table>
                     <tr>
                         <td>
-                            <button id="shareButton" class="btn" style="margin: 15px;background-color: rgba(250, 235, 215, 0.567);">
-                                <i class="fa-solid fa-share"></i>Share
-                            </button>
+                            <button class="profile-info" type="button" class="useredit-button" data-bs-toggle="modal" data-bs-target="#editModal">Change Profile</button>
                         </td>
                         <td><h5>last visit:  {{ user.last_seen }}</h5></td>
                     </tr>
@@ -81,7 +78,7 @@
                         <div id="COMMENTS" class="container tab-pane fade"><br>
                             <h3>COMMENTS</h3>
                               {% for comment in comments %}
-                                 Comment: {{comment.comment}}
+                                 {{ user.username }} Comment: {{ comment.comment }}
                               {% endfor %}
                         </div>
                     </div>

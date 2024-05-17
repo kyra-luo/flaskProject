@@ -3,7 +3,9 @@
     <div class="single-post">
         <!-- Post content -->
         <div class="post-user-info">
-            <img src="{{ post.author.avatar(36) }}" alt="" class="post-user-avatar">
+            <a href="{{ url_for('user', username=post.author.username) }}">
+                <img src="{{ post.author.avatar(36) }}" alt="" class="post-user-avatar">
+            </a>
             <span class="post-user-name">{{ post.author.username }}</span>
             <span class="post-date">{{ moment(post.time_stamp).fromNow() }}</span>
         </div>

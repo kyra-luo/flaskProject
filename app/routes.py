@@ -138,6 +138,38 @@ def commui():
     return render_template('community.html', title='community')
 
 
+def get_user_posts_and_comments(user_id):
+    user = db.session.get(User, user_id)
+    if not user:
+        return None, None
+
+    # 获取用户的所有帖子和每个帖子的评论
+    query = (
+        db.session.query(Post, Comment, User)
+        .join(Comment, Post.id == Comment.post_id)
+        .join(User, User.id == Comment.user_id)
+        .filter(Post.user_id == user_id)
+        .order_by(Post.timestamp.desc(), Comment.timestamp.asc())
+    )
+
+    results = query.all()
+
+    # 组织数据
+    posts = {}
+    for post, comment, comment_user in results:
+        if post.id not in posts:
+            posts[post.id] = {
+                'post': post,
+                'comments': []
+            }
+        posts[post.id]['comments'].append({
+            'comment': comment,
+            'commentor': comment_user
+        })
+
+    return user, posts
+
+
 @app.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
@@ -148,11 +180,13 @@ def user(username):
 
 
 
+
+
     # 获取所有帖子并按时间戳降序排列
-    query = sa.select(Post).order_by(Post.timestamp.desc())
+    query = sa.select(Post).where(Post.user_id == user.id).order_by(Post.timestamp.desc())
     post_all = db.session.scalars(query).all()
-    post_count = db.session.query(Post).filter_by(user_id=user.id).count()
-    comment_count = db.session.query(Comment).filter_by(user_id=user.id).count()
+    post_count = len(post_all)
+
 
     posts = []
     for post in post_all:
@@ -169,8 +203,9 @@ def user(username):
         })
 
     # 获取所有评论
-    comment_query = sa.select(Comment).order_by(Comment.timestamp.asc())
+    comment_query = sa.select(Comment).where(Comment.user_id == user.id).order_by(Comment.timestamp.asc())
     comments = db.session.scalars(comment_query).all()
+    comment_count = db.session.query(Comment).filter_by(user_id=user.id).count()
 
     form = CommentForm()
     userform = UserForm()
@@ -191,6 +226,7 @@ def user(username):
 
     users = User.query.all()
     return render_template('user.html', title='User Profile', user=user, users=users, form=form, userform=userform, posts=posts, comments=comments, post_count=post_count, comment_count=comment_count)
+
 
 @app.route('/base', methods=['GET', 'POST'])
 def base():

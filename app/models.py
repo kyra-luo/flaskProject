@@ -12,7 +12,36 @@ from hashlib import md5
 # lastname,username and the email and password_hash to
 
 
+def get_user_posts_and_comments(user_id):
+    user = db.session.get(User, user_id)
+    if not user:
+        return None
 
+    # 获取用户的所有帖子和每个帖子的评论
+    query = (
+        db.session.query(Post, Comment, User)
+        .join(Comment, Post.id == Comment.post_id)
+        .join(User, User.id == Comment.user_id)
+        .filter(Post.user_id == user_id)
+        .order_by(Post.timestamp.desc(), Comment.timestamp.asc())
+    )
+
+    results = query.all()
+
+    # 组织数据
+    posts = {}
+    for post, comment, comment_user in results:
+        if post.id not in posts:
+            posts[post.id] = {
+                'post': post,
+                'comments': []
+            }
+        posts[post.id]['comments'].append({
+            'comment': comment,
+            'commentor': comment_user
+        })
+
+    return user, posts
 
 
 class User(UserMixin, db.Model):
@@ -44,7 +73,7 @@ class User(UserMixin, db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
-    
+
 class Post(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     topic: so.Mapped[str] = so.mapped_column(sa.String(250))
@@ -60,7 +89,7 @@ class Post(db.Model):
 
     def __repr__(self):
         return '<Post {}>'.format(self.body)
-    
+
 class Comment(db.Model):
     id: so.Mapped[int] = so.mapped_column(primary_key=True)
     comment: so.Mapped[str] = so.mapped_column(sa.String(140))
@@ -77,3 +106,5 @@ class Comment(db.Model):
 @login.user_loader
 def load_user(id):
     return db.session.get(User, int(id))
+
+
