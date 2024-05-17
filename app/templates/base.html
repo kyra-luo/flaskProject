@@ -30,7 +30,7 @@
                 <a href="{{ url_for('main.logout') }}">Logout</a>
                 {% else %}
                 <button onclick="loadlogin()">Log In</button>
-                <button>Get account</button>
+                <button onclick="window.location.href = '/register'">Get account</button>
                 {% endif %}
             </div>
         </div>
@@ -56,6 +56,8 @@
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='comment.js') }}"></script>
+    <script src="{{ url_for('static', filename='home.js') }}"></script>
+
 </body>
 <script>
     function loadlogin() {
