@@ -24,6 +24,7 @@ class User(UserMixin, db.Model):
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
     about_me: so.Mapped[str] = so.mapped_column(sa.String(250), nullable=True)
+    last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(default=lambda: datetime.now(timezone.utc))
     #Communities: so.Mapped[str] = so.mapped_column(sa.String(250),nullable=True)
 
 

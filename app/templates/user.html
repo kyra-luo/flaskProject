@@ -46,9 +46,16 @@
                     </tr>
                 </table>
 
-                    <button id="shareButton" class="btn" style="margin: 15px;background-color: rgba(250, 235, 215, 0.567);">
-                        <i class="fa-solid fa-share"></i>Share
-                    </button>
+                <table>
+                    <tr>
+                        <td>
+                            <button id="shareButton" class="btn" style="margin: 15px;background-color: rgba(250, 235, 215, 0.567);">
+                                <i class="fa-solid fa-share"></i>Share
+                            </button>
+                        </td>
+                        <td><h5>last visit:  {{ user.last_seen }}</h5></td>
+                    </tr>
+                </table>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#personalized">personalized</a>
