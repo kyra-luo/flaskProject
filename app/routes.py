@@ -2,7 +2,7 @@ from flask import render_template, redirect, url_for, flash, request, jsonify
 from flask_login import current_user, login_required, login_user, logout_user
 from urllib.parse import urlsplit
 from app import app, db
-from app.form import PostForm, RegisterForm, LoginForm, CommentForm
+from app.form import PostForm, RegisterForm, LoginForm, CommentForm, ResetPasswordRequestForm
 import sqlalchemy as sa
 from app.models import User, Post, Comment
 from random import randint
