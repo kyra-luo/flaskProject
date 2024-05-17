@@ -30,7 +30,7 @@
                 <a href="{{ url_for('main.logout') }}">Logout</a>
                 {% else %}
                 <button onclick="loadlogin()">Log In</button>
-                <button>Get account</button>
+                <button onclick="window.location.href = '/register'">Get account</button>
                 {% endif %}
             </div>
         </div>
