@@ -132,12 +132,6 @@ def community(category):
         else:
             forums = db.session.query(Community).all()
         comment_form = CommentForm()
-        query = sa.select(Post).order_by(Post.timestamp.desc())
-        post_all=db.session.scalars(query).all()
-        if post_all is None:
-             return redirect(url_for('create'))
-        else:
-            posts = process_posts_with_comments(post_all)
         community_form = CommunityForm()
         if community_form.validate_on_submit():
             community = Community(
@@ -149,7 +143,23 @@ def community(category):
             db.session.commit()
             flash('Community created requested for user {}, category={}'.format(community_form.communityName.data, community_form.category.data))
             return redirect(url_for('community'))
-        return render_template('community.html',title='community', comment_form=comment_form, forums=forums, posts=posts, community_form=community_form)
+        return render_template('community.html',title='community', comment_form=comment_form, forums=forums, community_form=community_form)
+
+@main.route('/community/1/<id>', methods=['GET', 'POST'])
+def forum(id):
+    comment_form = CommentForm()
+    community_form = CommunityForm()
+    query = sa.select(Post).where(Post.community_id == id
+    ).order_by(Post.timestamp.desc())
+    post_all=db.session.scalars(query).all()
+    communities = db.session.query(Community).all()
+    if post_all is None:
+        return redirect(url_for('main.create'))
+    elif communities is None:
+        return redirect(url_for('community'))
+    else:
+        posts = process_posts_with_comments(post_all)
+    return render_template('forum.html', title='Home', posts=posts, comment_form=comment_form, community_form=community_form)
 
 @main.route('/user', methods=['GET', 'POST'])
 def user():

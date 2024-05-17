@@ -45,93 +45,19 @@
             </div>
 
             <div class="inner-main"> 
-                <!-- <div class="inner-main-header">
-                    <select class="custom-select custom-select-sm w-auto mr-1">
-                        <option selected>Latest</option>
-                        <option value="1">Popular</option>
-                        <option value="3">Name A-Z</option>
-                        <option value="3">Name Z-A</option>
-                    </select> -->
-                    <!-- <span class="input-icon input-icon-sm ml-auto w-auto">
-                        <input type="text" class="form-control form-control-sm bg-gray-200 border-gray-200 shadow-none mb-4 mt-4" placeholder="Search forum" />
-                    </span> -->
-                <!-- </div> -->
                 <div class="inner-main-body p-2 p-sm-3 collapse forum-content show">
                     <div class="card mb-2">
                         <div class="card-body p-2 p-sm-3">
                             <div class="media forum-item">
-                                <a href="#" data-bs-toggle="collapse" data-bs-target=".forum-content"><img src="" class="mr-3 rounded-circle" width="50" alt="Forum picture" /></a>
                                 <div class="media-body">
-                                {% for f in forums %}
-                                <a href="{{ url_for('main.forum', id=f.id) }}" class="text-body">{{ f.communityName }}</a>
-                                <p class="text-secondary">
-                                {{f.description}}
-                                </p>
-                                <p class="text-muted"><span class="text-secondary font-weight-bold">Established {{ moment(f.timestamp).fromNow() }}</span></p>
-                                {% endfor %}                            
+                                    {% for post in posts %}
+                                    {% include "_post.html" %}
+                                    {% endfor %}                          
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <ul class="pagination pagination-sm pagination-circle justify-content-center mb-0">
-                        <li class="page-item disabled">
-                        <span class="page-link has-icon"><i class="material-icons">chevron_left</i></span>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0)">1</a></li>
-                        <li class="page-item active"><span class="page-link">2</span></li>
-                        <li class="page-item"><a class="page-link" href="javascript:void(0)">3</a></li>
-                        <li class="page-item">
-                        <a class="page-link has-icon" href="javascript:void(0)"><i class="material-icons">chevron_right</i></a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- <div class="inner-main-body p-2 p-sm-3 collapse forum-content">
-                    {% for post in posts %}
-                    {% include "_post.html" %}
-                    {% endfor %} -->
-                    <!-- <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-bs-toggle="collapse" data-bs-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a> -->
-                    <!-- <div class="card mb-2">
-                        <div class="card-body">                   
-                            <div class="media forum-item">                   
-                                <a href="javascript:void(0)" class="card-link">                  
-                                    <img src="" class="rounded-circle" width="50" alt="User" />                 
-                                    <small class="d-block text-center text-muted">Newbie</small>                 
-                                </a>
-                                {% for post in posts %}
-                                <div class="media-body ml-3">
-                                    <a href="javascript:void(0)" class="text-secondary">{{post.author}}</a>
-                                    <small class="text-muted ml-2">{{post.timestamp}}</small>
-                                    <h5 class="mt-1">{{post.topic}}</h5>
-                                    <div class="mt-3 font-size-sm">
-                                       {{post.body}}
-                                    </div>
-                                {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="card mb-2">
-                        <div class="card-body">
-                            <div class="media forum-item">
-                                <a href="javascript:void(0)" class="card-link">
-                                <img src="" class="rounded-circle" width="50" alt="User" />
-                                <small class="d-block text-center text-muted">Pro</small>
-                            </a>
-                            <div class="media-body ml-3">
-                                <a href="javascript:void(0)" class="text-secondary">drew</a>
-                                <small class="text-muted ml-2">1 hour ago</small>
-                                <div class="mt-3 font-size-sm">
-                                    <p> lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet</p>
-                                    <p> lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet</p>
-                                </div>
-                                <button class="btn btn-xs text-muted has-icon"><i class="fa fa-heart" aria-hidden="true"></i>1</button>
-                                <a href="javascript:void(0)" class="text-muted small">Reply</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-             </div> 
+                </div> 
             </div>
         </div>
         <div class="modal fade" id="forumModal" tabindex="-1" role="dialog" aria-labelledby="forumModalLabel" aria-hidden="true">
@@ -187,14 +113,3 @@
 </div>
 </div>
 {% endblock %}
-<!-- <script>
-    document.getElementById('communityLink-{{ f.id }}').addEventListener('click', function(event) {
-        event.preventDefault();  // Prevents the default navigation
-        // Add your collapse logic here
-        // Example:
-        document.querySelector('.forum-content').classList.toggle('show');
-        // Uncomment the following line to actually navigate after the collapse (if needed)
-        // window.location.href = this.href;
-    });
-</script> -->
-<!-- <h6><a href="{{ url_for('community', category=f.category, name=f.communityName) }}" data-bs-toggle="collapse" data-bs-target=".forum-content" class="text-body">{{f.communityName}}</a></h6> -->
