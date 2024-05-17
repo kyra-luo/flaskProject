@@ -1,7 +1,8 @@
 from flask import render_template, redirect, url_for, flash, request, jsonify
 from flask_login import current_user, login_required, login_user, logout_user
 from urllib.parse import urlsplit
-from app import app, db
+from app import db
+from app.blueprint import main
 from app.form import PostForm, RegisterForm, LoginForm, CommentForm, ResetPasswordRequestForm, ResetPasswordForm, CommunityForm
 import sqlalchemy as sa
 from app.models import User, Post, Community, Comment
@@ -221,7 +222,7 @@ def reset_password_request():
                            title='Reset Password', form=form)
 
 
-@app.route('/reset_password/<token>', methods=['GET', 'POST'])
+@main.route('/reset_password/<token>', methods=['GET', 'POST'])
 def reset_password(token):
     if current_user.is_authenticated:
         return redirect(url_for('main.index'))
