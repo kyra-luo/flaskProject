@@ -5,6 +5,7 @@ import sqlalchemy as sa
 import sqlalchemy.orm as so
 from app import db, login
 from flask_login import UserMixin
+from hashlib import md5
 
 
 # Create a new database callled user, for user register, which content id(UI&PK), id after format, Firstname,
@@ -105,8 +106,9 @@ class Community(db.Model):
     members:  so.WriteOnlyMapped[User] = so.relationship(
         secondary=commembers,
         back_populates='communities')
-    
     __tablename__ = "community"
+
+
     def __repr__(self):
         return '<Community {}>'.format(self.communityName)
 

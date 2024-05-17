@@ -147,19 +147,20 @@ def community(category):
 
 @main.route('/community/<category>/<id>', methods=['GET', 'POST'])
 def forum(category, id):
-    comment_form = CommentForm()
-    community_form = CommunityForm()
-    query = sa.select(Post).where(Post.community_id == id
-    ).order_by(Post.timestamp.desc())
-    post_all=db.session.scalars(query).all()
-    communities = db.session.query(Community).all()
-    if post_all is None:
-        return redirect(url_for('main.create'))
-    elif communities is None:
-        return redirect(url_for('community'))
-    else:
-        posts = process_posts_with_comments(post_all)
-    return render_template('forum.html', title='Home', posts=posts, comment_form=comment_form, community_form=community_form)
+    if category and id:
+        comment_form = CommentForm()
+        community_form = CommunityForm()
+        query = sa.select(Post).where(Post.community_id == id
+        ).order_by(Post.timestamp.desc())
+        post_all=db.session.scalars(query).all()
+        communities = db.session.query(Community).all()
+        if post_all is None:
+            return redirect(url_for('main.create'))
+        elif communities is None:
+            return redirect(url_for('community'))
+        else:
+            posts = process_posts_with_comments(post_all)
+        return render_template('forum.html', title='Home', posts=posts, comment_form=comment_form, community_form=community_form)
 
 
 # @main.route('/community', defaults={'category': None, 'id': None}, methods=['GET', 'POST'])
