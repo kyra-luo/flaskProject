@@ -163,34 +163,6 @@ def forum(category, id):
             posts = process_posts_with_comments(post_all)
         return render_template('forum.html', title='Home', posts=posts, comment_form=comment_form, community_form=community_form)
 
-
-# @main.route('/community', defaults={'category': None, 'id': None}, methods=['GET', 'POST'])
-# @main.route('/community/<category>', defaults={'id': None}, methods=['GET', 'POST'])
-# @main.route('/community/<category>/<id>', methods=['GET', 'POST'])
-# def community(category, id):
-#         posts = []
-#         if category:
-#             forums = db.session.query(Community).filter_by(category=category).all()
-#             if id:
-#                 query = sa.select(Post).where(Post.community_id == id
-#                 ).order_by(Post.timestamp.desc())
-#                 post_all=db.session.scalars(query).all()
-#                 posts = process_posts_with_comments(post_all)
-#         else:
-#             forums = db.session.query(Community).all()      
-#         comment_form = CommentForm()
-#         community_form = CommunityForm()
-#         if community_form.validate_on_submit():
-#             community = Community(
-#                     communityName=community_form.communityName.data,
-#                     category=community_form.category.data,
-#                     description=community_form.description.data
-#                     )
-#             db.session.add(community)
-#             db.session.commit()
-#             flash('Community created requested for user {}, category={}'.format(community_form.communityName.data, community_form.category.data))
-#             return redirect(url_for('community'))
-#         return render_template('community.html',title='community', comment_form=comment_form, forums=forums, community_form=community_form, posts=posts)
 @main.route('/user', methods=['GET', 'POST'])
 def user():
     return render_template('user.html', title='User')
