@@ -6,7 +6,6 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config:
     SQLALCHEMY_DATABASE_URI = os.environ.get('DATABASE_URL') or \
     'sqlite:///' + os.path.join(basedir, 'app.db')
-                              'sqlite:///' + os.path.join(basedir, 'app.db')
     ADMINS = ['2929657051@qq.com']
     MAIL_SERVER = 'smtp.qq.com'
     MAIL_PORT = 587

@@ -124,23 +124,8 @@ def regi():
             flash("Registration failed. Please check your input.")
     return render_template('register.html', title='register', form=form)
 
-
-# @app.route('/community', methods=['GET', 'POST'])
-# def community():
-#     form = CommunityForm()
-#     if form.validate_on_submit():
-#             community = Community(
-#                     communityName=form.communityName.data,
-#                     category=form.category.data,
-#                     description=form.description.data
-#                     )
-#             db.session.add(community)
-#             db.session.commit()
-#             flash('Community {} created, category={}'.format(form.communityName.data, form.category.data))
-#     return render_template('community.html',title='community', form=form)
-
-@app.route('/community', defaults={'category': None}, methods=['GET', 'POST'])
-@app.route('/community/<category>', methods=['GET', 'POST'])
+@main.route('/community', defaults={'category': None}, methods=['GET', 'POST'])
+@main.route('/community/<category>', methods=['GET', 'POST'])
 def community(category):
         if category:
             forums = db.session.query(Community).filter_by(category=category).all()

@@ -9,7 +9,7 @@ from flask_login import UserMixin
 
 # Create a new database callled user, for user register, which content id(UI&PK), id after format, Firstname,
 # lastname,username and the email and password_hash to
-from time import time
+from time import time 
 import jwt
 from app import app
 
