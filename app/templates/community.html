@@ -25,12 +25,12 @@
                                     <div class="simplebar-content-wrapper" style="height: 100%; overflow: hidden scroll;">
                                         <div class="simplebar-content" style="padding: 16px;">
                                             <nav class="nav nav-pills nav-gap-y-1 flex-column">
-                                                <a href="{{ url_for('community')}}" class="nav-link">All Forums</a>
-                                                <a href="{{ url_for('community', category='1') }}" class="nav-link">IT Forums</a>
-                                                <a href="{{ url_for('community', category='2') }}" class="nav-link">Mathmatic Forums</a>
-                                                <a href="{{ url_for('community', category='3') }}" class="nav-link">Physics Forums</a>
-                                                <a href="{{ url_for('community', category='4') }}" class="nav-link">Engineering Forums</a>
-                                                <a href="{{ url_for('community', category='5') }}" class="nav-link">Sport Forums</a>
+                                                <a href="{{ url_for('main.community')}}" class="nav-link">All Forums</a>
+                                                <a href="{{ url_for('main.community', category='1') }}" class="nav-link">IT Forums</a>
+                                                <a href="{{ url_for('main.community', category='6') }}" class="nav-link">Mathmatic Forums</a>
+                                                <a href="{{ url_for('main.community', category='3') }}" class="nav-link">Physics Forums</a>
+                                                <a href="{{ url_for('main.community', category='4') }}" class="nav-link">Engineering Forums</a>
+                                                <a href="{{ url_for('main.community', category='5') }}" class="nav-link">Sport Forums</a>
                                             </nav>
                                         </div>
                                     </div>
@@ -63,18 +63,7 @@
                                 <a href="#" data-bs-toggle="collapse" data-bs-target=".forum-content"><img src="" class="mr-3 rounded-circle" width="50" alt="Forum picture" /></a>
                                 <div class="media-body">
                                 {% for f in forums %}
-                                <!-- <script>
-                                    document.getElementById('communityLink-{{ f.id }}').addEventListener('click', function(event) {
-                                        event.preventDefault();  // Prevents the default navigation
-                                        // Add your collapse logic here
-                                        // Example:
-                                        document.querySelector('.forum-content').classList.toggle('show');
-                                        // Uncomment the following line to actually navigate after the collapse (if needed)
-                                        // window.location.href = this.href;
-                                    });
-                                </script> -->
-                                <!-- <h6><a href="{{ url_for('community', category=f.category, name=f.communityName) }}" data-bs-toggle="collapse" data-bs-target=".forum-content" class="text-body">{{f.communityName}}</a></h6> -->
-                                <a href="{{ url_for('community', category=f.category, name=f.communityName) }}" class="text-body">{{ f.communityName }}</a>
+                                <a href="" class="text-body">{{ f.communityName }}</a>
                                 <p class="text-secondary">
                                 {{f.description}}
                                 </p>
@@ -198,3 +187,14 @@
 </div>
 </div>
 {% endblock %}
+<!-- <script>
+    document.getElementById('communityLink-{{ f.id }}').addEventListener('click', function(event) {
+        event.preventDefault();  // Prevents the default navigation
+        // Add your collapse logic here
+        // Example:
+        document.querySelector('.forum-content').classList.toggle('show');
+        // Uncomment the following line to actually navigate after the collapse (if needed)
+        // window.location.href = this.href;
+    });
+</script> -->
+<!-- <h6><a href="{{ url_for('community', category=f.category, name=f.communityName) }}" data-bs-toggle="collapse" data-bs-target=".forum-content" class="text-body">{{f.communityName}}</a></h6> -->
