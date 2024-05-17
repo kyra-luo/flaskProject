@@ -2,11 +2,12 @@ from flask import render_template, redirect, url_for, flash, request, jsonify
 from flask_login import current_user, login_required, login_user, logout_user
 from urllib.parse import urlsplit
 from app import app, db
-from app.form import PostForm, RegisterForm, LoginForm, CommentForm, ResetPasswordRequestForm, ResetPasswordForm
+from app.form import PostForm, RegisterForm, LoginForm, CommentForm
 import sqlalchemy as sa
 from app.models import User, Post, Comment
 from random import randint
 from sqlalchemy.exc import IntegrityError
+from app.blueprint import main
 from werkzeug.security import generate_password_hash, check_password_hash
 from app.email import send_password_reset_email, send_welcome_email
 
@@ -16,12 +17,12 @@ sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore 
 def generate_user_id():
     return '{:06d}'.format(randint(0, 999999))
 
-@app.route('/')
-@app.route('/index')
+@main.route('/')
+@main.route('/index')
 def index():
     return render_template('index.html', title='Home')
 
-@app.route('/explore', methods=['GET', 'POST'])
+@main.route('/explore', methods=['GET', 'POST'])
 @login_required
 def test():
     form = CommentForm()
@@ -29,7 +30,7 @@ def test():
     
     post_all=db.session.scalars(query).all()
     if post_all is None:
-        return redirect(url_for('create'))
+        return redirect(url_for('main.create'))
     else:
         posts =[]
         for post in post_all:
@@ -47,7 +48,7 @@ def test():
     return render_template('post.html', title='Home', posts=posts, form=form)
 
 
-@app.route('/create', methods=['GET', 'POST'])
+@main.route('/create', methods=['GET', 'POST'])
 @login_required
 def create():
     form = PostForm()
@@ -59,7 +60,7 @@ def create():
     return render_template('create_post.html', title='Create Post', form=form)
 
 
-@app.route('/post_comment', methods=['POST'])
+@main.route('/post_comment', methods=['POST'])
 @login_required
 def post_comment():
     if request.method == 'POST':
@@ -72,15 +73,15 @@ def post_comment():
             db.session.commit()
             flash('Your comment is now live!')
             comment_html = render_template('_comment.html', comment=comment)
-            # print(comment_html)
+            print(comment_html)
             return jsonify({'comment_html': comment_html})
     
     return jsonify({'error': 'Invalid data'}), 400
 
-@app.route('/login', methods=['GET', 'POST'])
+@main.route('/login', methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect(url_for('base'))
+        return redirect(url_for('main.base'))
     form = LoginForm()
     if form.validate_on_submit():
         print('Form data received:', form.email_addr.data, form.password.data)
@@ -92,18 +93,19 @@ def login():
         if user is None or not user.check_password(form.password.data):
             flash('Invalid email or password')
             print('Invalid email or password')  # Add this line to check if this condition is met
-            return redirect(url_for('login'))
+            return redirect(url_for('main.login'))
 
         login_user(user)
         next_page = request.args.get('next')
         if not next_page or urlsplit(next_page).netloc != '':
-            next_page = url_for('index')
+            next_page = url_for('main.index')
         return redirect(next_page)
         print(current_user.is_authenticated)
-        return redirect(url_for('base'))  # Redirect to index page
+        return redirect(url_for('main.base'))  # Redirect to index page
     return render_template('login.html', title='Sign In', form=form)
 
-@app.route('/register', methods=['GET', 'POST'])
+
+@main.route('/register', methods=['GET', 'POST'])
 def regi():
     form = RegisterForm()
     # if the request method == POST and the form.validate == TRUE.
@@ -119,33 +121,33 @@ def regi():
             db.session.commit()
             send_welcome_email(user)
             flash("You are now registered")
-            return redirect(url_for('login'))
+            return redirect(url_for('main.login'))
         except IntegrityError:
             flash("Registration failed. Please check your input.")
     return render_template('register.html', title='register', form=form)
 
 
-@app.route('/community', methods=['GET', 'POST'])
+@main.route('/community', methods=['GET', 'POST'])
 def commui():
     return render_template('community.html', title='community')
 
 
-@app.route('/user', methods=['GET', 'POST'])
+@main.route('/user', methods=['GET', 'POST'])
 def user():
     return render_template('user.html', title='User')
 
 
-@app.route('/base', methods=['GET', 'POST'])
+@main.route('/base', methods=['GET', 'POST'])
 def base():
     return render_template('base.html', title='base')
 
-@app.route('/logout')
+@main.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('index'))
+    return redirect(url_for('main.index'))
 
 
-@app.route('/reset_password_request', methods=['GET', 'POST'])
+@main.route('/reset_password_request', methods=['GET', 'POST'])
 def reset_password_request():
     if current_user.is_authenticated:
         return redirect(url_for('index'))

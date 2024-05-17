@@ -27,7 +27,7 @@
             </div>
             <div class="button-container">
                 {% if current_user.is_authenticated %}
-                <a href="{{ url_for('logout') }}">Logout</a>
+                <a href="{{ url_for('main.logout') }}">Logout</a>
                 {% else %}
                 <button onclick="loadlogin()">Log In</button>
                 <button onclick="window.location.href = '/register'">Get account</button>
