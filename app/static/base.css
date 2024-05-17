@@ -469,3 +469,12 @@ td {
     height: 55px;
     width: 55px;
 }
+
+
+.middle table, th, td{
+    border: none;/* 垂直居中 */
+        }
+.middle td{
+    text-align: center; /* 水平居中 */
+    vertical-align: middle; /* 垂直居中 */
+}

@@ -3,7 +3,7 @@
     <div class="single-post">
         <!-- Post content -->
         <div class="post-user-info">
-            <img src="/static/avatar/Screenshot 2024-03-22 at 5.56.01 pm.jpeg" alt="" class="post-user-avatar">
+            <img src="{{ post.author.avatar(36) }}" alt="" class="post-user-avatar">
             <span class="post-user-name">{{ post.author.username }}</span>
             <span class="post-date">{{ moment(post.time_stamp).fromNow() }}</span>
         </div>

@@ -139,9 +139,13 @@ def user(username):
     if not user:
         abort(404)
 
+
+
     # 获取所有帖子并按时间戳降序排列
     query = sa.select(Post).order_by(Post.timestamp.desc())
     post_all = db.session.scalars(query).all()
+    post_count = db.session.query(Post).filter_by(user_id=user.id).count()
+    comment_count = db.session.query(Comment).filter_by(user_id=user.id).count()
 
     posts = []
     for post in post_all:
@@ -179,7 +183,7 @@ def user(username):
         userform.about_me.data = user.about_me
 
     users = User.query.all()
-    return render_template('user.html', title='User Profile', user=user, users=users, form=form, userform=userform, posts=posts, comments=comments)
+    return render_template('user.html', title='User Profile', user=user, users=users, form=form, userform=userform, posts=posts, comments=comments, post_count=post_count, comment_count=comment_count)
 
 @app.route('/base', methods=['GET', 'POST'])
 def base():

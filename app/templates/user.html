@@ -39,7 +39,13 @@
         <div class="col-sm-9">
             <div class="row">
                 <div class="middle">
-                    <h2>{{ user.username }}</h2>
+                <table>
+                    <tr valign="top">
+                        <td><img src="{{ user.avatar(128) }}"></td>
+                        <td><h2>{{ user.username }}</h2></td>
+                    </tr>
+                </table>
+
                     <button id="shareButton" class="btn" style="margin: 15px;background-color: rgba(250, 235, 215, 0.567);">
                         <i class="fa-solid fa-share"></i>Share
                     </button>
@@ -48,10 +54,10 @@
                             <a class="nav-link active" data-bs-toggle="tab" href="#personalized">personalized</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#POSTS">POSTS<span class="badge bg-secondary">5</span></a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#POSTS">POSTS<span class="badge bg-secondary">{{ post_count }}</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#COMMENTS">COMMENTS<span class="badge bg-secondary">10</span></a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#COMMENTS">COMMENTS<span class="badge bg-secondary">{{ comment_count }}</span></a>
                         </li>
                     </ul>
                     <div class="tab-content">
