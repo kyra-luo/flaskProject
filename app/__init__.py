@@ -21,9 +21,7 @@ def create_app(Config):
     app.register_blueprint(main)
     db.init_app(app)
     mail.init_app(app)
-    # migrate = Migrate(app, db)
     moment.init_app(app)
-    # csrf = CSRFProtect(app)
     login.init_app(app)
 
     print(app.config['SQLALCHEMY_DATABASE_URI'])

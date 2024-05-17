@@ -5,6 +5,7 @@ from unittest import TestCase
 from selenium import webdriver  
 from app import create_app, db
 from config import SeleniumConfig, TestingConfig
+from selenium.webdriver.common.by import By
 from app.models import User, Post, Comment
 
 localHost = "http://localhost:5000/"
@@ -36,9 +37,15 @@ class SeleniumTestCase(TestCase):
         self.driver.close()
 
 
-    def test_login_page(self):
-        time.sleep(5)
-        self.assertTrue(True)
+    def test_register_button(self):
+        # Find the button using its text or other attribute
+        button = self.driver.find_element(By.XPATH, "//button[text()='Get account']")
+        button.click()
+        
+        # Allow some time for the navigation
+        time.sleep(2)
 
-        # loginElement = self.driver.find_element(By.ID, "login")
-        # loginElement.send_keys("01349324")
+        # Verify the URL
+        current_url = self.driver.current_url
+        expected_url = localHost + "register"
+        self.assertEqual(current_url, expected_url)
