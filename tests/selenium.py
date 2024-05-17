@@ -4,7 +4,7 @@ import time
 from unittest import TestCase 
 from selenium import webdriver  
 from app import create_app, db
-from config import TestingConfig
+from config import SeleniumConfig, TestingConfig
 from app.models import User, Post, Comment
 
 localHost = "http://localhost:5000/"
@@ -12,7 +12,7 @@ localHost = "http://localhost:5000/"
 class SeleniumTestCase(TestCase):
 
     def setUp(self):
-        self.testApp = create_app(TestingConfig)
+        self.testApp = create_app(SeleniumConfig)
         self.app_context = self.testApp.app_context()
         self.app_context.push()
         db.create_all()

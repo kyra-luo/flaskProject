@@ -14,9 +14,9 @@ moment = Moment()
 login=LoginManager()
 login.login_view = 'main.login'
 
-def create_app(config_class=Config):
+def create_app(Config):
     app = Flask(__name__)
-    app.config.from_object(DevelopmentConfig)
+    app.config.from_object(Config)
     from app.blueprint import main
     app.register_blueprint(main)
     db.init_app(app)
@@ -30,10 +30,5 @@ def create_app(config_class=Config):
     return app
 
 from app import models
-#
-# with app.app_context():
-#     db.create_all()
 
 
-
-from app import routes, models
