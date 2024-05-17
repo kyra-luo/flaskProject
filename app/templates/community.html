@@ -63,7 +63,7 @@
                                 <a href="#" data-bs-toggle="collapse" data-bs-target=".forum-content"><img src="" class="mr-3 rounded-circle" width="50" alt="Forum picture" /></a>
                                 <div class="media-body">
                                 {% for f in forums %}
-                                <a href="{{ url_for('main.forum', id=f.id) }}" class="text-body">{{ f.communityName }}</a>
+                                <a href="{{ url_for('main.forum', category=f.category, id=f.id) }}" class="text-body">{{ f.communityName }}</a>
                                 <p class="text-secondary">
                                 {{f.description}}
                                 </p>
@@ -85,10 +85,6 @@
                         </li>
                     </ul>
                 </div>
-                <!-- <div class="inner-main-body p-2 p-sm-3 collapse forum-content">
-                    {% for post in posts %}
-                    {% include "_post.html" %}
-                    {% endfor %} -->
                     <!-- <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-bs-toggle="collapse" data-bs-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a> -->
                     <!-- <div class="card mb-2">
                         <div class="card-body">                   
