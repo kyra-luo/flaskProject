@@ -10,6 +10,7 @@ class Config:
     MAIL_USERNAME = '2929657051@qq.com'
     MAIL_PASSWORD = 'oyvjzmlwsfihdgij'
     ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
+    POSTS_PER_PAGE = 5
 
 class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
