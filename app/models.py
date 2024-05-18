@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
 from werkzeug.security import generate_password_hash, check_password_hash
+from typing import Optional
 import jwt
 from time import time
 from flask import current_app
@@ -28,6 +29,12 @@ class User(UserMixin, db.Model):
     username: so.Mapped[str] = so.mapped_column(sa.String(64), index=True, unique=True)
     email: so.Mapped[str] = so.mapped_column(sa.String(120), index=True, unique=True)
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
+    about_me: so.Mapped[str] = so.mapped_column(sa.String(250), nullable=True)
+    last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(default=lambda: datetime.now(timezone.utc))
+
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
 
     posts: so.WriteOnlyMapped['Post'] = so.relationship(
         back_populates='author')
