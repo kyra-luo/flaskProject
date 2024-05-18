@@ -9,6 +9,7 @@ class Config:
     MAIL_USE_TLS = True
     MAIL_USERNAME = '2929657051@qq.com'
     MAIL_PASSWORD = 'oyvjzmlwsfihdgij'
+    ELASTICSEARCH_URL = os.environ.get('ELASTICSEARCH_URL')
 
 class DevelopmentConfig(Config):
     SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
