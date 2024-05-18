@@ -27,10 +27,10 @@
                                             <nav class="nav nav-pills nav-gap-y-1 flex-column">
                                                 <a href="{{ url_for('main.community')}}" class="nav-link">All Forums</a>
                                                 <a href="{{ url_for('main.community', category='1') }}" class="nav-link">IT Forums</a>
-                                                <a href="{{ url_for('main.community', category='3') }}" class="nav-link">Mathmatic Forums</a>
-                                                <a href="{{ url_for('main.community', category='4') }}" class="nav-link">Physics Forums</a>
-                                                <a href="{{ url_for('main.community', category='5') }}" class="nav-link">Engineering Forums</a>
-                                                <a href="{{ url_for('main.community', category='6') }}" class="nav-link">Sport Forums</a>
+                                                <a href="{{ url_for('main.community', category='6') }}" class="nav-link">Mathmatic Forums</a>
+                                                <a href="{{ url_for('main.community', category='3') }}" class="nav-link">Physics Forums</a>
+                                                <a href="{{ url_for('main.community', category='4') }}" class="nav-link">Engineering Forums</a>
+                                                <a href="{{ url_for('main.community', category='5') }}" class="nav-link">Sport Forums</a>
                                             </nav>
                                         </div>
                                     </div>
@@ -50,61 +50,14 @@
                         <div class="card-body p-2 p-sm-3">
                             <div class="media forum-item">
                                 <div class="media-body">
-                                {% for f in forums %}
-                                <a href="{{ url_for('main.forum', category=f.category, id=f.id) }}" class="text-body">{{ f.communityName }}</a>
-                                <p class="text-secondary">
-                                {{f.description}}
-                                </p>
-                                <p class="text-muted"><span class="text-secondary font-weight-bold">Established {{ moment(f.timestamp).fromNow() }}</span></p>
-                                {% endfor %}                            
+                                    {% for post in posts %}
+                                    {% include "_post.html" %}
+                                    {% endfor %}                          
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                    <!-- <a href="#" class="btn btn-light btn-sm mb-3 has-icon" data-bs-toggle="collapse" data-bs-target=".forum-content"><i class="fa fa-arrow-left mr-2"></i>Back</a> -->
-                    <!-- <div class="card mb-2">
-                        <div class="card-body">                   
-                            <div class="media forum-item">                   
-                                <a href="javascript:void(0)" class="card-link">                  
-                                    <img src="" class="rounded-circle" width="50" alt="User" />                 
-                                    <small class="d-block text-center text-muted">Newbie</small>                 
-                                </a>
-                                {% for post in posts %}
-                                <div class="media-body ml-3">
-                                    <a href="javascript:void(0)" class="text-secondary">{{post.author}}</a>
-                                    <small class="text-muted ml-2">{{post.timestamp}}</small>
-                                    <h5 class="mt-1">{{post.topic}}</h5>
-                                    <div class="mt-3 font-size-sm">
-                                       {{post.body}}
-                                    </div>
-                                {% endfor %}
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
-                    <!-- <div class="card mb-2">
-                        <div class="card-body">
-                            <div class="media forum-item">
-                                <a href="javascript:void(0)" class="card-link">
-                                <img src="" class="rounded-circle" width="50" alt="User" />
-                                <small class="d-block text-center text-muted">Pro</small>
-                            </a>
-                            <div class="media-body ml-3">
-                                <a href="javascript:void(0)" class="text-secondary">drew</a>
-                                <small class="text-muted ml-2">1 hour ago</small>
-                                <div class="mt-3 font-size-sm">
-                                    <p> lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet</p>
-                                    <p> lorem ipsum dolor sit amet lorem ipsum dolor sit amet lorem ipsum dolor sit amet</p>
-                                </div>
-                                <button class="btn btn-xs text-muted has-icon"><i class="fa fa-heart" aria-hidden="true"></i>1</button>
-                                <a href="javascript:void(0)" class="text-muted small">Reply</a>
-                            </div>
-                        </div>
-                    </div>
-                </div> -->
-             </div> 
+                </div> 
             </div>
         </div>
         <div class="modal fade" id="forumModal" tabindex="-1" role="dialog" aria-labelledby="forumModalLabel" aria-hidden="true">
@@ -160,14 +113,3 @@
 </div>
 </div>
 {% endblock %}
-<!-- <script>
-    document.getElementById('communityLink-{{ f.id }}').addEventListener('click', function(event) {
-        event.preventDefault();  // Prevents the default navigation
-        // Add your collapse logic here
-        // Example:
-        document.querySelector('.forum-content').classList.toggle('show');
-        // Uncomment the following line to actually navigate after the collapse (if needed)
-        // window.location.href = this.href;
-    });
-</script> -->
-<!-- <h6><a href="{{ url_for('community', category=f.category, name=f.communityName) }}" data-bs-toggle="collapse" data-bs-target=".forum-content" class="text-body">{{f.communityName}}</a></h6> -->
