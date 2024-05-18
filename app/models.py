@@ -32,6 +32,10 @@ class User(UserMixin, db.Model):
     about_me: so.Mapped[str] = so.mapped_column(sa.String(250), nullable=True)
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(default=lambda: datetime.now(timezone.utc))
 
+    def avatar(self, size):
+        digest = md5(self.email.lower().encode('utf-8')).hexdigest()
+        return f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
+
     posts: so.WriteOnlyMapped['Post'] = so.relationship(
         back_populates='author')
     

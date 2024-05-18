@@ -15,6 +15,7 @@ from app.helpers import process_posts_with_comments, generate_user_id, get_user_
 from flask import g
 from app.form import SearchForm
 
+
 @main.before_app_request
 def before_request():
     if current_user.is_authenticated:
@@ -169,7 +170,7 @@ def forum(category, id):
 @main.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
-    user = db.session.query(User).filter_by(username=username).first_or_404()
+    user = db.first_or_404(sa.select(User).where(User.username == username))
 
     form = CommentForm()
     userform = UserForm()
