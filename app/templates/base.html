@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     {% block head %}
-    <title>Navbar before login</title>
+    <title>{{ title }}</title>
     <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/logo.ico') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
@@ -20,19 +20,20 @@
                 <img src="../static/image/logo.gif" alt="our Logo" id="logo_nav">
             </div>
             <div>
-                 {% if current_user.is_authenticated %}
-                <a href="{{ url_for('main.commui') }}">Community</a>
+                {% if current_user.is_authenticated %}
+                <a href="{{ url_for('main.community') }}">Community</a>
                 &nbsp;&nbsp;
-                <a href="{{ url_for('main.test') }}">Post</a>
+                <a href="{{ url_for('main.test') }}">Explore</a>
                 {% endif %}
             </div>
             <div class="search-container" id="search-icon">
-{#                <form action="{{ url_for('main.search') }}" method="get">#}
+                {# <form action="{{ url_for('main.search') }}" method="get">#}
                     <label>
                         <i class="fa-solid fa-magnifying-glass"></i>
                         <input type="text" placeholder="Search" class="Search-input">
                     </label>
-{#                </form>#}
+                    {#
+                </form>#}
             </div>
             <div class="button-container">
                 {% if current_user.is_authenticated %}
@@ -65,6 +66,8 @@
         crossorigin="anonymous"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="{{ url_for('static', filename='comment.js') }}"></script>
+    <script src="{{ url_for('static', filename='home.js') }}"></script>
+
 </body>
 <script>
     function loadlogin() {
