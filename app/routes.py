@@ -82,7 +82,7 @@ def login():
         print('User found:', user)  # Add this line to check if user is retrieved
 
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid email or password')
+            flash('Invalid email or password', 'failed')
             print('Invalid email or password')  # Add this line to check if this condition is met
             return redirect(url_for('main.login'))
 
