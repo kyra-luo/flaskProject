@@ -16,32 +16,31 @@
     <div class="navbar">
         <div class="navbar-container">
             <div class="logo-container">
-                <img src="../static/image/logo.gif" alt="our Logo" id="logo_nav">
-            </div>
-            <div>
-                {% if current_user.is_authenticated %}
-
+                <img src="{{ url_for('static', filename='image/logo.gif') }}" alt="our Logo" id="logo_nav">
+                &nbsp; &nbsp;&nbsp;
+                 {% if current_user.is_authenticated %}
                 <a href="{{ url_for('main.community') }}" class="after_login">Community</a>
                 &nbsp; &nbsp;
                 <a href="{{ url_for('main.test') }}" class="after_login">Explore</a>
                 &nbsp;&nbsp;
                 <a href="{{ url_for('main.create') }}" class="after_login">Create</a>
-
                 {% endif %}
             </div>
+
             <div class="search-container" id="search-icon">
-                {% if g.search_form %}
+                {% if current_user.is_authenticated and g.search_form %}
                 <form class="navbar-form navbar-left" method="get" action="{{ url_for('main.search') }}">
                     <div class="form-group">
-                        {{ g.search_form.q(size=20, class='form-control',
-                        placeholder=g.search_form.q.label.text) }}
+                        {{ g.search_form.q(size=20, class='form-control', placeholder=g.search_form.q.label.text) }}
                     </div>
                 </form>
+                {% else %}
+{#                    The website title #}
+                <h2 class="Big_t">University Community</h2>
                 {% endif %}
             </div>
             <div class="button-container">
                 {% if current_user.is_authenticated %}
-                {# <a href="{{ url_for('main.logout') }}" class="after_login">Logout</a>#}
                 <button onclick="window.location.href = '/logout'">Logout</button>
                 {% else %}
                 <button onclick="loadlogin()">Log In</button>
@@ -64,6 +63,7 @@
         {# The child template will display at this part#}
         {% endblock %}
     </div>
+
     {{ moment.include_moment() }}
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
