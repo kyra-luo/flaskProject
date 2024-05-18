@@ -222,6 +222,9 @@ def search():
     page = request.args.get('page', 1, type=int)
     post_all, total = Post.search(g.search_form.q.data, page,
                                current_app.config['POSTS_PER_PAGE'])
+    if total == 0:
+        flash('No results found, return to the explore page')
+        return redirect(url_for('main.test'))
     posts = process_posts_with_comments(post_all)
     comment_form = CommentForm()
     
