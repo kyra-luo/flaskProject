@@ -12,7 +12,7 @@ from werkzeug.security import generate_password_hash
 from app.email import send_password_reset_email, send_welcome_email
 from app.helpers import process_posts_with_comments
 from datetime import datetime, timezone
-from app.helpers import process_posts_with_comments, generate_user_id, get_user_posts, get_user_comments
+from app.helpers import process_posts_with_comments, generate_user_id
 
 @main.before_request
 def before_request():
@@ -55,7 +55,7 @@ def create():
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
-        # return redirect(url_for('main.user', username=current_user.username))
+        return redirect(url_for('main.user', username=current_user.username))
     return render_template('create_post.html', title='Create Post', form=form)
 
 
@@ -163,7 +163,54 @@ def forum(category, id):
         return render_template('forum.html', title='Home', posts=posts, comment_form=comment_form, community_form=community_form)
 
 
+def get_user_posts(user_id):
+    # 获取用户的所有帖子和每个帖子的评论
+    query = (
+        db.session.query(Post, Comment, User)
+        .join(Comment, Post.id == Comment.post_id)
+        .join(User, User.id == Comment.user_id)
+        .filter(Post.user_id == user_id)
+        .order_by(Post.timestamp.desc(), Comment.timestamp.asc())
+    )
 
+    results = query.all()
+
+    # 组织数据
+    posts = {}
+    for post, comment, comment_user in results:
+        if post.id not in posts:
+            posts[post.id] = {
+                'post': post,
+                'comments': []
+            }
+        posts[post.id]['comments'].append({
+            'comment': comment,
+            'commentor': comment_user
+        })
+
+    return posts
+
+def get_user_comments(user_id):
+    # 获取用户的所有评论及其相关的帖子信息
+    query = (
+        db.session.query(Comment, Post, User)
+        .join(Post, Comment.post_id == Post.id)
+        .join(User, Post.user_id == User.id)
+        .filter(Comment.user_id == user_id)
+        .order_by(Comment.timestamp.asc())
+    )
+
+    results = query.all()
+
+    comments = []
+    for comment, post, post_author in results:
+        comments.append({
+            'comment': comment,
+            'post': post,
+            'post_author': post_author
+        })
+
+    return comments
 
 
 @main.route('/user/<username>', methods=['GET', 'POST'])
@@ -173,9 +220,9 @@ def user(username):
     user = db.session.query(User).filter_by(username=username).first_or_404()
     if not user:
         abort(404)
-
-    # 获取用户的帖子及其评论
+    
     posts = get_user_posts(user.id)
+    print(user.id)
     post_count = len(posts)
 
     # 获取用户的评论及其相关帖子信息

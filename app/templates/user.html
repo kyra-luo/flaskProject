@@ -37,68 +37,83 @@
         <div class="col-sm-9">
             <div class="row">
                 <div class="middle">
-                <table>
-                    <tr valign="top">
-                        <td><img src="{{ user.avatar(128) }}"></td>
-                        <td><h2>{{ user.username }}</h2></td>
-                    </tr>
-                </table>
+                    <table>
+                        <tr valign="top">
+                            <td><img src="{{ user.avatar(128) }}"></td>
+                            <td>
+                                <h2>{{ user.username }}</h2>
+                            </td>
+                        </tr>
+                    </table>
 
-                <table>
-                    <tr>
-                        <td>
-                            <button class="profile-info" type="button" class="useredit-button" data-bs-toggle="modal" data-bs-target="#editModal">Change Profile</button>
-                        </td>
-                        <td><h5>last visit:  {{ user.last_seen }}</h5></td>
-                    </tr>
-                </table>
+                    <table>
+                        <tr>
+                            <td>
+                                <button class="profile-info" type="button" class="useredit-button"
+                                    data-bs-toggle="modal" data-bs-target="#editModal">Change Profile</button>
+                            </td>
+                            <td>
+                                <h5>last visit: {{ user.last_seen }}</h5>
+                            </td>
+                        </tr>
+                    </table>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#personalized">personalized</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#POSTS">POSTS<span class="badge bg-secondary">{{ post_count }}</span></a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#POSTS">POSTS<span
+                                    class="badge bg-secondary">{{ post_count }}</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" data-bs-toggle="tab" href="#COMMENTS">COMMENTS<span class="badge bg-secondary">{{ comment_count }}</span></a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#COMMENTS">COMMENTS<span
+                                    class="badge bg-secondary">{{ comment_count }}</span></a>
                         </li>
                     </ul>
                     <div class="tab-content">
                         <div id="personalized" class="container tab-pane active"><br>
                             <h3>personalized</h3>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua.</p>
                         </div>
                         <div id="POSTS" class="container tab-pane fade"><br>
                             <h3>POSTS</h3>
                             {% for post_id, post_data in posts.items() %}
-                                <div class="list-group-item">
+                            <div class="list-group-item">
 
                                 <div class="userpost1">
                                     <h3>{{ post_data.post.topic }}</h3>
                                     <p>{{ post_data.post.body }}</p>
-                                    <small>Posted by {{ post_data.post.author.username }} on {{ post_data.post.timestamp }}</small>
+                                    <small>Posted by {{ post_data.post.author.username }} on {{ post_data.post.timestamp
+                                        }}</small>
                                 </div>
                                 <div class="userpost2">
                                     <div class="comments mt-3">
                                         <h5>Comments:</h5>
                                         {% for comment in post_data.comments %}
-                                            <div class="comment">
-                                                <p>{{ comment.comment.comment }}</p>
-                                                <small>Commented by <a href="{{ url_for('user', username=comment.commentor.username) }}">{{ comment.commentor.username }}</a> on {{ comment.comment.timestamp }}</small>
-                                            </div>
+                                        <div class="comment">
+                                            <p>{{ comment.comment.comment }}</p>
+                                            <small>Commented by <a
+                                                    href="{{ url_for('main.user', username=comment.commentor.username) }}">{{
+                                                    comment.commentor.username }}</a> on {{ comment.comment.timestamp
+                                                }}</small>
+                                        </div>
                                         {% endfor %}
                                     </div>
-                                    </div>
                                 </div>
+                            </div>
                             {% endfor %}
                         </div>
                         <div id="COMMENTS" class="container tab-pane fade"><br>
                             <h3>COMMENTS</h3>
                             {% for comment in comments %}
-                                <div class="comment">
-                                    <p>{{ comment.comment.comment }}</p>
-                                    <small>Commented on <a href="{{ url_for('test', post_id=comment.post.id) }}">{{ comment.post.topic }}</a> by <a href="{{ url_for('user', username=comment.post_author.username) }}">{{ comment.post_author.username }}</a> on {{ comment.comment.timestamp }}</small>
-                                </div>
+                            <div class="comment">
+                                <p>{{ comment.comment.comment }}</p>
+                                <small>Commented on <a href="{{ url_for('main.test', post_id=comment.post.id) }}">{{
+                                        comment.post.topic }}</a> by <a
+                                        href="{{ url_for('main.user', username=comment.post_author.username) }}">{{
+                                        comment.post_author.username }}</a> on {{ comment.comment.timestamp }}</small>
+                            </div>
                             {% endfor %}
                         </div>
                     </div>
@@ -118,7 +133,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <form id="editAboutMeForm" method="post" action="{{ url_for('user', username=user.username) }}">
+                <form id="editAboutMeForm" method="post" action="{{ url_for('main.user', username=user.username) }}">
                     {{ form.hidden_tag() }}
                     <div class="mb-3">
                         {{ userform.username.label(class="form-label") }}

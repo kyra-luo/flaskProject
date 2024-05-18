@@ -1,7 +1,7 @@
 # utils.py
 from sqlalchemy import select
 from app import db
-from app.models import Post, Comment
+from app.models import Post, Comment, User, Community
 from random import randint
 
 def process_posts_with_comments(post_all):
