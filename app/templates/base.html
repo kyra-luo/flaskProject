@@ -27,10 +27,12 @@
                 {% endif %}
             </div>
             <div class="search-container" id="search-icon">
-                <label>
-                    <i class="fa-solid fa-magnifying-glass"></i>
-                    <input type="text" placeholder="Search" class="Search-input">
-                </label>
+{#                <form action="{{ url_for('main.search') }}" method="get">#}
+                    <label>
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                        <input type="text" placeholder="Search" class="Search-input">
+                    </label>
+{#                </form>#}
             </div>
             <div class="button-container">
                 {% if current_user.is_authenticated %}
