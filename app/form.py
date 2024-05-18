@@ -5,8 +5,17 @@ from app import db, SQLAlchemy as sa
 from app.models import User, Post, Comment, Community
 from wtforms import StringField, SubmitField, TextAreaField, SelectField, PasswordField
 from wtforms.validators import DataRequired, Length, Email, EqualTo
+from flask import request
 
+class SearchForm(FlaskForm):
+    q = StringField('Search', validators=[DataRequired()])
 
+    def __init__(self, *args, **kwargs):
+        if 'formdata' not in kwargs:
+            kwargs['formdata'] = request.args
+        if 'meta' not in kwargs:
+            kwargs['meta'] = {'csrf': False}
+        super(SearchForm, self).__init__(*args, **kwargs)
 class PostForm(FlaskForm):
     communities = SelectField('Communities', choices=[], validators=[DataRequired()])
     topic = TextAreaField('Your topic', validators=[

@@ -1,4 +1,5 @@
-from flask import render_template, redirect, url_for, flash, request, jsonify
+from datetime import datetime, timezone
+from flask import current_app, render_template, redirect, url_for, flash, request, jsonify
 from flask_login import current_user, login_required, login_user, logout_user
 from urllib.parse import urlsplit
 from app import db
@@ -11,6 +12,15 @@ from app.blueprint import main
 from werkzeug.security import generate_password_hash
 from app.email import send_password_reset_email, send_welcome_email
 from app.helpers import process_posts_with_comments, generate_user_id
+from flask import g
+from app.form import SearchForm
+
+@main.before_app_request
+def before_request():
+    if current_user.is_authenticated:
+        current_user.last_seen = datetime.now(timezone.utc) 
+        db.session.commit()
+        g.search_form = SearchForm()
 
 
 @main.route('/')
@@ -203,3 +213,19 @@ def reset_password(token):
         flash('Your password has been reset.')
         return redirect(url_for('mian.login'))
     return render_template('reset_password.html', form=form)
+
+@main.route('/search')
+@login_required
+def search():
+    if not g.search_form.validate():
+        return redirect(url_for('main.explore'))
+    page = request.args.get('page', 1, type=int)
+    post_all, total = Post.search(g.search_form.q.data, page,
+                               current_app.config['POSTS_PER_PAGE'])
+    if total == 0:
+        flash('No results found, return to the explore page')
+        return redirect(url_for('main.test'))
+    posts = process_posts_with_comments(post_all)
+    comment_form = CommentForm()
+    
+    return render_template('search.html', title='Search', posts=posts, comment_form=comment_form)
