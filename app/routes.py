@@ -13,9 +13,6 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from app.email import send_password_reset_email, send_welcome_email
 from app.helpers import process_posts_with_comments
 
-sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa."
-
-
 def generate_user_id():
     return '{:06d}'.format(randint(0, 999999))
 
@@ -30,11 +27,8 @@ def test():
     comment_form = CommentForm()
     query = sa.select(Post).order_by(Post.timestamp.desc())
     post_all=db.session.scalars(query).all()
-    communities = db.session.query(Community).all()
-    if post_all is None:
+    if not post_all:
         return redirect(url_for('main.create'))
-    elif communities is None:
-        return redirect(url_for('community'))
     else:
         posts = process_posts_with_comments(post_all)
     return render_template('post.html', title='Home', posts=posts, comment_form=comment_form)
@@ -45,8 +39,8 @@ def test():
 def create():
     form = PostForm()
     community_list = db.session.query(Community).all()
-    if community_list is None:
-        community_choices = []
+    if not community_list:
+        return redirect(url_for('main.community'))
     else:
         community_choices = [(str(community.id), community.communityName) for community in community_list]
     form.communities.choices = [('', 'Select a community...')] + community_choices
@@ -57,6 +51,7 @@ def create():
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
+        # return redirect(url_for('main.user', username=current_user.username))
     return render_template('create_post.html', title='Create Post', form=form)
 
 
