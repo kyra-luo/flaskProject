@@ -14,6 +14,7 @@
 <body>
     <div class="container">
         <div class="con_forms">
+            <img src="../static/image/logo.gif" alt="our Logo" class="iconss" onclick="window.location.href='/index'">
             <div class="login_register">
                 <div class="bg-text">
                     <form action="/register" class="sign_in" id="f_register" method="post">
@@ -55,6 +56,7 @@
                         </div>
                         <div class="button">
                             {{form.submit(class='regi')}}
+                             <input class="regi" onclick="location.href=('/login')" type="button" value="SIGN IN">
                         </div>
                     </form>
                 </div>

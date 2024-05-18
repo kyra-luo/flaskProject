@@ -6,6 +6,7 @@ from flask_login import LoginManager
 from flask_moment import Moment
 from flask_mail import Mail
 from flask_wtf.csrf import CSRFProtect
+from elasticsearch import Elasticsearch
 
 mail=Mail()
 
@@ -23,6 +24,8 @@ def create_app(Config):
     mail.init_app(app)
     moment.init_app(app)
     login.init_app(app)
+    app.elasticsearch = Elasticsearch([app.config['ELASTICSEARCH_URL']]) \
+        if app.config['ELASTICSEARCH_URL'] else None
 
     print(app.config['SQLALCHEMY_DATABASE_URI'])
     return app

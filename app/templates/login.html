@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <script src="{{ url_for('static', filename='login.js') }}"></script>
-    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='image/logo.ico') }}">
     <link href="{{ url_for('static', filename='login.css') }}" rel="stylesheet">
     <script crossorigin="anonymous" src="https://kit.fontawesome.com/f48b9c11bb.js"></script>
     <title>Sign in</title>
@@ -13,6 +12,7 @@
 <body>
     <div class="container">
         <div class="con_forms">
+            <img src="../static/image/logo.gif" alt="our Logo" class="iconss" onclick="window.location.href='/index'">
             <div class="login_register">
                 <div class="bg-text">
                     <form action="" class="sign_in" method="POST">
@@ -20,15 +20,15 @@
                         <h2 class="title">SIGN IN</h2>
                         <div class="input_box">
                             <i class="fa-solid fa-envelope"></i>
-                            {{form.email_addr(class="email", id="email",placeholder="Enter Your email")}}
+                            {{ form.email_addr(class="email", id="email", placeholder="Enter Your email") }}
                         </div>
                         <div class="input_box">
                             <i class="fa-solid fa-lock"></i>
-                            {{form.password(class="PIN0", id="PIN", placeholder="Enter You password")}}
+                            {{ form.password(class="PIN0", id="PIN", placeholder="Enter You password") }}
                             <i class="fa-solid fa-eye" onclick="Hid('PIN0')"></i>
                         </div>
                         <div class="button">
-                            {{form.submit(class='btn')}}
+                            {{ form.submit(class='btn') }}
                             <input class="btn" onclick="location.href=('/register')" type="button" value="Register">
                         </div>
                         <br>
@@ -39,8 +39,18 @@
                 </div>
             </div>
         </div>
-
     </div>
+
+    <script>
+        window.onload = function() {
+            const flashMessages = {{ get_flashed_messages(with_categories=true) | tojson }};
+            flashMessages.forEach(function(message) {
+                if (message[0] === 'failed') {
+                    alert(message[1]);
+                }
+            });
+        };
+    </script>
 </body>
 
 </html>
