@@ -469,3 +469,9 @@ td {
     height: 55px;
     width: 55px;
 }
+.after_login{
+    color: #ff4500;
+    text-decoration: none;
+    font-weight: bold;
+
+}
