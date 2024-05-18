@@ -104,29 +104,28 @@ def login():
         return redirect(url_for('main.base'))  # Redirect to index page
     return render_template('login.html', title='Sign In', form=form)
 
-
+# router for register
 @main.route('/register', methods=['GET', 'POST'])
 def regi():
     form = RegisterForm()
-    # if the request method == POST and the form.validate == TRUE.
     if form.validate_on_submit():
         try:
-            user = User(User_id=generate_user_id(),
-                    fname=form.Firstname.data,
-                    lname=form.Lastname.data,
-                    username=form.Username.data,
-                    email=form.email_address.data,
-                    password_hash=generate_password_hash(form.Password.data, method='pbkdf2:sha256'))
+            user = User(
+                User_id=generate_user_id(),
+                fname=form.Firstname.data,
+                lname=form.Lastname.data,
+                username=form.Username.data,
+                email=form.email_address.data,
+                password_hash=generate_password_hash(form.Password.data, method='pbkdf2:sha256')
+            )
             db.session.add(user)
             db.session.commit()
             send_welcome_email(user)
-            flash("You are now registered")
+            flash("You are now registered", 'success')
             return redirect(url_for('main.login'))
         except IntegrityError:
-            flash("Registration failed. Please check your input.")
+            flash("Registration failed. Please check your input.", 'try again')
     return render_template('register.html', title='register', form=form)
-
-
 @main.route('/community', methods=['GET', 'POST'])
 def commui():
     return render_template('community.html', title='community')

@@ -16,7 +16,7 @@
         <div class="con_forms">
             <div class="login_register">
                 <div class="bg-text">
-                    <form action="" class="sign_in" id="f_register" method="post" action="/register">
+                    <form action="/register" class="sign_in" id="f_register" method="post">
                         <h2 class="title">SIGN UP</h2>
                         <div class="input_box">
                             <i class="fa-solid fa-user"></i>
@@ -60,20 +60,30 @@
                 </div>
             </div>
         </div>
-
     </div>
-    {% if registered %}
-    <script>
-        alert("Registration successful! You can now login.");
-    </script>
-    {% endif %}
 
-    {% if failed %}
-    <script>
-        alert("Registration failed. Please check your input.");
-    </script>
-    {% endif %}
+    <div id="flash-messages">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message" data-category="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+    </div>
 
+    <script>
+        window.onload = function() {
+            const flashMessages = document.querySelectorAll('.flash-message');
+            flashMessages.forEach(function(message) {
+                if (message.dataset.category === 'success') {
+                    alert(message.textContent);
+                } else if (message.dataset.category === 'try again') {
+                    alert(message.textContent);
+                }
+            });
+        };
+    </script>
 </body>
 
 </html>
