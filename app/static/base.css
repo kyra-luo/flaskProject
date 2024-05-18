@@ -189,7 +189,6 @@ textarea.auto-expand:focus {
     padding: 1rem;
     padding-bottom: 4rem;
     margin-top: 1.5rem;
-    background-color: none;
     position: relative;
 }
 
@@ -465,7 +464,8 @@ td {
     margin-bottom: 40px;
     /* 设置按钮之间的垂直间距 */
 }
-#logo_nav{
+
+#logo_nav {
     height: 55px;
     width: 55px;
 }

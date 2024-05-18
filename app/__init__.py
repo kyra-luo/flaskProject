@@ -14,26 +14,19 @@ moment = Moment()
 login=LoginManager()
 login.login_view = 'main.login'
 
-def create_app(config_class=Config):
+def create_app(Config):
     app = Flask(__name__)
-    app.config.from_object(DevelopmentConfig)
+    app.config.from_object(Config)
     from app.blueprint import main
     app.register_blueprint(main)
     db.init_app(app)
     mail.init_app(app)
-    # migrate = Migrate(app, db)
     moment.init_app(app)
-    # csrf = CSRFProtect(app)
     login.init_app(app)
 
     print(app.config['SQLALCHEMY_DATABASE_URI'])
     return app
 
 from app import models
-#
-# with app.app_context():
-#     db.create_all()
 
 
-
-from app import routes, models

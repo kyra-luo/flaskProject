@@ -6,25 +6,19 @@ from app.blueprint import main
 from app.form import PostForm, RegisterForm, LoginForm, CommentForm, UserForm, ResetPasswordRequestForm, ResetPasswordForm, CommunityForm
 import sqlalchemy as sa
 from app.models import User, Post, Community, Comment
-from random import randint
 from sqlalchemy.exc import IntegrityError
 from app.blueprint import main
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from app.email import send_password_reset_email, send_welcome_email
 from app.helpers import process_posts_with_comments
 from datetime import datetime, timezone
+from app.helpers import process_posts_with_comments, generate_user_id, get_user_posts, get_user_comments
 
 @main.before_request
 def before_request():
     if current_user.is_authenticated:
         current_user.last_seen = datetime.now(timezone.utc)
         db.session.commit()
-
-sample_posts = "Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa."
-
-
-def generate_user_id():
-    return '{:06d}'.format(randint(0, 999999))
 
 @main.route('/')
 @main.route('/index')
@@ -37,11 +31,8 @@ def test():
     comment_form = CommentForm()
     query = sa.select(Post).order_by(Post.timestamp.desc())
     post_all=db.session.scalars(query).all()
-    communities = db.session.query(Community).all()
-    if post_all is None:
+    if not post_all:
         return redirect(url_for('main.create'))
-    elif communities is None:
-        return redirect(url_for('community'))
     else:
         posts = process_posts_with_comments(post_all)
     return render_template('post.html', title='Home', posts=posts, comment_form=comment_form)
@@ -52,8 +43,8 @@ def test():
 def create():
     form = PostForm()
     community_list = db.session.query(Community).all()
-    if community_list is None:
-        community_choices = []
+    if not community_list:
+        return redirect(url_for('main.community'))
     else:
         community_choices = [(str(community.id), community.communityName) for community in community_list]
     form.communities.choices = [('', 'Select a community...')] + community_choices
@@ -64,6 +55,7 @@ def create():
         db.session.add(post)
         db.session.commit()
         flash('Your post is now live!')
+        # return redirect(url_for('main.user', username=current_user.username))
     return render_template('create_post.html', title='Create Post', form=form)
 
 
@@ -170,54 +162,7 @@ def forum(category, id):
             posts = process_posts_with_comments(post_all)
         return render_template('forum.html', title='Home', posts=posts, comment_form=comment_form, community_form=community_form)
 
-def get_user_posts(user_id):
-    # 获取用户的所有帖子和每个帖子的评论
-    query = (
-        db.session.query(Post, Comment, User)
-        .join(Comment, Post.id == Comment.post_id)
-        .join(User, User.id == Comment.user_id)
-        .filter(Post.user_id == user_id)
-        .order_by(Post.timestamp.desc(), Comment.timestamp.asc())
-    )
 
-    results = query.all()
-
-    # 组织数据
-    posts = {}
-    for post, comment, comment_user in results:
-        if post.id not in posts:
-            posts[post.id] = {
-                'post': post,
-                'comments': []
-            }
-        posts[post.id]['comments'].append({
-            'comment': comment,
-            'commentor': comment_user
-        })
-
-    return posts
-
-def get_user_comments(user_id):
-    # 获取用户的所有评论及其相关的帖子信息
-    query = (
-        db.session.query(Comment, Post, User)
-        .join(Post, Comment.post_id == Post.id)
-        .join(User, Post.user_id == User.id)
-        .filter(Comment.user_id == user_id)
-        .order_by(Comment.timestamp.asc())
-    )
-
-    results = query.all()
-
-    comments = []
-    for comment, post, post_author in results:
-        comments.append({
-            'comment': comment,
-            'post': post,
-            'post_author': post_author
-        })
-
-    return comments
 
 
 

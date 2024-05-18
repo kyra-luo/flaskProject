@@ -1,9 +1,5 @@
 import unittest
-import sys
-import os
 from werkzeug.security import generate_password_hash, check_password_hash
-
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 from config import TestingConfig
 from app import create_app, db
@@ -27,5 +23,5 @@ class TestConfig(unittest.TestCase):
         self.assertFalse(u.check_password('dog'))
         self.assertTrue(u.check_password('cat'))
 
-if __name__ == '__main__':
-    unittest.main()
+# please run the following command to run the test
+# python -m unittest tests.unit_test

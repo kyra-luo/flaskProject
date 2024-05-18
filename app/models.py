@@ -1,21 +1,15 @@
 from datetime import datetime, timezone
+from typing import Optional
 from werkzeug.security import generate_password_hash, check_password_hash
 import jwt
 from time import time
 from flask import current_app
 from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from app import db, login
 from flask_login import UserMixin
 from hashlib import md5
-
-
-# Create a new database callled user, for user register, which content id(UI&PK), id after format, Firstname,
-# lastname,username and the email and password_hash to
-from time import time 
-import jwt
 
 
 commembers = sa.Table(
@@ -37,10 +31,7 @@ class User(UserMixin, db.Model):
     password_hash: so.Mapped[str] = so.mapped_column(sa.String(256))
     about_me: so.Mapped[str] = so.mapped_column(sa.String(250), nullable=True)
     last_seen: so.Mapped[Optional[datetime]] = so.mapped_column(default=lambda: datetime.now(timezone.utc))
-    #Communities: so.Mapped[str] = so.mapped_column(sa.String(250),nullable=True)
     posts: so.WriteOnlyMapped['Post'] = so.relationship(back_populates='author')
-
-    # write_comments: so.WriteOnlyMapped['Comment'] = so.relationship(back_populates='commentor')
     
     communities: so.WriteOnlyMapped['Community'] = so.relationship(
         secondary=commembers,
