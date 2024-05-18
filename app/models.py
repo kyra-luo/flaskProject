@@ -4,18 +4,11 @@ import jwt
 from time import time
 from flask import current_app
 from flask_login import UserMixin
-from werkzeug.security import generate_password_hash, check_password_hash
 import sqlalchemy as sa
 import sqlalchemy.orm as so
 from app import db, login
 from flask_login import UserMixin
 from hashlib import md5
-
-
-# Create a new database callled user, for user register, which content id(UI&PK), id after format, Firstname,
-# lastname,username and the email and password_hash to
-from time import time 
-import jwt
 
 
 commembers = sa.Table(

@@ -6,15 +6,12 @@ from app.blueprint import main
 from app.form import PostForm, RegisterForm, LoginForm, CommentForm, ResetPasswordRequestForm, ResetPasswordForm, CommunityForm
 import sqlalchemy as sa
 from app.models import User, Post, Community, Comment
-from random import randint
 from sqlalchemy.exc import IntegrityError
 from app.blueprint import main
-from werkzeug.security import generate_password_hash, check_password_hash
+from werkzeug.security import generate_password_hash
 from app.email import send_password_reset_email, send_welcome_email
-from app.helpers import process_posts_with_comments
+from app.helpers import process_posts_with_comments, generate_user_id
 
-def generate_user_id():
-    return '{:06d}'.format(randint(0, 999999))
 
 @main.route('/')
 @main.route('/index')
