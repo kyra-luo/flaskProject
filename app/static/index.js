@@ -1,15 +1,13 @@
-//............................................................... Script ...................................................................
-// Data for the sections
-let h1Texts = ["Pear", "Apple", "Exotic"]; // Add your h1 texts here
+
+let h1Texts = ["Profile","Posts","Forum"]; 
 let logoColors = [
-  "var(--pear-logo)",
-  "var(--apple-logo)",
-  "var(--exotic-logo)"
-]; // Add your logo colors here
-let keyframes = ["wave-pear-effect", "wave-apple-effect", "wave-exotic-effect"]; // Add your keyframes here
-// Normal GSAP animation.......
-gsap.from(".fruit-image ", { y: "-100vh", delay: 0.5 });
-gsap.to(".fruit-image img", {
+  "var(--Profile-logo)",
+  "var(--Post-logo)",
+  "var(--Forum-logo)"
+]; 
+let keyframes = ["wave-Profile-effect", "wave-Post-effect", "wave-Forum-effect"]; 
+gsap.from(".floating-image ", { y: "-100vh", delay: 0.5 });
+gsap.to(".floating-image img", {
   x: "random(-20, 20)",
   y: "random(-20, 20)",
   zIndex: 22,
@@ -24,7 +22,6 @@ const waveEffect = document.querySelector(".wave");
 const sections = document.querySelectorAll(".section");
 const prevButton = document.getElementById("prevButton");
 const nextButton = document.getElementById("nextButton");
-const caneLabels = document.querySelector(".cane-labels");
 const sectionContainer = document.querySelector(".section-container");
 // Set index and current position
 let index = 0;
@@ -36,8 +33,6 @@ nextButton.addEventListener("click", () => {
   // Decrease the current position by 100% (to the left)
   if (currentPosition > -200) {
     currentPosition -= 100;
-    // Update the left position of the cane-labels
-    caneLabels.style.left = `${currentPosition}%`;
     sectionContainer.style.left = `${currentPosition}%`;
   }
   // Increment index and currentIndex
@@ -53,7 +48,7 @@ nextButton.addEventListener("click", () => {
     color: logoColors[currentIndex]
   });
   gsap.from(".h1", { y: "20%", opacity: 0, duration: 0.5 });
-  gsap.from(".fruit-image ", { y: "-100vh", delay: 0.4, duration: 0.4 });
+  gsap.from(".floating-image ", { y: "-100vh", delay: 0.4, duration: 0.4 });
 
   // Disable the nextButton if the last section is active
   if (currentIndex === h1Texts.length - 1) {
@@ -73,8 +68,6 @@ nextButton.addEventListener("click", () => {
 prevButton.addEventListener("click", () => {
   if (currentPosition < 0) {
     currentPosition += 100;
-    // Update the left position of the cane-labels
-    caneLabels.style.left = `${currentPosition}%`;
     sectionContainer.style.left = `${currentPosition}%`;
     sectionContainer.style.transition = `all 0.5s ease-in-out`;
   }

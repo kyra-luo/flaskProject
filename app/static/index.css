@@ -1,4 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Lexend:wght@100..900&display=swap");
+@import url("https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css");
+
 
 /* Common Style */
 * {
@@ -34,17 +36,17 @@ button:focus,
 }
 /* Root*/
 :root {
-  --pear-can: #e6ffde;
-  --pear-logo: #03403f;
-  --apple-can: #f2675a;
-  --apple-logo: #ec4458;
-  --exotic-can: #9590f1;
+  --Profile-can: #e6ffde;
+  --Profile-logo: #03403f;
+  --Post-can: #f2675a;
+  --Post-logo: #ec4458;
+  --Forum-can: #9590f1;
   --black-color: #000000;
   --white-color: #ffffff;
-  --exotic-logo: #6464ff;
-  --pear-background: #c9e78a;
-  --apple-background: #ffb2b2;
-  --exotic-background: #c1bff2;
+  --Forum-logo: #6464ff;
+  --Profile-background: #c9e78a;
+  --Post-background: #ffb2b2;
+  --Forum-background: #c1bff2;
 }
 /* Typography */
 h1 {
@@ -72,7 +74,7 @@ header {
   text-align: center;
 }
 .logo {
-  color: var(--pear-logo);
+  color: var(--Profile-logo);
 }
 h1 {
   position: absolute;
@@ -80,35 +82,9 @@ h1 {
   left: 50%;
   transform: translate(-50%, -50%);
 }
-/* Cane Image and Wrapper Image */
-.cane-image {
-  max-width: 265px;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  mask-image: url(https://www.yudiz.com/codepen/fruity/cane.svg);
-  -webkit-mask-repeat: no-repeat;
-  mask-repeat: no-repeat;
-  -webkit-mask-position: center center;
-  mask-position: center center;
-  -webkit-mask-size: 100% auto;
-  mask-size: 100% auto;
-  overflow: hidden;
-}
-.cane-image img {
-  width: 100%;
-}
-.cane-labels {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 300% !important;
-  mix-blend-mode: multiply;
-  transition: all ease-in-out 0.3s;
-}
+
 /*Fruits Images */
-.fruit-image {
+.floating-image {
   opacity: 1;
   position: absolute;
 }
@@ -132,7 +108,7 @@ h1 {
   right: 0;
 }
 /* After */
-.fruit-image::after {
+.floating-image::after {
   content: "";
   position: absolute;
   background: linear-gradient(90deg, #000 3.66%, rgba(0, 0, 0, 0) 92.35%);
@@ -177,13 +153,13 @@ h1 {
   position: relative;
   overflow: hidden;
   z-index: -1;
-  background: var(--pear-background);
+  background: var(--Profile-background);
 }
 .section:nth-child(2) {
-  background-color: var(--apple-background);
+  background-color: var(--Post-background);
 }
 .section:nth-child(3) {
-  background-color: var(--exotic-background);
+  background-color: var(--Forum-background);
 }
 /* Add this to your CSS */
 /* Buttons */
@@ -199,7 +175,7 @@ button {
   background-color: var(--white-color);
   border: none;
   font-size: 40px;
-  color: var(--apple-logo);
+  color: var(--Post-logo);
   transition: all ease-in-out 0.3s;
   cursor: pointer;
 }
@@ -210,17 +186,17 @@ button {
   transition: all ease-in 0.3s;
 }
 .wave {
-  animation: wave-apple-effect 4s linear infinite;
+  animation: wave-Post-effect 4s linear infinite;
   animation-direction: normal;
 }
-@keyframes wave-pear-effect {
+@keyframes wave-Profile-effect {
   0% {
-    box-shadow: 0 0 0 0px var(--pear-background),
-      0 0 0 0px var(--pear-background);
+    box-shadow: 0 0 0 0px var(--Profile-background),
+      0 0 0 0px var(--Profile-background);
   }
   40% {
     box-shadow: 0 0 0 50px rgba(60, 41, 188, 0),
-      0 0 0 0px var(--pear-background);
+      0 0 0 0px var(--Profile-background);
   }
   80% {
     box-shadow: 0 0 0 50px rgba(60, 41, 188, 0), 0 0 0 30px rgba(0, 0, 0, 0);
@@ -229,14 +205,14 @@ button {
     box-shadow: 0 0 0 0px rgba(60, 41, 188, 0), 0 0 0 30px rgba(0, 230, 118, 0);
   }
 }
-@keyframes wave-apple-effect {
+@keyframes wave-Post-effect {
   0% {
-    box-shadow: 0 0 0 0px var(--apple-background),
-      0 0 0 0px var(--apple-background);
+    box-shadow: 0 0 0 0px var(--Post-background),
+      0 0 0 0px var(--Post-background);
   }
   40% {
     box-shadow: 0 0 0 50px rgba(60, 41, 188, 0),
-      0 0 0 0px var(--apple-background);
+      0 0 0 0px var(--Post-background);
   }
   80% {
     box-shadow: 0 0 0 50px rgba(60, 41, 188, 0), 0 0 0 30px rgba(0, 0, 0, 0);
@@ -245,14 +221,14 @@ button {
     box-shadow: 0 0 0 0px rgba(60, 41, 188, 0), 0 0 0 30px rgba(0, 230, 118, 0);
   }
 }
-@keyframes wave-exotic-effect {
+@keyframes wave-Forum-effect {
   0% {
-    box-shadow: 0 0 0 0px var(--exotic-background),
-      0 0 0 0px var(--exotic-background);
+    box-shadow: 0 0 0 0px var(--Forum-background),
+      0 0 0 0px var(--Forum-background);
   }
   40% {
     box-shadow: 0 0 0 50px rgba(60, 41, 188, 0),
-      0 0 0 0px var(--exotic-background);
+      0 0 0 0px var(--Forum-background);
   }
   80% {
     box-shadow: 0 0 0 50px rgba(60, 41, 188, 0), 0 0 0 30px rgba(0, 0, 0, 0);
@@ -266,8 +242,6 @@ button {
   h1 {
     font-size: 350px !important;
   }
-  .cane-image {
-    max-width: 280px;
   }
   .image-one {
     max-width: 250px;
@@ -284,14 +258,13 @@ button {
     max-width: 260px;
     right: 40px;
   }
-}
+
+
 @media screen and (max-width: 1199px) {
   h1 {
     font-size: 300px !important;
   }
-  .cane-image::after {
-    width: 150%;
-  }
+
   .image-one {
     max-width: 220px;
   }
@@ -312,9 +285,7 @@ button {
   h1 {
     font-size: 240px !important;
   }
-  .cane-image {
-    max-width: 250px;
-  }
+
   button {
     height: 80px;
     width: 80px;
@@ -343,9 +314,7 @@ button {
   h2 {
     font-size: 30px;
   }
-  .cane-image {
-    max-width: 180px;
-  }
+
   button {
     height: 60px;
     width: 60px;
@@ -372,9 +341,6 @@ button {
 @media screen and (max-width: 575px) {
   h1 {
     font-size: 100px !important;
-  }
-  .cane-image::after {
-    width: 100%;
   }
   .image-one {
     max-width: 150px;

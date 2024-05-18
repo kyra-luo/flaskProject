@@ -6,15 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hover Me!</title>
     <link href="{{ url_for('static', filename='index.css') }}" rel="stylesheet">
-    <script src="{{ url_for('static', filename='index.js') }}"></script>
-
 </head>
 
 <body>
     <!-- header -->
     <header>
       <h2 class="logo">
-        Fruity
+        University Forums
       </h2>
     </header>
     <!-- main -->
@@ -26,43 +24,42 @@
       </div>
       <!-- Fixed Sections -->
       <div class="text">
-        <h1 class="h1">Pear</h1>
-        <div class="cane-image ">
-          <img src="https://www.yudiz.com/codepen/fruity/cane.svg" alt="">
-          <img src="https://www.yudiz.com/codepen/fruity/Labels.jpg" alt="" class="cane-labels">
-        </div>
+        <h1 class="h1">Proflie</h1>
       </div>
       <!-- Fixed Sections Ends-->
       <!-- Fruits Images Section -->
       <div class="section-container-main">
         <div class="section-container">
           <section class="section" id="section1">
-            <div class="fruit-images">
-              <div class="image-one fruit-image"><img src="https://www.yudiz.com/codepen/fruity/pear-one.png" alt="pear-image"></div>
-              <div class="image-two fruit-image"><img src="https://www.yudiz.com/codepen/fruity/pear-two.png" alt="pear-image"></div>
-              <div class="image-three fruit-image"><img src="https://www.yudiz.com/codepen/fruity/pear-three.png" alt="pear-image"></div>
-              <div class="image-four fruit-image"><img src="https://www.yudiz.com/codepen/fruity/pear-four.png" alt="pear-image"></div>
+            <div class="floating-images">
+              <div class="image-one floating-image"><img src="https://www.yudiz.com/codepen/fruity/pear-one.png" alt="Profile-image"></div>
+              <div class="image-two floating-image"><img src="https://www.yudiz.com/codepen/fruity/pear-two.png" alt="Profile-image"></div>
+              <div class="image-three floating-image"><img src="https://www.yudiz.com/codepen/fruity/pear-three.png" alt="Profile-image"></div>
+              <div class="image-four floating-image"><img src="https://www.yudiz.com/codepen/fruity/pear-four.png" alt="Profile-image"></div>
             </div>
           </section>
           <section class="section" id="section2">
-            <div class="fruit-images">
-              <div class="image-one fruit-image"><img src="https://www.yudiz.com/codepen/fruity/apple-one.png" alt="apple-image"></div>
-              <div class="image-two fruit-image"><img src="https://www.yudiz.com/codepen/fruity/apple-two.png" alt="apple-image"></div>
-              <div class="image-three fruit-image"><img src="https://www.yudiz.com/codepen/fruity/apple-three.png" alt="apple-image"></div>
-              <div class="image-four fruit-image"><img src="https://www.yudiz.com/codepen/fruity/apple-four.png" alt="apple-image"></div>
+            <div class="floating-images">
+              <div class="image-one floating-image"><img src="https://www.yudiz.com/codepen/fruity/apple-one.png" alt="Post-image"></div>
+              <div class="image-two floating-image"><img src="https://www.yudiz.com/codepen/fruity/apple-two.png" alt="Post-image"></div>
+              <div class="image-three floating-image"><img src="https://www.yudiz.com/codepen/fruity/apple-three.png" alt="Post-image"></div>
+              <div class="image-four floating-image"><img src="https://www.yudiz.com/codepen/fruity/apple-four.png" alt="Post-image"></div>
             </div>
           </section>
           <section class="section" id="section3">
-            <div class="fruit-images">
-              <div class="image-one fruit-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-one.png" alt="exotic-image"></div>
-              <div class="image-two fruit-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-two.png" alt="exotic-image"></div>
-              <div class="image-three fruit-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-three.png" alt="exotic-image"></div>
-              <div class="image-four fruit-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-four.png" alt="exotic-image"></div>
+            <div class="floating-images">
+              <div class="image-two floating-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-two.png" alt="Forum-image"></div>
+              <div class="image-three floating-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-three.png" alt="Forum-image"></div>
+              <div class="image-four floating-image"><img src="https://www.yudiz.com/codepen/fruity/exotic-four.png" alt="Forum-image"></div>
             </div>
           </section>
         </div>
       </div>
     </main>
+        <!-- GSAP -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.3/gsap.min.js"></script>
+        <!-- Your JavaScript file -->
+        <script src="{{ url_for('static', filename='index.js') }}"></script>
   </body>
 
 </html>
