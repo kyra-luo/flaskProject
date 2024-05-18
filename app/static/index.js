@@ -18,7 +18,7 @@ const waveEffect = document.querySelector(".wave");
 const sections = document.querySelectorAll(".section");
 const prevButton = document.getElementById("prevButton");
 const nextButton = document.getElementById("nextButton");
-const navigateButton = document.getElementById("navigateButton");
+const navigateButton = document.getElementById("navigateWord");
 const sectionContainer = document.querySelector(".section-container");
 
 let index = 0;
