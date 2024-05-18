@@ -469,6 +469,7 @@ td {
     height: 55px;
     width: 55px;
 }
+<<<<<<< HEAD
 
 
 .middle table, th, td{
@@ -486,4 +487,11 @@ td {
 
 .userpost2{
     background-color: rgba(199, 255, 130, 0.3);
+=======
+.after_login{
+    color: #ff4500;
+    text-decoration: none;
+    font-weight: bold;
+
+>>>>>>> main
 }

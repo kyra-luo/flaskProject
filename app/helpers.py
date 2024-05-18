@@ -24,34 +24,37 @@ def generate_user_id():
     return '{:06d}'.format(randint(0, 999999))
 
 def get_user_posts(user_id):
-    # 获取用户的所有帖子和每个帖子的评论
     query = (
-        db.session.query(Post, Comment, User)
-        .join(Comment, Post.id == Comment.post_id)
-        .join(User, User.id == Comment.user_id)
+        db.session.query(Post)
         .filter(Post.user_id == user_id)
-        .order_by(Post.timestamp.desc(), Comment.timestamp.asc())
+        .order_by(Post.timestamp.desc())
     )
 
-    results = query.all()
+    posts = query.all()
 
-    # 组织数据
-    posts = {}
-    for post, comment, comment_user in results:
-        if post.id not in posts:
-            posts[post.id] = {
-                'post': post,
-                'comments': []
-            }
-        posts[post.id]['comments'].append({
-            'comment': comment,
-            'commentor': comment_user
+    results = []
+    for post in posts:
+        comment_query = (
+            db.session.query(Comment, User)
+            .join(User, User.id == Comment.user_id)
+            .filter(Comment.post_id == post.id)
+            .order_by(Comment.timestamp.asc())
+        )
+        comments = []
+        for comment, comment_user in comment_query.all():
+            comments.append({
+                'comment': comment,
+                'commentor': comment_user
+            })
+        results.append({
+            'post': post,
+            'comments': comments
         })
 
-    return posts
+    return results
+
 
 def get_user_comments(user_id):
-    # 获取用户的所有评论及其相关的帖子信息
     query = (
         db.session.query(Comment, Post, User)
         .join(Post, Comment.post_id == Post.id)
@@ -60,10 +63,8 @@ def get_user_comments(user_id):
         .order_by(Comment.timestamp.asc())
     )
 
-    results = query.all()
-
     comments = []
-    for comment, post, post_author in results:
+    for comment, post, post_author in query.all():
         comments.append({
             'comment': comment,
             'post': post,

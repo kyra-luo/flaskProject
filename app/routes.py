@@ -10,9 +10,8 @@ from sqlalchemy.exc import IntegrityError
 from app.blueprint import main
 from werkzeug.security import generate_password_hash
 from app.email import send_password_reset_email, send_welcome_email
-from app.helpers import process_posts_with_comments
+from app.helpers import process_posts_with_comments, generate_user_id, get_user_posts, get_user_comments
 from datetime import datetime, timezone
-from app.helpers import process_posts_with_comments, generate_user_id
 
 @main.before_request
 def before_request():
@@ -89,7 +88,7 @@ def login():
         print('User found:', user)  # Add this line to check if user is retrieved
 
         if user is None or not user.check_password(form.password.data):
-            flash('Invalid email or password')
+            flash('Invalid email or password', 'failed')
             print('Invalid email or password')  # Add this line to check if this condition is met
             return redirect(url_for('main.login'))
 
@@ -102,26 +101,27 @@ def login():
         return redirect(url_for('main.base'))  # Redirect to index page
     return render_template('login.html', title='Sign In', form=form)
 
-
+# router for register
 @main.route('/register', methods=['GET', 'POST'])
 def regi():
     form = RegisterForm()
-    # if the request method == POST and the form.validate == TRUE.
     if form.validate_on_submit():
         try:
-            user = User(User_id=generate_user_id(),
-                        fname=form.Firstname.data,
-                        lname=form.Lastname.data,
-                        username=form.Username.data,
-                        email=form.email_address.data,
-                        password_hash=generate_password_hash(form.Password.data, method='pbkdf2:sha256'))
+            user = User(
+                User_id=generate_user_id(),
+                fname=form.Firstname.data,
+                lname=form.Lastname.data,
+                username=form.Username.data,
+                email=form.email_address.data,
+                password_hash=generate_password_hash(form.Password.data, method='pbkdf2:sha256')
+            )
             db.session.add(user)
             db.session.commit()
             send_welcome_email(user)
-            flash("You are now registered")
+            flash("You are now registered", 'success')
             return redirect(url_for('main.login'))
         except IntegrityError:
-            flash("Registration failed. Please check your input.")
+            flash("Registration failed. Please check your input.", 'try again')
     return render_template('register.html', title='register', form=form)
 
 @main.route('/community', defaults={'category': None}, methods=['GET', 'POST'])
@@ -162,56 +162,6 @@ def forum(category, id):
             posts = process_posts_with_comments(post_all)
         return render_template('forum.html', title='Home', posts=posts, comment_form=comment_form, community_form=community_form)
 
-
-def get_user_posts(user_id):
-    query = (
-        db.session.query(Post)
-        .filter(Post.user_id == user_id)
-        .order_by(Post.timestamp.desc())
-    )
-
-    posts = query.all()
-
-    results = []
-    for post in posts:
-        comment_query = (
-            db.session.query(Comment, User)
-            .join(User, User.id == Comment.user_id)
-            .filter(Comment.post_id == post.id)
-            .order_by(Comment.timestamp.asc())
-        )
-        comments = []
-        for comment, comment_user in comment_query.all():
-            comments.append({
-                'comment': comment,
-                'commentor': comment_user
-            })
-        results.append({
-            'post': post,
-            'comments': comments
-        })
-
-    return results
-
-
-def get_user_comments(user_id):
-    query = (
-        db.session.query(Comment, Post, User)
-        .join(Post, Comment.post_id == Post.id)
-        .join(User, Post.user_id == User.id)
-        .filter(Comment.user_id == user_id)
-        .order_by(Comment.timestamp.asc())
-    )
-
-    comments = []
-    for comment, post, post_author in query.all():
-        comments.append({
-            'comment': comment,
-            'post': post,
-            'post_author': post_author
-        })
-
-    return comments
 
 
 @main.route('/user/<username>', methods=['GET', 'POST'])
