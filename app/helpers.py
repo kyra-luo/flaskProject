@@ -2,6 +2,7 @@
 from sqlalchemy import select
 from app import db
 from app.models import Post, Comment
+from random import randint
 
 def process_posts_with_comments(post_all):
     posts = []
@@ -17,3 +18,7 @@ def process_posts_with_comments(post_all):
             'comments': db.session.scalars(comment_query).all()
         })
     return posts
+
+
+def generate_user_id():
+    return '{:06d}'.format(randint(0, 999999))
