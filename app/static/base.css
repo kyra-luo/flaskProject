@@ -443,7 +443,7 @@ td {
 
 .useredit-button {
     background-color: #ffffff;
-    /* 按钮背景色 */
+    /*Button background color*/
     border: 2px solid #ccc;
     /* 边框 */
     border-radius: 20px;
@@ -473,5 +473,35 @@ td {
     color: #ff4500;
     text-decoration: none;
     font-weight: bold;
+    font-size: 20px;
 
 }
+.after_login:hover{
+    color: #cc3700;
+
+}
+.Big_t{
+    color: #ff4500;
+    font-weight: bold;
+    text-align: center;
+}
+
+.Big_t:hover{
+    color: lightyellow;
+}
+
+.middle table, th, td{
+    border: none;/* 垂直居中 */
+        }
+.middle td{
+    text-align: center; /* 水平居中 */
+    vertical-align: middle; /* 垂直居中 */
+}
+
+
+.userpost1{
+    background-color: rgb(240, 240, 240);
+}
+
+.userpost2{
+    background-color: rgba(199, 255, 130, 0.3);}
