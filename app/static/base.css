@@ -489,3 +489,19 @@ td {
 .Big_t:hover{
     color: lightyellow;
 }
+
+.middle table, th, td{
+    border: none;/* 垂直居中 */
+        }
+.middle td{
+    text-align: center; /* 水平居中 */
+    vertical-align: middle; /* 垂直居中 */
+}
+
+
+.userpost1{
+    background-color: rgb(240, 240, 240);
+}
+
+.userpost2{
+    background-color: rgba(199, 255, 130, 0.3);}
