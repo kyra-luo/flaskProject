@@ -7,6 +7,7 @@ from app import create_app, db
 from config import SeleniumConfig, TestingConfig
 from selenium.webdriver.common.by import By
 from app.models import User, Post, Comment
+from werkzeug.security import generate_password_hash, check_password_hash
 
 localHost = "http://localhost:5000/"
 
@@ -17,6 +18,8 @@ class SeleniumTestCase(TestCase):
         self.app_context = self.testApp.app_context()
         self.app_context.push()
         db.create_all()
+        p = generate_password_hash('cat')
+        u = User(username='susan', fname='Susan', lname='Smith', email='like@qq.com', password_hash=p)
 
         multiprocessing.set_start_method('fork')
         self.server_process = multiprocessing.Process(target=self.testApp.run)
