@@ -1,7 +1,10 @@
 alembic==1.13.1
 blinker==1.8.1
+certifi==2024.2.2
 click==8.1.7
 dnspython==2.6.1
+elastic-transport==8.13.0
+elasticsearch==8.13.1
 email_validator==2.1.1
 Flask==3.0.3
 Flask-Avatars==0.2.3
@@ -23,6 +26,7 @@ PyJWT==2.8.0
 python-dotenv==1.0.1
 SQLAlchemy==2.0.30
 typing_extensions==4.11.0
+urllib3==2.2.1
 Werkzeug==3.0.2
 WTForms==3.1.2
 zipp==3.18.1
