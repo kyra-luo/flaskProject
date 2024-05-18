@@ -4,7 +4,7 @@ from flask_login import current_user, login_required, login_user, logout_user
 from urllib.parse import urlsplit
 from app import db
 from app.blueprint import main
-from app.form import PostForm, RegisterForm, LoginForm, CommentForm, ResetPasswordRequestForm, ResetPasswordForm, CommunityForm
+from app.form import PostForm, RegisterForm, LoginForm, CommentForm, ResetPasswordRequestForm, ResetPasswordForm, CommunityForm, UserForm
 import sqlalchemy as sa
 from app.models import User, Post, Community, Comment
 from sqlalchemy.exc import IntegrityError
