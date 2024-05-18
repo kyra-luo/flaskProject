@@ -39,22 +39,9 @@ post1 = Post(
 #     underPost=post1
 # )
 
-post2 = Post(
-    topic="topic2",
-    body="Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolore quod aliquid asperiores modi sequi minus nostrum porro sint! Quasi molestiae necessitatibus accusamus nisi libero repudiandae, eum pariatur unde eveniet culpa.",
-    author=user,
-    community=community
-)
-comment1_post2 = Comment(
-    comment="post2_1 " + sample_posts,
-    commentor=user,
-    underPost=post2
-)
-
 db.session.rollback()
 # Add users to the database session
-db.session.add_all([comment1_post2, community, post2])
-db.session.add_all([])
+db.session.add_all([ community, post1])
 
 # Commit the session to the database
 db.session.commit()
