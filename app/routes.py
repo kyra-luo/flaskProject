@@ -164,34 +164,37 @@ def forum(category, id):
 
 
 def get_user_posts(user_id):
-    # 获取用户的所有帖子和每个帖子的评论
     query = (
-        db.session.query(Post, Comment, User)
-        .join(Comment, Post.id == Comment.post_id)
-        .join(User, User.id == Comment.user_id)
+        db.session.query(Post)
         .filter(Post.user_id == user_id)
-        .order_by(Post.timestamp.desc(), Comment.timestamp.asc())
+        .order_by(Post.timestamp.desc())
     )
 
-    results = query.all()
+    posts = query.all()
 
-    # 组织数据
-    posts = {}
-    for post, comment, comment_user in results:
-        if post.id not in posts:
-            posts[post.id] = {
-                'post': post,
-                'comments': []
-            }
-        posts[post.id]['comments'].append({
-            'comment': comment,
-            'commentor': comment_user
+    results = []
+    for post in posts:
+        comment_query = (
+            db.session.query(Comment, User)
+            .join(User, User.id == Comment.user_id)
+            .filter(Comment.post_id == post.id)
+            .order_by(Comment.timestamp.asc())
+        )
+        comments = []
+        for comment, comment_user in comment_query.all():
+            comments.append({
+                'comment': comment,
+                'commentor': comment_user
+            })
+        results.append({
+            'post': post,
+            'comments': comments
         })
 
-    return posts
+    return results
+
 
 def get_user_comments(user_id):
-    # 获取用户的所有评论及其相关的帖子信息
     query = (
         db.session.query(Comment, Post, User)
         .join(Post, Comment.post_id == Post.id)
@@ -200,10 +203,8 @@ def get_user_comments(user_id):
         .order_by(Comment.timestamp.asc())
     )
 
-    results = query.all()
-
     comments = []
-    for comment, post, post_author in results:
+    for comment, post, post_author in query.all():
         comments.append({
             'comment': comment,
             'post': post,
@@ -216,38 +217,38 @@ def get_user_comments(user_id):
 @main.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
-    # 获取指定用户名的用户信息
     user = db.session.query(User).filter_by(username=username).first_or_404()
-    if not user:
-        abort(404)
-    
+
     posts = get_user_posts(user.id)
-    print(user.id)
     post_count = len(posts)
 
-    # 获取用户的评论及其相关帖子信息
     comments = get_user_comments(user.id)
     comment_count = len(comments)
 
     form = CommentForm()
     userform = UserForm()
 
-    if userform.validate_on_submit():
-        try:
-            user.username = userform.username.data
-            user.about_me = userform.about_me.data
-            db.session.commit()
-            flash('Profile updated successfully!', 'success')
-            return redirect(url_for('user', username=user.username))
-        except Exception as e:
-            db.session.rollback()
-            flash('Error updating profile: ' + str(e), 'error')
+    if request.method == 'POST' and userform.validate_on_submit():
+        if current_user.username != username:
+            flash('You can only edit your own profile!', 'error')
+            return redirect(url_for('main.user', username=current_user.username))
+        else:
+            try:
+                current_user.username = userform.username.data
+                current_user.about_me = userform.about_me.data
+                db.session.commit()
+                flash('Profile updated successfully!', 'success')
+                return redirect(url_for('main.user', username=current_user.username))
+            except Exception as e:
+                db.session.rollback()
+                flash('Error updating profile: ' + str(e), 'error')
+
     elif request.method == 'GET':
         userform.username.data = user.username
         userform.about_me.data = user.about_me
 
-    return render_template('user.html', title='User Profile', user=user, form=form, userform=userform, posts=posts, comments=comments, post_count=post_count, comment_count=comment_count)
-
+    return render_template('user.html', title='User Profile', user=user, form=form, userform=userform, posts=posts,
+                           comments=comments, post_count=post_count, comment_count=comment_count)
 
 
 @main.route('/base', methods=['GET', 'POST'])

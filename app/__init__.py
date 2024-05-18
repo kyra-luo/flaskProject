@@ -29,4 +29,3 @@ def create_app(Config):
 
 from app import models
 
-
