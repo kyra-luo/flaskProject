@@ -11,7 +11,7 @@ from sqlalchemy.exc import IntegrityError
 from app.blueprint import main
 from werkzeug.security import generate_password_hash
 from app.email import send_password_reset_email, send_welcome_email
-from app.helpers import process_posts_with_comments, generate_user_id
+from app.helpers import process_posts_with_comments, generate_user_id, get_user_posts, get_user_comments
 from flask import g
 from app.form import SearchForm
 
@@ -166,9 +166,43 @@ def forum(category, id):
             posts = process_posts_with_comments(post_all)
         return render_template('forum.html', title='Home', posts=posts, comment_form=comment_form, community_form=community_form)
 
-@main.route('/user', methods=['GET', 'POST'])
-def user():
-    return render_template('user.html', title='User')
+@main.route('/user/<username>', methods=['GET', 'POST'])
+@login_required
+def user(username):
+    user = db.session.query(User).filter_by(username=username).first_or_404()
+
+    form = CommentForm()
+    userform = UserForm()
+
+
+    # Retrieve user posts and comments
+    posts = get_user_posts(user.id)
+    post_count = len(posts)
+    comments = get_user_comments(user.id)
+    comment_count = len(comments)
+
+    if request.method == 'POST' and userform.validate_on_submit():
+        if current_user.username != username:
+            flash('You can only edit your own profile!', 'error')
+            return redirect(url_for('main.user', username=current_user.username))
+
+        try:
+            current_user.username = userform.username.data
+            current_user.about_me = userform.about_me.data
+
+            db.session.commit()
+            flash('Profile updated successfully!', 'success')
+            return redirect(url_for('main.user', username=current_user.username))
+        except Exception as e:
+            db.session.rollback()
+            flash(f'Error updating profile: {e}', 'error')
+    else:
+        userform.username.data = user.username
+        userform.about_me.data = user.about_me
+
+
+    return render_template('user.html', title='User Profile', user=user, form=form, userform=userform, posts=posts,
+                           comments=comments, post_count=post_count, comment_count=comment_count)
 
 
 @main.route('/base', methods=['GET', 'POST'])

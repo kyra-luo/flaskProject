@@ -1,149 +1,151 @@
-
 {% extends "base.html" %}
 {% block content %}
-    <div class="container-fluid">
+
+<div class="container-fluid mt-3">
     <div class="row">
-        <div class="col-sm-3 sidenav">
+        <div class="col-sm-3 sidenav" style="background-color: rgba(197, 187, 174, 0.25);">
             <ul class="nav nav-pills flex-column" role="tablist">
-                <li class="nav-item"><a class="nav-link" href="#home">Home</a></li>
-                <li class="nav-item"><a class="nav-link" href="#popular">Popular</a></li>
-                <li class="nav-item"><a class="nav-link" href="#All">All</a></li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Home</a>
+                </li>
             </ul>
+
             <hr>
-            <div class="mb-3">
-    <p class="userleft" onclick="toggleSection('custom-feeds', this)">
-        CUSTOM FEEDS<span class="arrow">&#9650;</span> <!-- 箭头向上表示展开 -->
-    </p>
-    <div class="custom-feeds" style="display:block;">
-        <button class="btn">
-            <i class="fa-solid fa-heart fa-beat" style="--fa-animation-duration: 0.5s;"></i>
-            <a href="#">About Custom Feeds</a>
-        </button>
-    </div>
-</div>
 
-<hr>
-<div class="mb-3">
-    <p class="userleft" onclick="toggleSection('communities', this)">
-        COMMUNITIES<span class="arrow">&#9650;</span>
-    </p>
-    <div class="communities" style="display:block;">
-        <button class="btn">
-            <i class="fa-solid fa-users"></i>
-            <a href="#">Detail about Communities</a>
-        </button>
-    </div>
-</div>
+            <h4 style="margin-top:20px">About me</h4>
+            <div class="profile-section">
+                <img src="{{ url_for('static', filename='image/01.png') }}" alt="Profile Icon" class="profile-icon">
+                <div class="profile-info">
+                    <p id="aboutMeText">{{ user.about_me or 'That is who am I' }}</p>
+                </div>
+            </div>
 
-<hr>
-<div class="mb-3">
-    <p class="userleft" onclick="toggleSection('userresources', this)">
-        RESOURCES<span class="arrow">&#9650;</span>
-    </p>
-    <div class="userresources" style="display:block;">
-        <button class="btn">
-            <i class="fa-regular fa-bell"></i>
-            <a href="#">HELP</a>
-        </button>
-        <br>
-        <button class="btn">
-            <i class="fa-solid fa-info"></i>
-            <a href="#">ABOUT WEBSITE</a>
-        </button>
-        <br>
-        <button class="btn">
-            <i class="fa-solid fa-feather"></i>
-            <a href="#">USER AGREEMENT</a>
-        </button>
-        <br>
-        <button class="btn">
-            <i class="fa-solid fa-file-invoice"></i>
-            <a href="#">PRIVACY POLICY</a>
-        </button>
-    </div>
-</div>
+            <hr>
 
-
-
+            <h4>LINKS</h4>
+            <button class="useredit-button" style="margin: 20px" onclick="addSocialLink()">+ Add Social Link</button>
         </div>
 
         <div class="col-sm-9">
             <div class="row">
-            <div class="col-sm-8">
                 <div class="middle">
-                    <h2 style="margin: 20px">User name</h2>
-                    <h6 style="margin-left:20px ">ID: 1234567</h6>
-                    <br>
+                    <table>
+                        <tr valign="top">
+                            <td><img src="{{ user.avatar(128) }}"></td>
+                            <td>
+                                <h2>{{ user.username }}</h2>
+                            </td>
+                        </tr>
+                    </table>
+
+                    <table>
+                        <tr>
+                            <td>
+                                <button class="profile-info" type="button" class="useredit-button"
+                                    data-bs-toggle="modal" data-bs-target="#editModal">Change Profile</button>
+                            </td>
+                            <td>
+                                <h5>last visit: {{ user.last_seen }}</h5>
+                            </td>
+                        </tr>
+                    </table>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="#">OVERVIEWS</a>
+                            <a class="nav-link active" data-bs-toggle="tab" href="#personalized">personalized</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">POSTS<span class="badge bg-secondary">5</span></a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#POSTS">POSTS<span
+                                    class="badge bg-secondary">{{ post_count }}</span></a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#">COMMENTS<span class="badge bg-secondary">10</span></a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="#">SAVED<span class="badge bg-secondary">2</span></a>
+                            <a class="nav-link" data-bs-toggle="tab" href="#COMMENTS">COMMENTS<span
+                                    class="badge bg-secondary">{{ comment_count }}</span></a>
                         </li>
                     </ul>
+                    <div class="tab-content">
+                        <div id="personalized" class="container tab-pane active"><br>
+                            <h3>personalized</h3>
+                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor
+                                incididunt ut labore et dolore magna aliqua.</p>
+                        </div>
+                        <div id="POSTS" class="container tab-pane fade"><br>
+                            <h3>POSTS</h3>
+                            {% for post_data in posts %}
+                            <div class="list-group-item">
+
+                                <div class="userpost1">
+                                    <h3>{{ post_data.post.topic }}</h3>
+                                    <p>{{ post_data.post.body }}</p>
+                                    <small>Posted by {{ post_data.post.author.username }} on {{ post_data.post.timestamp
+                                        }}</small>
+                                </div>
+                                <div class="userpost2">
+                                    <div class="comments mt-3">
+                                        <h5>Comments:</h5>
+                                        {% for comment in post_data.comments %}
+                                        <div class="comment">
+                                            <p>{{ comment.comment.comment }}</p>
+                                            <small>Commented by <a
+                                                    href="{{ url_for('main.user', username=comment.commentor.username) }}">{{
+                                                    comment.commentor.username }}</a> on {{ comment.comment.timestamp
+                                                }}</small>
+                                        </div>
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            {% endfor %}
+                        </div>
+                        <div id="COMMENTS" class="container tab-pane fade"><br>
+                            <h3>COMMENTS</h3>
+                            {% for comment in comments %}
+                            <div class="comment">
+                                <p>{{ comment.comment.comment }}</p>
+                                <small>Commented on <a href="{{ url_for('main.test', post_id=comment.post.id) }}">{{
+                                        comment.post.topic }}</a> by <a
+                                        href="{{ url_for('main.user', username=comment.post_author.username) }}">{{
+                                        comment.post_author.username }}</a> on {{ comment.comment.timestamp }}</small>
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </div>
                     <hr>
                 </div>
-            </div>
-
-                <div class="col-sm-4" style="background-color: rgba(197, 187, 174, 0.25);">
-                <div class="Userblue-header"></div>
-                <h4 style="margin: 20px">User name</h4>
-                <button id="shareButton" class="btn" style="margin: 15px;background-color: rgba(250, 235, 215, 0.567);">
-                    <i class="fa-solid fa-share"></i>Share
-                </button>
-                <div id="shareOptions" class="d-none">
-                    <ul>
-                        <li><a href="#">Facebook</a></li>
-                        <li><a href="#">Twitter</a></li>
-                        <li><a href="#">LinkedIn</a></li>
-                        <li><a href="#">Email</a></li>
-                    </ul>
-                </div>
-
-                <table class="UserTable" style="background-color: transparent">
-                    <tr>
-                        <th>Post Karma</th>
-                        <th>Comment Karma</th>
-                    </tr>
-                    <tr>
-                        <td id="postKarma">0</td>
-                        <td id="commentKarma">0</td>
-                    </tr>
-                    <tr>
-                        <th>Cake Day</th>
-                        <th>Gold Received</th>
-                    </tr>
-                    <tr>
-                        <td id="cakeDay">Apr 30, 2024</td>
-                        <td id="goldReceived">0</td>
-                    </tr>
-                </table>
-                <hr>
-                <h4 style="margin-top:20px "> Setting</h4>
-
-                <div class="profile-section">
-                    <img src="{{ url_for('static', filename='image/1.jpg') }}" alt="Profile Icon" class="profile-icon">
-                    <div class="profile-info">
-                        <h3>Profile</h3>
-                        <p>Customize your profile</p>
-                    </div>
-                    <button class="useredit-button">Edit Profile</button>
-                </div>
-                <hr>
-                <h4>LINKS</h4>
-                <button class="useredit-button" style="margin: 20px" onclick="addSocialLink()">+ Add Social Link</button>
-                    <br>
-            </div>
             </div>
         </div>
     </div>
 </div>
 
-    {% endblock %}
+<!-- Edit About Me Modal -->
+<div class="modal fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Edit About Me</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form id="editAboutMeForm" method="post" action="{{ url_for('main.user', username=user.username) }}">
+                    {{ form.hidden_tag() }}
+                    <div class="mb-3">
+                        {{ userform.username.label(class="form-label") }}
+                        {{ userform.username(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ userform.about_me.label(class="form-label") }}
+                        {{ userform.about_me(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ userform.communities.label(class="form-label") }}
+                        {{ userform.communities(class="form-control") }}
+                    </div>
+                    <div class="mb-3">
+                        {{ userform.submit(class="btn btn-primary") }}
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
