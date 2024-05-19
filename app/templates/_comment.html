@@ -1,6 +1,8 @@
 <div class="post-single-reply">
     <div class="post-user-info">
-        <img src="/static/avatar/Screenshot 2024-03-22 at 5.56.01 pm.jpeg" alt="" class="post-user-avatar">
+       <a href="{{ url_for('main.user', username=comment.commentor.username) }}">
+                <img src="{{ comment.commentor.avatar(36) }}" alt="" class="post-user-avatar">
+            </a>
         <span class="post-user-name">{{ comment.commentor.username }}</span>
         <span class="post-date">{{ moment(comment.timestamp).fromNow() }}</span>
     </div>
