@@ -264,3 +264,8 @@ def search():
     comment_form = CommentForm()
     
     return render_template('search.html', title='Search', posts=posts, comment_form=comment_form)
+
+@main.route('/user', methods=['GET', 'POST'])
+@login_required
+def userp():
+   return redirect(url_for('main.login'))
