@@ -12,7 +12,9 @@ Welcome to our project, a discussion forum designed to facilitate vibrant and en
 ## Environment Setup
 
 ### Step 0 Python installed 
-Make sure you already install the Python(Version 3.7 or higher version)
+Make sure you already install the Python(Version 3.7 or higher version)<br>
+Make sure you have installed the docker. For how to install the docker, please refer the docker official website
+https://docs.docker.com/desktop/install/mac-install/
 
 ### Step 1 Cloning a repository
 git clone https://github.com/kyra-luo/flaskProject.git<br>
@@ -114,6 +116,16 @@ Search function is allow you to search the post body part, but require login.
 ### Notifications (To be implemented)
 
 - **Get notifications after new comments**: Users will be noti
+
+### Testing 
+For unit_test
+```
+python3 -m unittest tests.unit_test
+```
+For selenium
+```
+python3 -m unittest tests.selenium
+```
 
 ## Project Goals
 

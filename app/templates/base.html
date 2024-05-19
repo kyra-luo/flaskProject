@@ -19,11 +19,13 @@
                 <img src="{{ url_for('static', filename='image/logo.gif') }}" alt="our Logo" id="logo_nav" onclick='window.location.href="/index"'>
                 &nbsp; &nbsp;&nbsp;
                  {% if current_user.is_authenticated %}
-                <a href="{{ url_for('main.community') }}" class="after_login">Community</a>
-                &nbsp; &nbsp;
-                <a href="{{ url_for('main.test') }}" class="after_login">Explore</a>
-                &nbsp;&nbsp;
-                <a href="{{ url_for('main.create') }}" class="after_login">Create</a>
+                    <a href="{{ url_for('main.community') }}" class="after_login">Community</a>
+                    &nbsp; &nbsp;
+                    <a href="{{ url_for('main.test') }}" class="after_login">Explore</a>
+                    &nbsp;&nbsp;
+                     <a href="{{ url_for('main.create') }}" class="after_login">Create</a>
+                    &nbsp;&nbsp;
+                     <a href="{{ url_for('main.user',username = current_user.username)}}" class="after_login">Profile</a >
                 {% endif %}
             </div>
 
