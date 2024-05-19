@@ -5,10 +5,10 @@ function toggleSection(className, headerRow) {
     sections.forEach(section => {
         if (section.style.display === 'block') {
             section.style.display = 'none';
-            arrow.innerHTML = '&#9660;';  // 确保这里没有额外的添加操作
+            arrow.innerHTML = '&#9660;';
         } else {
             section.style.display = 'block';
-            arrow.innerHTML = '&#9650;';  // 确保这里没有额外的添加操作
+            arrow.innerHTML = '&#9650;';
         }
     });
 }
@@ -22,7 +22,7 @@ document.getElementById('shareButton').addEventListener('click', () => {
 document.addEventListener('DOMContentLoaded', async () => {
     async function fetchData() {
         try {
-            const response = await fetch('https://example.com/api/user-stats');  // 替换为你的API URL
+            const response = await fetch('https://example.com/api/user-stats');
             const data = await response.json();
             document.getElementById('postKarma').textContent = data.postKarma;
             document.getElementById('commentKarma').textContent = data.commentKarma;
@@ -32,8 +32,10 @@ document.addEventListener('DOMContentLoaded', async () => {
         }
     }
 
-    setInterval(fetchData, 30000);  // 定时刷新数据，每30秒更新一次
-    fetchData();  // 初始加载数据
+    //refresh every 30s
+    setInterval(fetchData, 30000);
+    //init loading data
+    fetchData();
 });
 
 function addSocialLink() {
