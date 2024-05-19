@@ -19,26 +19,45 @@ git clone https://github.com/kyra-luo/flaskProject.git<br>
 
 ### Step 2 Setting up the environment 
 Create a virtual environment<br>
-python3 -m venv venv <br>
+
+```sh
+    python3 -m venv venv
+```
+
 source venv/bin/activate (For Linux and macOS)<br>
 .\venv\Scripts\activate  (For Windows)<br>
 Create a .env file, setting up the secret key to start the program
 ### Step 3 install the requirement 
+
+```
 pip install -r requirements.txt
+```
 
 ### Step 4 Getting connection with the database
+
+```
 flask db upgrade
+```
 
 ### Step 5 setting up the docker (requirement for the search function )
+
 #### open a new terminal
+
+```
 docker run --name elasticsearch -d --rm -p 9200:9200 \
     --memory="2GB" \
     -e discovery.type=single-node -e xpack.security.enabled=false \
     -t docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+```
+
 #### Enter to the flask shell
-flask shell<br> 
-Post.reindex()<br>
-*press the control+ D to exit the flask shell<br>
+
+```
+flask shell
+Post.reindex()
+```
+
+*press the control+ D to exit the flask shell
 **For more info please go to https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvi-full-text-search
 
 ### Step 6 Starting the program 
@@ -83,24 +102,22 @@ But after you are login, you can use the search bar, link navigate you to commun
 
 Search function is allow you to search the post body part, but require login.
 
-
-### Replies (optional)
-
-- **Discussions**: This is something really nice to have, as it futher promotes the discussion among the users, if 
-- we do get time after implementing above essential functions, this should be considered first to be implemented.
-
-### Messaging (optional)
+### Messaging (To be implemented)
 
 - **Direct Messaging**: Users will have the ability to send private messages to others, facilitating direct and 
 - personal communication.
 
-### History (optional)
+### Members (Half finished)
 
-### Notifications (optional)
+- **Social with other members**: We have implemented the database schema for this part, but we have not yet finished adding user into a community.
+
+### Notifications (To be implemented)
+
+- **Get notifications after new comments**: Users will be noti
 
 ## Project Goals
 
-This forum aims to create a welcoming and active environment where users can freely share and discuss their interests. 
+This forum aims to create a welcoming and active environment where users can freely share and discuss their interests in university. 
 Our goal is to implement a user-friendly interface with robust features that support community building and personal 
 interaction.
 
@@ -113,10 +130,6 @@ are interested in contributing or have any feedback on our proposed features.
 
 For more information or to get involved, please contact us at:
 
-### Our student emails
-
-- Email: 22470722@student.uwa.edu.au
-- Project Link: [GitHub Repository](URL-to-your-repository)
 
 ## License
 
