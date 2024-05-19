@@ -518,3 +518,16 @@ td {
     font-size: 40px;
     padding: 100px;
 }
+
+.user_change_profile{
+    display: flex;
+    align-items: center;
+    /* 垂直居中 */
+    background-color: #f4f4f4;
+    /* 背景色 */
+    padding: 10px;
+    border-radius: 20px;
+
+
+
+}
