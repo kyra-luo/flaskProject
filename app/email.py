@@ -25,7 +25,7 @@ def send_password_reset_email(user):
 
 
 
-# 定义发送邮件函数
+# seding email function
 def send_welcome_email(user):
     # 构建邮件内容
     subject = 'Welcome to Our Website'
