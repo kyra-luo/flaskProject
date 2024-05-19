@@ -502,11 +502,14 @@ td {
 
 
 .userpost1{
-    background-color: rgb(240, 240, 240);
+    background-color: rgb(255,255,255);
+    padding: 50px;
 }
 
+
+
 .userpost2{
-    background-color: rgba(199, 255, 130, 0.3);}
+    background-color: rgba(230, 255, 130, 0.3);}
 
 .user_section1 img{
     padding: 60px;
@@ -531,4 +534,12 @@ td {
 .userlast{
     padding: 10px;
     padding-bottom: 50px;
+}
+
+.user_post h2{
+    background-color:rgb(240, 240, 240) ;
+}
+
+.user_post h2{
+    padding: 20px;
 }

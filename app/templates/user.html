@@ -25,7 +25,7 @@
                             </td>
                             <td>
                                 <button class="useredit-button" style="margin: 20px" onclick="addSocialLink()">+ Add Social Link</button>
-                               </td>
+                            </td>
                         </tr>
                     </table>
 
@@ -72,12 +72,15 @@
                     </ul>
                     <div class="tab-content">
                         <div id="POSTS" class="container tab-pane active"><br>
-                            <h3>POSTS</h3>
+                        <div class="user_post">
+                            <h2>POSTS</h2>
                             {% for post_data in posts %}
-                            <div class="list-group-item">
 
                                 <div class="userpost1">
                                     <h3>{{ post_data.post.topic }}</h3>
+                                    <p>
+
+                                    </p>
                                     <p>{{ post_data.post.body }}</p>
                                     <small>Posted by {{ post_data.post.author.username }} on {{ post_data.post.timestamp
                                         }}</small>
@@ -92,12 +95,15 @@
                                                     href="{{ url_for('main.user', username=comment.commentor.username) }}">{{
                                                     comment.commentor.username }}</a> on {{ comment.comment.timestamp
                                                 }}</small>
+
                                         </div>
+
+
                                         {% endfor %}
                                     </div>
                                 </div>
-                            </div>
                             {% endfor %}
+                        </div>
                         </div>
 
 
@@ -149,5 +155,5 @@
         </div>
     </div>
 </div>
-
+<script src="/static/user.js"></script>
 {% endblock %}
