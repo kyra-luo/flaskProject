@@ -22,8 +22,10 @@
                 <a href="{{ url_for('main.community') }}" class="after_login">Community</a>
                 &nbsp; &nbsp;
                 <a href="{{ url_for('main.test') }}" class="after_login">Explore</a>
-                &nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;
                 <a href="{{ url_for('main.create') }}" class="after_login">Create</a>
+                     &nbsp;&nbsp;
+                     <a href="{{ url_for('main.user', username = current_user.username) }}" class="after_login">Profile</a>
                 {% endif %}
             </div>
 

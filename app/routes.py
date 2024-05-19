@@ -167,6 +167,13 @@ def forum(category, id):
             posts = process_posts_with_comments(post_all)
         return render_template('forum.html', title='Home', posts=posts, comment_form=comment_form, community_form=community_form)
 
+
+@main.route('/user', methods=['GET', 'POST'])
+@login_required
+def userp():
+   return redirect(url_for('main.login'))
+
+
 @main.route('/user/<username>', methods=['GET', 'POST'])
 @login_required
 def user(username):
@@ -174,6 +181,8 @@ def user(username):
 
     form = CommentForm()
     userform = UserForm()
+
+
 
 
     # Retrieve user posts and comments
