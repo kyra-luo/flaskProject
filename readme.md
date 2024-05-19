@@ -22,7 +22,7 @@ git clone https://github.com/kyra-luo/flaskProject.git<br>
 ### Step 2 Setting up the environment 
 Create a virtual environment<br>
 
-```sh
+```
     python3 -m venv venv
 ```
 
