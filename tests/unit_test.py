@@ -3,6 +3,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy import select, text
 import sqlalchemy as sa
 from config import TestingConfig
+from hashlib import md5
 from app import create_app, db
 from app.models import User, Post, Comment, Community, commembers
 from app.helpers import generate_user_id, generate_random_email, generate_random_string, process_posts_with_comments
@@ -95,6 +96,22 @@ class TestConfig(unittest.TestCase):
         
         # Assert that the actual commebers match the expected result
         assert actual_commebers == expected_commebers, f"Expected {expected_commebers} but got {actual_commebers}"
+
+
+    def test_avatar(self):
+        # Given: a user with a known email
+        email = "test@example.com"
+        user = User(username="testuser", email=email)
+
+        # When: we call the avatar function with a specific size
+        size = 128
+        avatar_url = user.avatar(size)
+
+        # Then: the returned URL should match the expected Gravatar URL format
+        digest = md5(email.lower().encode('utf-8')).hexdigest()
+        expected_url = f'https://www.gravatar.com/avatar/{digest}?d=identicon&s={size}'
+
+        self.assertEqual(avatar_url, expected_url)
         
 
 
