@@ -1,8 +1,17 @@
-# A Discussion Forum (TBC)
+# A Discussion Forum (TBC) for CITS 5505 Group Project 
 
 ## Introduction
 
 Welcome to our project, a discussion forum designed to facilitate vibrant and engaging community interactions. This platform will allow users to post content, join communities of interest, and communicate directly with other users. It's currently under development, and this README outlines the core features we plan to implement.
+
+## Environment Setup
+
+### Step 0 Python installed 
+Make sure you already install the Python(Version 3.7 or higher version)
+
+### Step 1 Cloning a repository
+git clone https://github.com/kyra-luo/flaskProject.git
+
 
 ## Planned Features
 
