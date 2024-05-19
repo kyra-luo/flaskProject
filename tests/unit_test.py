@@ -1,10 +1,10 @@
 import unittest
 from werkzeug.security import generate_password_hash, check_password_hash
-from sqlalchemy import select
+from sqlalchemy import select, text
 import sqlalchemy as sa
 from config import TestingConfig
 from app import create_app, db
-from app.models import User, Post, Comment, Community
+from app.models import User, Post, Comment, Community, commembers
 from app.helpers import generate_user_id, generate_random_email, generate_random_string, process_posts_with_comments
 
 user_id = generate_user_id()
@@ -68,6 +68,34 @@ class TestConfig(unittest.TestCase):
         post_all=db.session.scalars(query).all()
         post = process_posts_with_comments(post_all)
         self.assertEqual(len(post[0]['comments']), 1)
+
+    def test_commembership(self):
+        self.create_user()
+        dog = generate_password_hash('dog')
+        self.create_user(username='bob', user_id=generate_user_id(), fname='Bob', lname='Smith', email='123@outlook.com', password=dog)    
+        self.create_community()
+        user = db.session.get(User, 1)
+        user2 = db.session.get(User, 2)
+        community = db.session.query(Community).first()
+        user.communities.add(community)
+        community.members.add(user)
+        user2.communities.add(community)
+        community.members.add(user2)
+        db.session.commit()
+         # Check the commebers table
+        query = text("SELECT member_id, community_id FROM commembers")
+        commebership = db.session.execute(query).fetchall()
+        # Expected result
+        expected_commebers = [
+            (1, 1),
+            (2, 1)
+        ]
+        # Convert the result to a list of tuples for easy comparison
+        actual_commebers = [(row.member_id, row.community_id) for row in commebership]
+        
+        # Assert that the actual commebers match the expected result
+        assert actual_commebers == expected_commebers, f"Expected {expected_commebers} but got {actual_commebers}"
+        
 
 
     
