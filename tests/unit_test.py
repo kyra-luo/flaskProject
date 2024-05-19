@@ -53,11 +53,11 @@ class TestConfig(unittest.TestCase):
         db.session.commit()
         return c
 
-    # def test_hash_password(self):
-    #     p = generate_password_hash('cat')
-    #     u = User(username='susan', User_id = user_id, fname='Susan', lname='Smith', email='like@qq.com', password_hash=p)
-    #     self.assertFalse(u.check_password('dog'))
-    #     self.assertTrue(u.check_password('cat'))
+    def test_hash_password(self):
+        p = generate_password_hash('cat')
+        u = User(username='susan', User_id = user_id, fname='Susan', lname='Smith', email='like@qq.com', password_hash=p)
+        self.assertFalse(u.check_password('dog'))
+        self.assertTrue(u.check_password('cat'))
 
     def test_comments(self):
         self.create_user()
