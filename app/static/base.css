@@ -91,7 +91,7 @@ html {
 }
 
 .single-post:hover {
-    background-color: rgba(211, 211, 211, 0.529);
+    background-color: lightsteelblue;
 }
 
 
@@ -408,37 +408,37 @@ td {
 
 .Userseparator {
     height: 1.5px;
-    /* 线的厚度 */
+
     background-color: #0505052b;
-    /* 线的颜色 */
+
     margin: 20px 0;
     border-top: 1.5px dotted #392929;
-    /* 在线上下添加一些空间 */
+
 }
 
 
 .profile-section {
     display: flex;
     align-items: center;
-    /* 垂直居中 */
+
     background-color: #f4f4f4;
-    /* 背景色 */
+
     padding: 10px;
     border-radius: 20px;
-    /* 圆角 */
+
 }
 
 .profile-icon {
     width: 60px;
-    /* 图标大小 */
+
     height: 60px;
     margin-right: 20px;
-    /* 图标和文本之间的间隔 */
+
 }
 
 .profile-info {
     flex-grow: 1;
-    /* 让文本区域填充多余的空间 */
+
 }
 
 .useredit-button {
@@ -491,11 +491,11 @@ td {
 }
 
 .middle table, th, td{
-    border: none;/* 垂直居中 */
+    border: none;
         }
 .middle td{
-    text-align: center; /* 水平居中 */
-    vertical-align: middle; /* 垂直居中 */
+    text-align: center;
+    vertical-align: middle;
 }
 
 
@@ -505,3 +505,17 @@ td {
 
 .userpost2{
     background-color: rgba(199, 255, 130, 0.3);}
+
+.Search_results{
+    text-align: center;
+    font-weight: bold;
+    color:gray;
+}
+.Search_results:hover{
+    color: #cbd5e0;
+}
+.post-user-name,.post-date{
+    color: #9590f1;
+    font-weight: bold;
+
+}

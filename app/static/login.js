@@ -27,6 +27,7 @@ function Hid(className) {
     });
 }
 
+//Checking the two password is same or not
 function checkpin() {
     var state = false;
     var mess = document.getElementsByClassName('message1')[0];
