@@ -2,6 +2,8 @@
 from sqlalchemy import select
 from app import db
 from app.models import Post, Comment, User
+import random
+import string
 from random import randint
 
 def process_posts_with_comments(post_all):
@@ -72,3 +74,17 @@ def get_user_comments(user_id):
         })
 
     return comments
+
+def generate_random_email():
+    domains = ["example.com", "test.com", "demo.com"]
+    name_length = random.randint(5, 10)
+    domain = random.choice(domains)
+    
+    name = ''.join(random.choices(string.ascii_lowercase + string.digits, k=name_length))
+    email = f"{name}@{domain}"
+    return email
+
+def generate_random_string(length=5):
+    characters = string.ascii_letters + string.digits
+    random_string = ''.join(random.choices(characters, k=length))
+    return random_string
