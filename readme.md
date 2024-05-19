@@ -29,6 +29,7 @@ Create a virtual environment<br>
 source venv/bin/activate (For Linux and macOS)<br>
 .\venv\Scripts\activate  (For Windows)<br>
 Create a .env file, setting up the secret key to start the program
+Also need a ELASTICSEARCH_URL=http://localhost:9200 at your .env for the docker 
 ### Step 3 install the requirement 
 
 ```
