@@ -29,7 +29,19 @@ pip install -r requirements.txt
 ### Step 4 Getting connection with the database
 flask db upgrade
 
-### Step 5 Starting the program 
+### Step 5 setting up the docker (requirement for the search function )
+#### open a new terminal
+docker run --name elasticsearch -d --rm -p 9200:9200 \
+    --memory="2GB" \
+    -e discovery.type=single-node -e xpack.security.enabled=false \
+    -t docker.elastic.co/elasticsearch/elasticsearch:8.11.1
+#### Enter to the flask shell
+flask shell<br> 
+Post.reindex()<br>
+*press the control+ D to exit the flask shell<br>
+**For more info please go to https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-xvi-full-text-search
+
+### Step 6 Starting the program 
 flask run <br>
 *Usually the program opened http://127.0.0.1:5000, but check which port are you using.
 
