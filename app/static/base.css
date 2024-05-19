@@ -543,3 +543,19 @@ td {
 .user_post h2{
     padding: 20px;
 }
+
+
+
+.Search_results{
+    text-align: center;
+    font-weight: bold;
+    color:gray;
+}
+.Search_results:hover{
+    color: #cbd5e0;
+}
+.post-user-name,.post-date{
+    color: #9590f1;
+    font-weight: bold;
+
+}
