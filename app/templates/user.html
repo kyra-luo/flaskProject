@@ -10,66 +10,56 @@
     </div>
 
 
-    <div class="col-sm-6">
+
+
+    <div class="col-sm-9">
             <div class="row">
-                <div class="user_section1" >
-                    <h2>{{ user.username }}</h2>
-                </div>
+                <table class="user_section">
+                        <tr>
+                            <td>
+                                <h2>{{ user.username }}</h2>
+                            </td>
+                            <td>
+                                <button  class="useredit-button" style="margin: 20px"  data-bs-toggle="modal" data-bs-target="#editModal"
+                                   ><img src="{{ url_for('static', filename='image/01.png') }}" alt="Profile Icon" class="profile-icon">Change Profile</button>
+                            </td>
+                            <td>
+                                <button class="useredit-button" style="margin: 20px" onclick="addSocialLink()">+ Add Social Link</button>
+                               </td>
+                        </tr>
+                    </table>
 
-            </div>
-    </div>
-
-    <div class="col-sm-3">
-            <div class="row">
-            </div>
-    </div>
-
-
-
-
-
-
-        <div class="col-sm-3 sidenav" style="background-color: rgba(197, 187, 174, 0.25);">
-            <ul class="nav nav-pills flex-column" role="tablist">
-                <li class="nav-item">
-                    <a href="{{ url_for('main.index') }}" class="nav-link">Home</a>
-
-                </li>
-            </ul>
-
-            <hr>
-
-            <h4 style="margin-top:20px">About me</h4>
             <div class="profile-section">
-                <img src="{{ url_for('static', filename='image/01.png') }}" alt="Profile Icon" class="profile-icon">
+
+
                 <div class="profile-info">
                     <p id="aboutMeText">{{ user.about_me or 'That is who am I' }}</p>
                 </div>
             </div>
 
-            <hr>
+                <p>
 
-            <h4>LINKS</h4>
-            <button class="useredit-button" style="margin: 20px" onclick="addSocialLink()">+ Add Social Link</button>
-        </div>
 
-        <div class="col-sm-9">
+
+                </p>
+                <div class="userlast">
+                    <h5>last visit: {{ user.last_seen }}</h5>
+                </div>
+
+            </div>
+    </div>
+
+
+
+
+<br>
+
+
+
+        <div class="col-sm-12">
             <div class="row">
                 <div class="middle">
 
-                    <table>
-                        <tr>
-                            <td>
-
-                                    <button type="button" class="useredit-button"
-                                    data-bs-toggle="modal" data-bs-target="#editModal"><img src="{{ url_for('static', filename='image/01.png') }}" alt="Profile Icon" class="profile-icon">Change Profile</button>
-
-                            </td>
-                            <td>
-                                <h5>last visit: {{ user.last_seen }}</h5>
-                            </td>
-                        </tr>
-                    </table>
                     <ul class="nav nav-tabs" role="tablist">
                         <li class="nav-item">
                             <a class="nav-link active" data-bs-toggle="tab" href="#personalized">personalized</a>
