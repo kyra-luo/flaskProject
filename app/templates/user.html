@@ -3,6 +3,31 @@
 
 <div class="container-fluid mt-3">
     <div class="row">
+    <div class="col-sm-3 sidenav">
+        <div class ="user_section1">
+            <img src="{{ user.avatar(128) }}">
+        </div>
+    </div>
+
+
+    <div class="col-sm-6">
+            <div class="row">
+                <div class="user_section1" >
+                <h2>{{ user.username }}</h2>
+                    </div>
+            </div>
+    </div>
+
+    <div class="col-sm-3">
+            <div class="row">
+            </div>
+    </div>
+
+
+
+
+
+
         <div class="col-sm-3 sidenav" style="background-color: rgba(197, 187, 174, 0.25);">
             <ul class="nav nav-pills flex-column" role="tablist">
                 <li class="nav-item">
@@ -30,14 +55,7 @@
         <div class="col-sm-9">
             <div class="row">
                 <div class="middle">
-                    <table>
-                        <tr valign="top">
-                            <td><img src="{{ user.avatar(128) }}"></td>
-                            <td>
-                                <h2>{{ user.username }}</h2>
-                            </td>
-                        </tr>
-                    </table>
+
 
                     <table>
                         <tr>

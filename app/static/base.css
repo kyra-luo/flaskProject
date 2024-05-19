@@ -506,3 +506,15 @@ td {
 
 .userpost2{
     background-color: rgba(199, 255, 130, 0.3);}
+
+.user_section1 img{
+    padding: 100px;
+    border: 1px solid #4CAF50;
+    font-size: 40px;
+
+}
+
+.user_section1 h2{
+    font-size: 40px;
+    padding: 100px;
+}
