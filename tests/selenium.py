@@ -6,14 +6,18 @@ from selenium import webdriver
 from app import create_app, db
 from config import SeleniumConfig, TestingConfig
 from selenium.webdriver.common.by import By
+from selenium.webdriver.support.ui import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 from app.models import User, Post, Comment, Community
 from werkzeug.security import generate_password_hash, check_password_hash
-from app.helpers import generate_user_id
+from app.helpers import generate_user_id, generate_random_email, generate_random_string
 
 localHost = "http://localhost:8000/"
 
 if not multiprocessing.get_start_method(allow_none=True):
     multiprocessing.set_start_method('fork')
+
+
 
 Uid=generate_user_id()
 
@@ -44,20 +48,20 @@ class SeleniumTestCase(TestCase):
         db.drop_all()
         self.app_context.pop()
 
-    def create_test_user(self):
-        p = generate_password_hash('cat')
-        u = User(username='susan', User_id=Uid, fname='Susan', lname='Smith', email='like@outlook.com', password_hash=p)
-        db.session.add(u)
-        db.session.commit()
-
 
     def actual_login(self):
-        self.create_test_user()
+        p = generate_password_hash('cat')
+        email_addr = generate_random_email()
+        fname = generate_random_string(5)
+        lname = generate_random_string(5)
+        username = generate_random_string(5)
+        u = User(username=username, User_id=Uid, fname=fname, lname=lname, email=email_addr, password_hash=p)
+        db.session.add(u)
+        db.session.commit()
         time.sleep(2)
-        email_addr="like@outlook.com"
         pin="cat"
-        button = self.driver.find_element(By.XPATH, "//button[text()='Log In']")
-        button.click()
+        login_url = f"http://localhost:8000/login"
+        self.driver.get(login_url)
         email = self.driver.find_element(By.ID, "email")
         email.send_keys(email_addr)
         password = self.driver.find_element(By.ID, "PIN")
@@ -78,65 +82,79 @@ class SeleniumTestCase(TestCase):
         db.session.add(p)
         db.session.commit()
 
-    # def test_register_button(self):
-    #     # Find the button using its text or other attribute
-    #     button = self.driver.find_element(By.XPATH, "//button[text()='Get account']")
-    #     button.click()
+    def test_register_button(self):
+        # Find the button using its text or other attribute
+        button_next = self.driver.find_element(By.ID, "nextButton")
+        button_next.click()
+        button_next.click()
+        button_enter = self.driver.find_element(By.ID, "navigateWord")
+        button_enter.click()
+        button = WebDriverWait(self.driver, 2).until(
+            EC.element_to_be_clickable((By.XPATH, "//button[text()='Get account']"))
+        )
         
-    #     # Allow some time for the navigation
-    #     time.sleep(2)
+        button.click()
+        time.sleep(2)
 
-    #     # Verify the URL
-    #     current_url = self.driver.current_url
-    #     expected_url = localHost + "register"
-    #     self.assertEqual(current_url, expected_url)
+        # Verify the URL
+        current_url = self.driver.current_url
+        expected_url = localHost + "register"
+        self.assertEqual(current_url, expected_url)
 
-    # def test_login_button(self):
-        
-    #     self.actual_login()
-    #     current_url = self.driver.current_url
-    #     expected_url = localHost + "index"
-    #     self.assertEqual(current_url, expected_url)
+    def test_login_button(self):
+        self.actual_login()
+        current_url = self.driver.current_url
+        expected_url = localHost + "index"
+        self.assertEqual(current_url, expected_url)
 
-    # def test_explore_button(self):
-    #     self.actual_login()
-    #     button = self.driver.find_element(By.XPATH, "//a[text()='Explore']")
-    #     button.click()
-    #     time.sleep(2)
-    #     current_url = self.driver.current_url
-    #     if db.session.query(Post).count() == 0:
-    #         expected_url = localHost + "community"
-    #         self.assertEqual(current_url, expected_url)
-    #     else:
-    #         expected_url = localHost + "explore"
-    #         self.assertEqual(current_url, expected_url)
+    def test_explore_button(self):
+        self.actual_login()
+        button_next = self.driver.find_element(By.ID, "nextButton")
+        button_next.click()
+        time.sleep(2)
+        button_enter = self.driver.find_element(By.ID, "navigateWord")
+        button_enter.click()
+        current_url = self.driver.current_url
+        if db.session.query(Post).count() == 0:
+            expected_url = localHost + "community"
+            self.assertEqual(current_url, expected_url)
+        else:
+            expected_url = localHost + "explore"
+            self.assertEqual(current_url, expected_url)
     
-    # def test_explore_button_2(self):
-    #     self.actual_login()
-    #     self.create_post()
-    #     time.sleep(3)
-    #     button = self.driver.find_element(By.XPATH, "//a[text()='Explore']")
-    #     button.click()
-    #     time.sleep(2)
-    #     current_url = self.driver.current_url
-    #     expected_url = localHost + "explore"
-    #     self.assertEqual(current_url, expected_url)
+    def test_explore_button_2(self):
+        self.actual_login()
+        self.create_post()
+        time.sleep(3)
+        button_next = self.driver.find_element(By.ID, "nextButton")
+        button_next.click()
+        button_enter = self.driver.find_element(By.ID, "navigateWord")
+        button_enter.click()
+        current_url = self.driver.current_url
+        expected_url = localHost + "explore"
+        self.assertEqual(current_url, expected_url)
 
     def test_community_button(self):
         self.actual_login()
-        button = self.driver.find_element(By.XPATH, "//a[text()='Community']")
-        button.click()
-        button_new = self.driver.find_element(By.XPATH, "//button[text()=' NEW FORUM']")
+        community_url = f"http://localhost:8000/community"
+        self.driver.get(community_url)
+        button_new = self.driver.find_element(By.XPATH, "//button[@data-bs-toggle='modal' and @data-bs-target='#forumModal']")
         button_new.click()
-        input_commnuity_name = self.driver.find_element(By.ID, "communityName")
-        input_commnuity_name.send_keys("Test Community")
+        input_community_name = WebDriverWait(self.driver, 2).until(
+            EC.element_to_be_clickable((By.ID, "communityName"))
+        )
+        # Scroll into view if needed
+        # self.driver.execute_script("arguments[0].scrollIntoView();", input_community_name)
+        
+        # Send keys to the input field
+        input_community_name.send_keys("Test Community")
         input_description = self.driver.find_element(By.ID, "description")
         input_description.send_keys("This is a test community")
         submit = self.driver.find_element(By.ID, "submit")
         submit.click()
         time.sleep(2)
-        messages = self.driver.find_elements(By.CLASS_NAME, "message")
-        self.assertEqual(current_url, expected_url)
+        messages = self.driver.find_elements(By.CLASS_NAME, "alert")
+        self.assertEqual(len(messages), 1, "Expected there to be a single error message when trying to create a community")
         
 
     
